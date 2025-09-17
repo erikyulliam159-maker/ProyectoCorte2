@@ -3,6 +3,8 @@ package co.edu.unbosque.proyectocorte2back.entity;
 import jakarta.persistence.*;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "detalles_subtemas")
 public class DetalleSubtema {
@@ -12,13 +14,13 @@ public class DetalleSubtema {
 	private Long id;
 
 	@Lob
-	private String descripcion; 
+	private String descripcion;
 
-	private String urlImagen; 
+	private String urlImagen;
 
-	@OneToOne
-	@JoinColumn(name = "subtema_id", unique = true)
+	@OneToOne(mappedBy = "detalle")
 	private Subtema subtema;
+
 
 	public DetalleSubtema() {
 		// TODO Auto-generated constructor stub
@@ -30,7 +32,6 @@ public class DetalleSubtema {
 		this.subtema = subtema;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(descripcion, id, subtema, urlImagen);
@@ -81,5 +82,4 @@ public class DetalleSubtema {
 		this.subtema = subtema;
 	}
 
-	
 }

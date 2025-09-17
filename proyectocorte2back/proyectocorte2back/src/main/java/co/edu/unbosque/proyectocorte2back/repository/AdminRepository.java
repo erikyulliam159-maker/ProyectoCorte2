@@ -11,9 +11,9 @@ public interface AdminRepository extends JpaRepository<Administrador, Long> {
 
 	public Optional<Administrador> findByNombreCompleto(String nombreCompleto);
 	public Optional<Administrador>findByEmail(String email);
-	public Optional<Administrador>findByUserName(String username);
+	public Optional<Administrador>findByUsername(String username);
 	
 	public void deleteByNombreCompleto(String nombre);
 	public void deleteByEmail(String email);
-	public void deleteByUserName(String username);
+	public void deleteByUsername(String username);
 }

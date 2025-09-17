@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="E:\ProyectoCorte2\proyectocorte2back"/>
 			<item value="D:\ProyectoCorte2\proyectocorte2back"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -12,5 +13,25 @@
 			<item value="[groupId].[artifactId]-[version]"/>
 			<item value="[name]"/>
 		</list>
+	</section>
+	<section name="wizardPage">
+		<list key="groupId">
+			<item value="co.edu.unbosque"/>
+		</list>
+		<list key="name">
+			<item value="proyectocorte2frontinfan"/>
+			<item value="proyecto corte 2 adulto"/>
+		</list>
+		<list key="artifactId">
+			<item value="proyectocorte2frontinfan"/>
+			<item value="proyectocorte2frontadul"/>
+		</list>
+		<list key="version">
+			<item value="0.0.1-SNAPSHOT"/>
+		</list>
+	</section>
+	<section name="org.eclipse.m2e.core.pom.overview">
+	</section>
+	<section name="org.eclipse.m2e.core.pom.dependencies">
 	</section>
 </section>

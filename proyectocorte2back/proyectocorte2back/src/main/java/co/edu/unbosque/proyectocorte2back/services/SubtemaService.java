@@ -12,7 +12,9 @@ import co.edu.unbosque.proyectocorte2back.dto.DetalleSubtemaDTO;
 import co.edu.unbosque.proyectocorte2back.dto.SubtemaDTO;
 import co.edu.unbosque.proyectocorte2back.entity.DetalleSubtema;
 import co.edu.unbosque.proyectocorte2back.entity.Subtema;
+import co.edu.unbosque.proyectocorte2back.entity.Temario;
 import co.edu.unbosque.proyectocorte2back.repository.SubtemaRepository;
+import co.edu.unbosque.proyectocorte2back.repository.TemarioRepository;
 
 
 @Service
@@ -20,6 +22,9 @@ public class SubtemaService implements CRUDOperation<SubtemaDTO> {
 
 	@Autowired
 	private SubtemaRepository subtemaRepository;
+	
+	@Autowired
+	private TemarioRepository temarioRepository;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -82,29 +87,38 @@ public class SubtemaService implements CRUDOperation<SubtemaDTO> {
 
 	@Override
 	public int updateById(Long id, SubtemaDTO newData) {
-		Optional<Subtema> found = subtemaRepository.findById(id);
+	    Optional<Subtema> found = subtemaRepository.findById(id);
 
-		if (found.isPresent()) {
-			Subtema existing = found.get();
+	    if (found.isPresent()) {
+	        Subtema existing = found.get();
 
-			existing.setNombre(newData.getNombre());
-			existing.setTipo(newData.getTipo());
-			existing.setTemario(newData.getTemario());
+	        existing.setNombre(newData.getNombre());
+	        existing.setTipo(newData.getTipo());
 
-			if (newData.getDetalle() != null) {
-				DetalleSubtema detalleEntity = modelMapper.map(newData.getDetalle(), DetalleSubtema.class);
-				detalleEntity.setSubtema(existing);
-				existing.setDetalle(detalleEntity);
-			} else {
-				existing.setDetalle(null);
-			}
 
-			subtemaRepository.save(existing);
-			return 0;
-		} else {
-			return 1;
-		}
+	        Optional<Temario> temarioOpt = temarioRepository.findByTitulo(newData.getTemarioTitulo());
+	        if (temarioOpt.isPresent()) {
+	            existing.setTemario(temarioOpt.get());
+	        } else {
+	         
+	            return 2; 
+	        }
+
+	        if (newData.getDetalle() != null) {
+	            DetalleSubtema detalleEntity = modelMapper.map(newData.getDetalle(), DetalleSubtema.class);
+	            detalleEntity.setSubtema(existing);
+	            existing.setDetalle(detalleEntity);
+	        } else {
+	            existing.setDetalle(null);
+	        }
+
+	        subtemaRepository.save(existing);
+	        return 0;
+	    } else {
+	        return 1; // Subtema no encontrado
+	    }
 	}
+
 
 	public SubtemaDTO getById(Long id) {
 		Optional<Subtema> found = subtemaRepository.findById(id);

@@ -11,9 +11,9 @@ public interface DocenteRepository extends JpaRepository<Docente, Long>{
 
 	public Optional<Docente> findByNombreCompleto(String nombreCompleto);
 	public Optional<Docente>findByEmail(String email);
-	public Optional<Docente>findByUserName(String username);
+	public Optional<Docente>findByUsername(String username);
 	
 	public void deleteByNombreCompleto(String nombre);
 	public void deleteByEmail(String email);
-	public void deleteByUserName(String username);
+	public void deleteByUsername(String username);
 }

@@ -99,15 +99,7 @@ public class DocenteController {
 
 	// ------------------- SUBTEMA -------------------
 
-	@PostMapping(path = "/subtema/createjson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> createSubtema(@RequestBody SubtemaDTO subtemaDTO) {
-		int status = subtemaService.create(subtemaDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Subtema creado exitosamente", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Error al crear el subtema", HttpStatus.NOT_ACCEPTABLE);
-		}
-	}
+	
 
 	@PutMapping(path = "/subtema/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateSubtema(@RequestParam Long id, @RequestBody SubtemaDTO subtemaDTO) {
@@ -153,15 +145,6 @@ public class DocenteController {
 
 	// ------------------- DETALLE SUBTEMA -------------------
 
-	@PostMapping(path = "/detallesubtema/createjson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> createDetalleSubtema(@RequestBody DetalleSubtemaDTO detalleDTO) {
-		int status = detalleSubtemaService.create(detalleDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Detalle de subtema creado exitosamente", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Error al crear el detalle de subtema", HttpStatus.NOT_ACCEPTABLE);
-		}
-	}
 
 	@PutMapping(path = "/detallesubtema/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateDetalleSubtema(@RequestParam Long id,

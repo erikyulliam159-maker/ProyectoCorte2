@@ -3,6 +3,8 @@ package co.edu.unbosque.proyectocorte2back.entity;
 import jakarta.persistence.*;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "subtemas")
 public class Subtema {
@@ -21,8 +23,10 @@ public class Subtema {
     @JoinColumn(name = "temario_id")
     private Temario temario;
 
-    @OneToOne(mappedBy = "subtema", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "detalle_id")
     private DetalleSubtema detalle;
+
 
     public Subtema() {
 		// TODO Auto-generated constructor stub

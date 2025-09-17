@@ -3,6 +3,7 @@ package co.edu.unbosque.proyectocorte2back.entity;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "temarios")
@@ -12,9 +13,10 @@ public class Temario {
 
 	@Column(nullable = false)
 	private String titulo;
-
-	@OneToMany(mappedBy = "temario", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Subtema> subtemas;
+	   @OneToMany(mappedBy = "temario",
+               cascade = CascadeType.ALL, // o {PERSIST, MERGE} si no quieres REMOVE
+               orphanRemoval = true)
+    private List<Subtema> subtemas;
 
 	public Temario() {
 		// TODO Auto-generated constructor stub
