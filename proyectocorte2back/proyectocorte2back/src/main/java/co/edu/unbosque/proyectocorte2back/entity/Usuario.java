@@ -43,8 +43,16 @@ public class Usuario {
         this.email = email;
         this.fotoPerfil = fotoPerfil;
     }
+    
+    
 
-    // Getters y Setters
+    public Usuario(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	// Getters y Setters
     public Long getId() {
         return id;
     }

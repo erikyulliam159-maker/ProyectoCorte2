@@ -23,6 +23,13 @@ public class Administrador extends Usuario {
 		super(username, password, nombreCompleto, email, fotoPerfil);
 
 	}
+	
+	
+
+	public Administrador(String username, String password) {
+		super(username, password);
+		
+	}
 
 	@Override
 	public int hashCode() {
