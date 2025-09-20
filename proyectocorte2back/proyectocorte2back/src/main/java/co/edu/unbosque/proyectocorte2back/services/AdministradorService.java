@@ -115,12 +115,6 @@ public class AdministradorService implements CRUDOperation<AdministradorDTO> {
 	}
 
 	public int validateCredentials(String username, String password) {
-		// encriptado del front
-		// username = AESUtil.decrypt("keyfrontfirstenc", "iviviviviviviviv", username);
-		// password = AESUtil.decrypt("keyfrontfirstenc", "iviviviviviviviv", password);
-		// a encriptrado del back
-		// username = AESUtil.encrypt(username);
-		// password = AESUtil.encrypt(password);
 		for (AdministradorDTO u : getAll()) {
 			if (u.getUsername().equals(username)) {
 				if (u.getPassword().equals(password)) {

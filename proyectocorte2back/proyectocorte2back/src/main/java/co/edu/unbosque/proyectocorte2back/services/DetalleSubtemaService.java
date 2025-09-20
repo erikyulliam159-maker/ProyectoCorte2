@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.DetalleSubtemaDTO;
 import co.edu.unbosque.proyectocorte2back.entity.DetalleSubtema;
 import co.edu.unbosque.proyectocorte2back.repository.DetalleSubtemaRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
@@ -31,8 +32,14 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         return detalleSubtemaRepository.existsById(id);
     }
 
-    @Override
     public int create(DetalleSubtemaDTO data) {
+        ExceptionChecker.checkNotNullOrEmpty(data.getDescripcion(), "Descripción del Detalle no puede estar");
+        ExceptionChecker.checkStringLength(data.getDescripcion(), 3, 1000, "Descripción del Detalle min 3 y 1000");
+        ExceptionChecker.checkNotNullOrEmpty(data.getUrlImagen(), "Url Imagen no puede estar vacia");
+        ExceptionChecker.checkNotNullOrEmpty(data.getSubtemaNombre(), "Subtema no puede estar vacio");
+        ExceptionChecker.checkOnlyLetters(data.getSubtemaNombre(), "Solo letras en subtema");
+        ExceptionChecker.checkStringLength(data.getSubtemaNombre(), 3, 100, "Subtema min 3 y max 100");
+        
         DetalleSubtema entity = modelMapper.map(data, DetalleSubtema.class);
         if (findIdAlreadyTaken(entity)) {
             return 1;
@@ -41,7 +48,7 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
             return 0;
         }
     }
-
+    
     @Override
     public List<DetalleSubtemaDTO> getAll() {
         List<DetalleSubtema> entityList = detalleSubtemaRepository.findAll();
@@ -77,13 +84,21 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
 
     @Override
     public int updateById(Long id, DetalleSubtemaDTO newData) {
+        ExceptionChecker.checkNotNullOrEmpty(newData.getDescripcion(), "Descripción del Detalle no puede estar");
+        ExceptionChecker.checkStringLength(newData.getDescripcion(), 3, 1000, "Descripción del Detalle min 3 y 1000");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getUrlImagen(), "Url Imagen no puede estar vacia");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getSubtemaNombre(), "Subtema no puede estar vacio");
+        ExceptionChecker.checkOnlyLetters(newData.getSubtemaNombre(), "Solo letras en subtema");
+        ExceptionChecker.checkStringLength(newData.getSubtemaNombre(), 3, 100, "Subtema min 3 y max 100");
+
+
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(id);
         Optional<DetalleSubtema> newFound = detalleSubtemaRepository.findById(newData.getId());
 
         if (found.isPresent() && !newFound.isPresent()) {
             DetalleSubtema temp = found.get();
             temp.setDescripcion(newData.getDescripcion());
-            temp.setUrlImagen(newData.getUrlImagen()); 
+            temp.setUrlImagen(newData.getUrlImagen());
             detalleSubtemaRepository.save(temp);
             return 0;
         }

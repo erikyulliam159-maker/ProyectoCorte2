@@ -1,6 +1,8 @@
 package co.edu.unbosque.proyectocorte2back.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -17,15 +19,16 @@ public class Evento {
 	@Column(length = 1000)
 	private String descripcion;
 
-	private LocalDateTime fecha;
+	private LocalDate fecha;
 
 	private String url;
 
 	public Evento() {
 	}
 
-	public Evento(String titulo, String descripcion, LocalDateTime fecha, String url) {
+	public Evento(Long id, String titulo, String descripcion, LocalDate fecha, String url) {
 		super();
+		this.id = id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
@@ -33,18 +36,22 @@ public class Evento {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Evento))
-			return false;
-		Evento evento = (Evento) o;
-		return Objects.equals(id, evento.id);
+	public int hashCode() {
+		return Objects.hash(descripcion, fecha, id, titulo, url);
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Evento other = (Evento) obj;
+		return Objects.equals(descripcion, other.descripcion) && Objects.equals(fecha, other.fecha)
+				&& Objects.equals(id, other.id) && Objects.equals(titulo, other.titulo)
+				&& Objects.equals(url, other.url);
 	}
 
 	public Long getId() {
@@ -71,11 +78,11 @@ public class Evento {
 		this.descripcion = descripcion;
 	}
 
-	public LocalDateTime getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDateTime fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -87,4 +94,5 @@ public class Evento {
 		this.url = url;
 	}
 
+	
 }

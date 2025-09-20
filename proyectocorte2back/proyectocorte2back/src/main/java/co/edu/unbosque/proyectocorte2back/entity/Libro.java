@@ -24,36 +24,53 @@ public class Libro {
 	private String imagenPortada;
 
 	@Column(nullable = false)
-	private String urlPdf;
+	private String pdf;
+	
+	@Column(nullable = false)
+	private String urlpdf;
 
 	public Libro() {
 	}
 
-	public Libro(String titulo, String autor, int anio, String descripcion, String imagenPortada, String urlPdf,
-			Docente profesor) {
+
+
+	public Libro(String titulo, String autor, int anio, String descripcion, String imagenPortada, String pdf,
+			String urlpdf) {
+		super();
 		this.titulo = titulo;
 		this.autor = autor;
 		this.anio = anio;
 		this.descripcion = descripcion;
 		this.imagenPortada = imagenPortada;
-		this.urlPdf = urlPdf;
-
+		this.pdf = pdf;
+		this.urlpdf = urlpdf;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Libro))
-			return false;
-		Libro libro = (Libro) o;
-		return Objects.equals(id, libro.id);
-	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(anio, autor, descripcion, id, imagenPortada, pdf, titulo, urlpdf);
 	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Libro other = (Libro) obj;
+		return anio == other.anio && Objects.equals(autor, other.autor)
+				&& Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
+				&& Objects.equals(imagenPortada, other.imagenPortada) && Objects.equals(pdf, other.pdf)
+				&& Objects.equals(titulo, other.titulo) && Objects.equals(urlpdf, other.urlpdf);
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -103,12 +120,28 @@ public class Libro {
 		this.imagenPortada = imagenPortada;
 	}
 
-	public String getUrlPdf() {
-		return urlPdf;
+
+
+	public String getPdf() {
+		return pdf;
 	}
 
-	public void setUrlPdf(String urlPdf) {
-		this.urlPdf = urlPdf;
+
+
+	public void setPdf(String pdf) {
+		this.pdf = pdf;
+	}
+
+
+
+	public String getUrlpdf() {
+		return urlpdf;
+	}
+
+
+
+	public void setUrlpdf(String urlpdf) {
+		this.urlpdf = urlpdf;
 	}
 
 }

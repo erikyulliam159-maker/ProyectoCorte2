@@ -15,13 +15,25 @@ import co.edu.unbosque.proyectocorte2back.dto.LibroDTO;
 import co.edu.unbosque.proyectocorte2back.dto.EventoDTO;
 import co.edu.unbosque.proyectocorte2back.dto.LinkValiosoDTO;
 import co.edu.unbosque.proyectocorte2back.services.TemarioService;
+import co.edu.unbosque.proyectocorte2back.util.ArchivoUtil;
 import co.edu.unbosque.proyectocorte2back.services.SubtemaService;
 import co.edu.unbosque.proyectocorte2back.services.DetalleSubtemaService;
 import co.edu.unbosque.proyectocorte2back.services.ProblemaService;
 import co.edu.unbosque.proyectocorte2back.services.LibroService;
 import co.edu.unbosque.proyectocorte2back.services.EventoService;
 import co.edu.unbosque.proyectocorte2back.services.LinkValiosoService;
-
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 @RestController
 @RequestMapping("/estudiante")
 @CrossOrigin(origins = { "*" })
@@ -47,8 +59,11 @@ public class EstudianteController {
 
     @Autowired
     private LinkValiosoService linkValiosoService;
+    
+    @Autowired
+    private ArchivoUtil archivoUtil;
 
-    // Ver temarios
+  
     @GetMapping("/temario/getall")
     public ResponseEntity<List<TemarioDTO>> getAllTemarios() {
         List<TemarioDTO> temarios = temarioService.getAll();
@@ -111,7 +126,7 @@ public class EstudianteController {
         }
     }
 
-    // Ver problemas
+
     @GetMapping("/problema/getall")
     public ResponseEntity<List<ProblemaDTO>> getAllProblemas() {
         List<ProblemaDTO> problemas = problemaService.getAll();
@@ -143,16 +158,26 @@ public class EstudianteController {
         }
     }
 
-    @GetMapping("/libro/getbyid/{id}")
-    public ResponseEntity<LibroDTO> getLibroById(@PathVariable Long id) {
+    @GetMapping("/libro/downloadpdf/{id}")
+    public ResponseEntity<InputStreamResource> downloadPdf(@PathVariable Long id) throws IOException {
         LibroDTO libro = libroService.getById(id);
-        if (libro != null) {
-            return new ResponseEntity<>(libro, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        if (libro == null || libro.getPdf() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        File archivo = archivoUtil.obtenerArchivo(libro.getPdf());
+        if (!archivo.exists()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(archivo));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + archivo.getName())
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(archivo.length())
+                .body(resource);
     }
 
+    
+    
     // Ver eventos
     @GetMapping("/evento/getall")
     public ResponseEntity<List<EventoDTO>> getAllEventos() {
@@ -193,5 +218,35 @@ public class EstudianteController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @GetMapping("/temario/downloadpdf")
+    public ResponseEntity<byte[]> downloadTemarioPdf() throws IOException {
+        List<TemarioDTO> temarios = temarioService.getAll();
+        byte[] pdfBytes = archivoUtil.generarPdfTemario(temarios);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=temarios.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+
+    @GetMapping("/problema/downloadpdf")
+    public ResponseEntity<byte[]> downloadProblemasPdf() throws IOException {
+        List<ProblemaDTO> problemas = problemaService.getAll();
+        byte[] pdfBytes = archivoUtil.generarPdfProblemas(problemas);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=problemas.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
+
+    @GetMapping("/libro/downloadpdf")
+    public ResponseEntity<byte[]> downloadLibrosPdf() throws IOException {
+        List<LibroDTO> libros = libroService.getAll();
+        byte[] pdfBytes = archivoUtil.generarPdfLibros(libros);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=libros.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
 }

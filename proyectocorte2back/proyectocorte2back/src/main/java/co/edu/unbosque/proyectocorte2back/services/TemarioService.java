@@ -13,6 +13,7 @@ import co.edu.unbosque.proyectocorte2back.dto.TemarioDTO;
 import co.edu.unbosque.proyectocorte2back.entity.Subtema;
 import co.edu.unbosque.proyectocorte2back.entity.Temario;
 import co.edu.unbosque.proyectocorte2back.repository.TemarioRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class TemarioService implements CRUDOperation<TemarioDTO> {
@@ -33,32 +34,48 @@ public class TemarioService implements CRUDOperation<TemarioDTO> {
 		return temarioRepository.existsById(id);
 	}
 
-	@Override
-	public int create(TemarioDTO data) {
-		Temario entity = modelMapper.map(data, Temario.class);
 
-		if (entity.getSubtemas() != null) {
-			entity.getSubtemas().forEach(s -> {
-				s.setTemario(entity);
-				if (s.getDetalle() != null) {
-					s.getDetalle().setSubtema(s);
-				}
-			});
-		}
+    @Override
+    public int create(TemarioDTO data) {
 
-		if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
-			List<Subtema> subtemasEntity = new ArrayList<>();
-			for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
-				Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
-				subtema.setTemario(entity);
-				subtemasEntity.add(subtema);
-			}
-			entity.setSubtemas(subtemasEntity);
-		}
+    
+        ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Título del Temario no puede estar vacio");
+        ExceptionChecker.checkOnlyLetters(data.getTitulo(), "Título del Temario solo letras");
+        ExceptionChecker.checkStringLength(data.getTitulo(), 3, 100, "Título del Temario min 3  y max 100");
 
-		temarioRepository.save(entity);
-		return 0;
-	}
+
+        if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
+            for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
+                ExceptionChecker.checkNotNullOrEmpty(subtemaDTO.getNombre(), "Nombre del Subtema");
+                ExceptionChecker.checkOnlyLetters(subtemaDTO.getNombre(), "Nombre del Subtema");
+                ExceptionChecker.checkStringLength(subtemaDTO.getNombre(), 3, 100, "Nombre del Subtema");
+            }
+        }
+
+        Temario entity = modelMapper.map(data, Temario.class);
+
+        if (entity.getSubtemas() != null) {
+            entity.getSubtemas().forEach(s -> {
+                s.setTemario(entity);
+                if (s.getDetalle() != null) {
+                    s.getDetalle().setSubtema(s);
+                }
+            });
+        }
+
+        if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
+            List<Subtema> subtemasEntity = new ArrayList<>();
+            for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
+                Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
+                subtema.setTemario(entity);
+                subtemasEntity.add(subtema);
+            }
+            entity.setSubtemas(subtemasEntity);
+        }
+
+        temarioRepository.save(entity);
+        return 0;
+    }
 
 	@Override
 	public List<TemarioDTO> getAll() {
@@ -83,32 +100,47 @@ public class TemarioService implements CRUDOperation<TemarioDTO> {
 	}
 
 	@Override
-	public int updateById(Long id, TemarioDTO newData) {
-		Optional<Temario> found = temarioRepository.findById(id);
+    public int updateById(Long id, TemarioDTO newData) {
 
-		if (found.isPresent()) {
-			Temario existing = found.get();
+        
+        ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Título del Temario no puede estar vacio");
+        ExceptionChecker.checkOnlyLetters(newData.getTitulo(), "Título del Temario solo letras");
+        ExceptionChecker.checkStringLength(newData.getTitulo(), 3, 100, "Título del Temario min 3 y max 100");
 
-			existing.setTitulo(newData.getTitulo());
+        if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
+            for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
+                ExceptionChecker.checkNotNullOrEmpty(subtemaDTO.getNombre(), "Nombre del Subtema");
+                ExceptionChecker.checkOnlyLetters(subtemaDTO.getNombre(), "Nombre del Subtema");
+                ExceptionChecker.checkStringLength(subtemaDTO.getNombre(), 3, 100, "Nombre del Subtema");
+            }
+        }
 
-			if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
-				List<Subtema> subtemasEntity = new ArrayList<>();
-				for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
-					Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
-					subtema.setTemario(existing);
-					subtemasEntity.add(subtema);
-				}
-				existing.setSubtemas(subtemasEntity);
-			} else {
-				existing.setSubtemas(null);
-			}
+        Optional<Temario> found = temarioRepository.findById(id);
 
-			temarioRepository.save(existing);
-			return 0;
-		} else {
-			return 1;
-		}
-	}
+        if (found.isPresent()) {
+            Temario existing = found.get();
+
+            existing.setTitulo(newData.getTitulo());
+
+            if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
+                List<Subtema> subtemasEntity = new ArrayList<>();
+                for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
+                    Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
+                    subtema.setTemario(existing);
+                    subtemasEntity.add(subtema);
+                }
+                existing.setSubtemas(subtemasEntity);
+            } else {
+                existing.setSubtemas(null);
+            }
+
+            temarioRepository.save(existing);
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
 
 	public TemarioDTO getById(Long id) {
 		Optional<Temario> found = temarioRepository.findById(id);
@@ -130,8 +162,5 @@ public class TemarioService implements CRUDOperation<TemarioDTO> {
 		}
 	}
 
-	public int create(String titulo, String subtemas) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 }

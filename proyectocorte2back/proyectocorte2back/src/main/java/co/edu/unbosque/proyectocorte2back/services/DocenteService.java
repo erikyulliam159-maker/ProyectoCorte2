@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.DocenteDTO;
 import co.edu.unbosque.proyectocorte2back.entity.Docente;
 import co.edu.unbosque.proyectocorte2back.repository.DocenteRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class DocenteService implements CRUDOperation<DocenteDTO> {
@@ -33,6 +34,16 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
 
     @Override
     public int create(DocenteDTO data) {
+		ExceptionChecker.checkNotNullOrEmpty(data.getUsername(), "Username no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getUsername(), 3, 12, "Username min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(data.getPassword(), "Contraseña no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(data.getNombreCompleto(), "El nombre no puede estar en vacio");
+		ExceptionChecker.checkStringLength(data.getNombreCompleto(), 3, 50, "El nombre Min 3 letras max 50");
+		ExceptionChecker.checkOnlyLetters(data.getNombreCompleto(), "Solo letras en el nombre");
+		ExceptionChecker.checkNotNullOrEmpty(data.getEmail(), "Email no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getEmail(), 5, 100, "Email min 5 y max 100");
+		
         Docente entity = modelMapper.map(data, Docente.class);
         if (findNombreAlreadyTaken(entity)) {
             return 1;
@@ -77,6 +88,14 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
 
     @Override
     public int updateById(Long id, DocenteDTO newData) {
+    	ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+		ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
+		ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
+
         Optional<Docente> found = docenteRepository.findById(id);
         Optional<Docente> newFound = docenteRepository.findByNombreCompleto(newData.getNombreCompleto());
 

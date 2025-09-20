@@ -1,22 +1,24 @@
 package co.edu.unbosque.proyectocorte2back.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.Objects;
 
 public class EventoDTO {
-	
+
 	private Long id;
 	private String titulo;
 	private String descripcion;
-	private LocalDateTime fecha;
+	private LocalDate fecha;
 	private String url;
-	
+
 	public EventoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EventoDTO(String titulo, String descripcion, LocalDateTime fecha, String url) {
+	public EventoDTO(Long id, String titulo, String descripcion, LocalDate fecha, String url) {
 		super();
+		this.id = id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
@@ -66,11 +68,11 @@ public class EventoDTO {
 		this.descripcion = descripcion;
 	}
 
-	public LocalDateTime getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDateTime fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -81,6 +83,5 @@ public class EventoDTO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
+
 }

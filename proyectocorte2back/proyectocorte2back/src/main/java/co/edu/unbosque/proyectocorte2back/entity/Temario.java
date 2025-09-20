@@ -3,7 +3,7 @@ package co.edu.unbosque.proyectocorte2back.entity;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "temarios")

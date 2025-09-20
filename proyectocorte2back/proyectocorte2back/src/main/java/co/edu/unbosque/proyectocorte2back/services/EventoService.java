@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.EventoDTO;
 import co.edu.unbosque.proyectocorte2back.entity.Evento;
 import co.edu.unbosque.proyectocorte2back.repository.EventoRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class EventoService implements CRUDOperation<EventoDTO> {
@@ -33,15 +34,22 @@ public class EventoService implements CRUDOperation<EventoDTO> {
 
     @Override
     public int create(EventoDTO data) {
+    	ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Titulo del Evento no puede estar vacia ");
+        ExceptionChecker.checkStringLength(data.getTitulo(), 3, 100, "Titulo del Evento min 3 y max 100");
+        ExceptionChecker.checkNotNullOrEmpty(data.getDescripcion(), "Descripción del Evento no puede estar vacia ");
+        ExceptionChecker.checkStringLength(data.getDescripcion(), 3, 500, "Descripción del Evento min 3 y max 500");
+        ExceptionChecker.checkNotNullOrEmpty(data.getUrl(), "URL del Evento no puede estar vacia");
+        ExceptionChecker.checkNotNullDate(data.getFecha(), "Fecha del Evento no puede estar vacio");
+        ExceptionChecker.checkNotPastDate(data.getFecha(), "No se pueden poner fechas en meses anteriores");
+
         Evento entity = modelMapper.map(data, Evento.class);
-        if (findNombreAlreadyTaken(entity)) {
+        if (findNombreAlreadyTaken(entity)){
             return 1;
         } else {
             eventoRepository.save(entity);
             return 0;
         }
     }
-
     @Override
     public List<EventoDTO> getAll() {
         List<Evento> entityList = eventoRepository.findAll();
@@ -77,15 +85,22 @@ public class EventoService implements CRUDOperation<EventoDTO> {
 
     @Override
     public int updateById(Long id, EventoDTO newData) {
+     	ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Titulo del Evento no puede estar vacia ");
+        ExceptionChecker.checkStringLength(newData.getTitulo(), 3, 100, "Titulo del Evento min 3 y max 100");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getDescripcion(), "Descripción del Evento no puede estar vacia ");
+        ExceptionChecker.checkStringLength(newData.getDescripcion(), 3, 500, "Descripción del Evento min 3 y max 500");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getUrl(), "URL del Evento no puede estar vacia");
+        ExceptionChecker.checkNotNullDate(newData.getFecha(), "Fecha del Evento no puede estar vacio");
+        ExceptionChecker.checkNotPastDate(newData.getFecha(), "No se pueden poner fechas en meses anteriores");
+
         Optional<Evento> found = eventoRepository.findById(id);
         Optional<Evento> newFound = eventoRepository.findById(newData.getId());
 
         if (found.isPresent() && !newFound.isPresent()) {
             Evento temp = found.get();
             temp.setDescripcion(newData.getDescripcion());
-            temp.setFecha(newData.getFecha()); 
-            temp.setUrl(newData.getUrl()); 
-            
+            temp.setFecha(newData.getFecha());
+            temp.setUrl(newData.getUrl());
             eventoRepository.save(temp);
             return 0;
         }

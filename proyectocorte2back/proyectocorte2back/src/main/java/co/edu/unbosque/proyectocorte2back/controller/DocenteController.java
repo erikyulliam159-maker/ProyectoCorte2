@@ -1,5 +1,6 @@
 package co.edu.unbosque.proyectocorte2back.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +9,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.edu.unbosque.proyectocorte2back.dto.TemarioDTO;
-import co.edu.unbosque.proyectocorte2back.dto.SubtemaDTO;
+
 import co.edu.unbosque.proyectocorte2back.dto.ProblemaDTO;
 
-import co.edu.unbosque.proyectocorte2back.dto.DetalleSubtemaDTO;
 import co.edu.unbosque.proyectocorte2back.services.TemarioService;
-import co.edu.unbosque.proyectocorte2back.services.SubtemaService;
-import co.edu.unbosque.proyectocorte2back.services.DetalleSubtemaService;
+
 import co.edu.unbosque.proyectocorte2back.services.ProblemaService;
 
 import co.edu.unbosque.proyectocorte2back.dto.LibroDTO;
+import co.edu.unbosque.proyectocorte2back.util.ArchivoUtil;
 import co.edu.unbosque.proyectocorte2back.services.LibroService;
 
 @RestController
@@ -32,38 +33,57 @@ public class DocenteController {
 	private TemarioService temarioService;
 
 	@Autowired
-	private SubtemaService subtemaService;
-
-	@Autowired
-	private DetalleSubtemaService detalleSubtemaService;
-
-	@Autowired
 	private ProblemaService problemaService;
 
 	@Autowired
 	private LibroService libroService;
 
+	@Autowired
+	private ArchivoUtil archivoUtil;
+
 	// ------------------- TEMARIO -------------------
 
 	@PostMapping(path = "/temario/createjson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createTemario(@RequestBody TemarioDTO temarioDTO) {
-		int status = temarioService.create(temarioDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Temario creado exitosamente", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Error al crear el temario", HttpStatus.NOT_ACCEPTABLE);
+		try {
+
+			if (temarioDTO.getTitulo() == null || temarioDTO.getTitulo().trim().isEmpty()) {
+				return new ResponseEntity<>("El título del evento es obligatorio", HttpStatus.BAD_REQUEST);
+			}
+
+			int status = temarioService.create(temarioDTO);
+			if (status == 0) {
+				return new ResponseEntity<>("Temario creado exitosamente", HttpStatus.CREATED);
+			} else if (status == 1) {
+				return new ResponseEntity<>("Ya existe un temario con ese título", HttpStatus.CONFLICT);
+			} else {
+				return new ResponseEntity<>("Error desconocido al crear el temario", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>("Error de validación: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error inesperado en el servidor: " + e.getMessage(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@PutMapping(path = "/temario/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateTemario(@RequestParam Long id, @RequestBody TemarioDTO temarioDTO) {
-		int status = temarioService.updateById(id, temarioDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Temario actualizado exitosamente", HttpStatus.ACCEPTED);
-		} else if (status == 1) {
-			return new ResponseEntity<>("Temario no encontrado", HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>("Error al actualizar el temario", HttpStatus.BAD_REQUEST);
+		try {
+			int status = temarioService.updateById(id, temarioDTO);
+			if (status == 0) {
+				return new ResponseEntity<>("Temario actualizado exitosamente", HttpStatus.ACCEPTED);
+			} else if (status == 1) {
+				return new ResponseEntity<>("El nuevo título ya está en uso", HttpStatus.IM_USED);
+			} else if (status == 2) {
+				return new ResponseEntity<>("Temario no encontrado", HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<>("Error al actualizar el temario", HttpStatus.BAD_REQUEST);
+			}
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error interno al actualizar el temario", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -93,101 +113,7 @@ public class DocenteController {
 		if (status == 0) {
 			return new ResponseEntity<>("Temario eliminado exitosamente", HttpStatus.ACCEPTED);
 		} else {
-			return new ResponseEntity<>("Error al eliminar el temario", HttpStatus.NOT_FOUND);
-		}
-	}
-
-	// ------------------- SUBTEMA -------------------
-
-	
-
-	@PutMapping(path = "/subtema/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateSubtema(@RequestParam Long id, @RequestBody SubtemaDTO subtemaDTO) {
-		int status = subtemaService.updateById(id, subtemaDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Subtema actualizado exitosamente", HttpStatus.ACCEPTED);
-		} else if (status == 1) {
-			return new ResponseEntity<>("Subtema no encontrado", HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>("Error al actualizar el subtema", HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@GetMapping("/subtema/getall")
-	public ResponseEntity<List<SubtemaDTO>> getAllSubtemas() {
-		List<SubtemaDTO> subtemas = subtemaService.getAll();
-		if (subtemas.isEmpty()) {
-			return new ResponseEntity<>(subtemas, HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<>(subtemas, HttpStatus.OK);
-		}
-	}
-
-	@GetMapping("/subtema/getbyid/{id}")
-	public ResponseEntity<SubtemaDTO> getSubtemaById(@PathVariable Long id) {
-		SubtemaDTO subtema = subtemaService.getById(id);
-		if (subtema != null) {
-			return new ResponseEntity<>(subtema, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@DeleteMapping("/subtema/deletebyid/{id}")
-	public ResponseEntity<String> deleteSubtemaById(@PathVariable Long id) {
-		int status = subtemaService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<>("Subtema eliminado exitosamente", HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<>("Error al eliminar el subtema", HttpStatus.NOT_FOUND);
-		}
-	}
-
-	// ------------------- DETALLE SUBTEMA -------------------
-
-
-	@PutMapping(path = "/detallesubtema/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateDetalleSubtema(@RequestParam Long id,
-			@RequestBody DetalleSubtemaDTO detalleDTO) {
-		int status = detalleSubtemaService.updateById(id, detalleDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Detalle de subtema actualizado exitosamente", HttpStatus.ACCEPTED);
-		} else if (status == 1) {
-			return new ResponseEntity<>("Detalle de subtema ya existe", HttpStatus.IM_USED);
-		} else if (status == 2) {
-			return new ResponseEntity<>("Detalle de subtema no encontrado", HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>("Error al actualizar el detalle de subtema", HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@GetMapping("/detallesubtema/getall")
-	public ResponseEntity<List<DetalleSubtemaDTO>> getAllDetallesSubtema() {
-		List<DetalleSubtemaDTO> detalles = detalleSubtemaService.getAll();
-		if (detalles.isEmpty()) {
-			return new ResponseEntity<>(detalles, HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<>(detalles, HttpStatus.OK);
-		}
-	}
-
-	@GetMapping("/detallesubtema/getbyid/{id}")
-	public ResponseEntity<DetalleSubtemaDTO> getDetalleSubtemaById(@PathVariable Long id) {
-		DetalleSubtemaDTO detalle = detalleSubtemaService.getById(id);
-		if (detalle != null) {
-			return new ResponseEntity<>(detalle, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@DeleteMapping("/detallesubtema/deletebyid/{id}")
-	public ResponseEntity<String> deleteDetalleSubtemaById(@PathVariable Long id) {
-		int status = detalleSubtemaService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<>("Detalle de subtema eliminado exitosamente", HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<>("Error al eliminar el detalle de subtema", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Error al eliminar el temario, no encontrado", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -195,14 +121,34 @@ public class DocenteController {
 
 	@PostMapping(path = "/problema/createjson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createProblema(@RequestBody ProblemaDTO problemaDTO) {
-		int status = problemaService.create(problemaDTO);
-		if (status == 0) {
-			return new ResponseEntity<>("Problema creado exitosamente", HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>("Error al crear el problema, puede que el título ya esté en uso",
-					HttpStatus.NOT_ACCEPTABLE);
+
+		try {
+
+			if (problemaDTO.getTitulo() == null || problemaDTO.getTitulo().trim().isEmpty()) {
+				return new ResponseEntity<>("El título del problema es obligatorio", HttpStatus.BAD_REQUEST);
+			} else if (problemaDTO.getJuez() == null || problemaDTO.getJuez().trim().isEmpty()) {
+				return new ResponseEntity<>("El juez del problema es obligatorio", HttpStatus.BAD_REQUEST);
+			} else if (problemaDTO.getTema() == null || problemaDTO.getTema().trim().isEmpty()) {
+				return new ResponseEntity<>("El Tema del problema es obligatorio", HttpStatus.BAD_REQUEST);
+			}
+
+			int status = problemaService.create(problemaDTO);
+			if (status == 0) {
+				return new ResponseEntity<>("Evento creado exitosamente", HttpStatus.CREATED);
+			} else if (status == 1) {
+				return new ResponseEntity<>("Ya existe un evento con ese título", HttpStatus.CONFLICT);
+			} else {
+				return new ResponseEntity<>("Error desconocido al crear el evento", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>("Error de validación: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error inesperado en el servidor: " + e.getMessage(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	
 
 	@PutMapping(path = "/problema/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateProblema(@RequestParam Long id, @RequestBody ProblemaDTO problemaDTO) {
@@ -257,69 +203,126 @@ public class DocenteController {
 			return new ResponseEntity<>("Error al eliminar el problema", HttpStatus.NOT_FOUND);
 		}
 	}
-	//------------------- LIBRO -------------------//
+	// ------------------- LIBRO -------------------//
 
-	@PostMapping(path = "/libro/createjson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> createLibro(@RequestBody LibroDTO libroDTO) {
-	    int status = libroService.create(libroDTO);
-	    if (status == 0) {
-	        return new ResponseEntity<>("Libro creado exitosamente", HttpStatus.CREATED);
-	    } else {
-	        return new ResponseEntity<>("Error al crear el libro, puede que el título ya esté en uso", HttpStatus.NOT_ACCEPTABLE);
+	@PostMapping(path = "/libro/createjson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> createLibro(@RequestParam("titulo") String titulo,
+			@RequestParam("autor") String autor, @RequestParam("anio") int anio,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(value = "imagenPortada", required = false) String imagenPortada,
+			@RequestParam("file") MultipartFile file, @RequestParam("urlPdf") String urlPdf) {
+		try {
+
+			 if (titulo == null || titulo.trim().isEmpty()) {
+		            return new ResponseEntity<>("El título del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }else if(autor==null|| autor.trim().isEmpty()) {
+		        	 return new ResponseEntity<>("El autor del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }else if(descripcion==null|| descripcion.trim().isEmpty()) {
+		        	 return new ResponseEntity<>("La descripcion del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }
+			
+			String nombreArchivo = archivoUtil.guardarArchivo(file);
+
+			LibroDTO libroDTO = new LibroDTO(titulo, autor, anio, descripcion, imagenPortada, nombreArchivo, urlPdf);
+
+			int status = libroService.create(libroDTO);
+			if (status == 0) {
+	            return new ResponseEntity<>("Evento creado exitosamente", HttpStatus.CREATED);
+	        } else if (status == 1) {
+	            return new ResponseEntity<>("Ya existe un evento con ese título", HttpStatus.CONFLICT);
+	        } else {
+	            return new ResponseEntity<>("Error desconocido al crear el evento", HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    } catch (IllegalArgumentException e) {
+	        return new ResponseEntity<>("Error de validación: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>("Error inesperado en el servidor: " + e.getMessage(),
+	                HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
 
-	@PutMapping(path = "/libro/updatejson", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateLibro(@RequestParam Long id, @RequestBody LibroDTO libroDTO) {
-	    int status = libroService.updateById(id, libroDTO);
-	    if (status == 0) {
-	        return new ResponseEntity<>("Libro actualizado exitosamente", HttpStatus.ACCEPTED);
-	    } else if (status == 1) {
-	        return new ResponseEntity<>("El nuevo título ya está en uso", HttpStatus.IM_USED);
-	    } else if (status == 2) {
-	        return new ResponseEntity<>("Libro no encontrado", HttpStatus.NOT_FOUND);
-	    } else {
-	        return new ResponseEntity<>("Error al actualizar el libro", HttpStatus.BAD_REQUEST);
-	    }
+	@PutMapping(path = "/libro/updatejson", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<String> updateLibro(@RequestParam Long id, @RequestParam("titulo") String titulo,
+			@RequestParam("autor") String autor, @RequestParam("anio") int anio,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam(value = "imagenPortada", required = false) String imagenPortada,
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			@RequestParam(value = "urlPdf", required = false) String urlPdf) {
+		try {
+			LibroDTO libroDTO = libroService.getById(id);
+			 if (titulo == null || titulo.trim().isEmpty()) {
+		            return new ResponseEntity<>("El título del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }else if(autor==null|| autor.trim().isEmpty()) {
+		        	 return new ResponseEntity<>("El autor del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }else if(descripcion==null|| descripcion.trim().isEmpty()) {
+		        	 return new ResponseEntity<>("La descripcion del libro es obligatorio", HttpStatus.BAD_REQUEST);
+		        }else if (libroDTO == null) {
+				return new ResponseEntity<>("Libro no encontrado", HttpStatus.NOT_FOUND);
+			}
+
+			if (file != null && !file.isEmpty()) {
+				String nombreArchivo = archivoUtil.guardarArchivo(file);
+				libroDTO.setPdf(nombreArchivo);
+			}
+			libroDTO.setTitulo(titulo);
+			libroDTO.setAutor(autor);
+			libroDTO.setAnio(anio);
+			libroDTO.setDescripcion(descripcion);
+			libroDTO.setImagenPortada(imagenPortada);
+			libroDTO.setUrlpdf(urlPdf);
+
+			int status = libroService.updateById(id, libroDTO);
+			if (status == 0) {
+				return new ResponseEntity<>("Libro actualizado exitosamente", HttpStatus.ACCEPTED);
+			} else if (status == 1) {
+				return new ResponseEntity<>("El nuevo título ya está en uso", HttpStatus.IM_USED);
+			} else if (status == 2) {
+				return new ResponseEntity<>("Libro no encontrado", HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<>("Error al actualizar el libro", HttpStatus.BAD_REQUEST);
+			}
+		} catch (IOException e) {
+			return new ResponseEntity<>("Error al subir el archivo", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/libro/getall")
 	public ResponseEntity<List<LibroDTO>> getAllLibros() {
-	    List<LibroDTO> libros = libroService.getAll();
-	    if (libros.isEmpty()) {
-	        return new ResponseEntity<>(libros, HttpStatus.NO_CONTENT);
-	    } else {
-	        return new ResponseEntity<>(libros, HttpStatus.OK);
-	    }
+		List<LibroDTO> libros = libroService.getAll();
+		if (libros.isEmpty()) {
+			return new ResponseEntity<>(libros, HttpStatus.NO_CONTENT);
+		} else {
+			return new ResponseEntity<>(libros, HttpStatus.OK);
+		}
 	}
 
 	@GetMapping("/libro/getbyid/{id}")
 	public ResponseEntity<LibroDTO> getLibroById(@PathVariable Long id) {
-	    LibroDTO libro = libroService.getById(id);
-	    if (libro != null) {
-	        return new ResponseEntity<>(libro, HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-	    }
+		LibroDTO libro = libroService.getById(id);
+		if (libro != null) {
+			return new ResponseEntity<>(libro, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@DeleteMapping("/libro/deletebyid/{id}")
 	public ResponseEntity<String> deleteLibroById(@PathVariable Long id) {
-	    int status = libroService.deleteById(id);
-	    if (status == 0) {
-	        return new ResponseEntity<>("Libro eliminado exitosamente", HttpStatus.ACCEPTED);
-	    } else {
-	        return new ResponseEntity<>("Error al eliminar el libro", HttpStatus.NOT_FOUND);
-	    }
+		int status = libroService.deleteById(id);
+		if (status == 0) {
+			return new ResponseEntity<>("Libro eliminado exitosamente", HttpStatus.ACCEPTED);
+		} else {
+			return new ResponseEntity<>("Error al eliminar el libro", HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@DeleteMapping("/libro/deletebytitle")
 	public ResponseEntity<String> deleteLibroByTitle(@RequestParam String titulo) {
-	    int status = libroService.deleteByTitulo(titulo);
-	    if (status == 0) {
-	        return new ResponseEntity<>("Libro eliminado exitosamente", HttpStatus.ACCEPTED);
-	    } else {
-	        return new ResponseEntity<>("Error al eliminar el libro", HttpStatus.NOT_FOUND);
-	    }
+		int status = libroService.deleteByTitulo(titulo);
+		if (status == 0) {
+			return new ResponseEntity<>("Libro eliminado exitosamente", HttpStatus.ACCEPTED);
+		} else {
+			return new ResponseEntity<>("Error al eliminar el libro", HttpStatus.NOT_FOUND);
+		}
 	}
 }

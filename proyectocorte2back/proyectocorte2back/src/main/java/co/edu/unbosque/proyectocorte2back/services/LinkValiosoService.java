@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.LinkValiosoDTO;
 import co.edu.unbosque.proyectocorte2back.entity.LinkValioso;
 import co.edu.unbosque.proyectocorte2back.repository.LinkValiosoRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class LinkValiosoService implements CRUDOperation<LinkValiosoDTO> {
@@ -33,15 +34,23 @@ public class LinkValiosoService implements CRUDOperation<LinkValiosoDTO> {
 
     @Override
     public int create(LinkValiosoDTO data) {
+        ExceptionChecker.checkNotNullOrEmpty(data.getNombre(), "Nombre del Link");
+        ExceptionChecker.checkStringLength(data.getNombre(), 3, 150, "Nombre del Link");
+        ExceptionChecker.checkNotNullOrEmpty(data.getUrl(), "URL del Link");
+        ExceptionChecker.checkStringLength(data.getUrl(), 3, 500, "URL del Link");
+        ExceptionChecker.checkNotNullOrEmpty(data.getTipo(), "Tipo link vacio");
+        ExceptionChecker.checkStringLength(data.getTipo(), 3, 100, "Tipo link min 3 y max 100");
+        ExceptionChecker.checkOnlyLetters(data.getTipo(), "Solo letras");
+       
+
         LinkValioso entity = modelMapper.map(data, LinkValioso.class);
         if (findTituloAlreadyTaken(entity)) {
-            return 1; // título ya existe
+            return 1; 
         } else {
             linkValiosoRepository.save(entity);
-            return 0; // creado
+            return 0; 
         }
     }
-
     @Override
     public List<LinkValiosoDTO> getAll() {
         List<LinkValioso> entityList = linkValiosoRepository.findAll();
@@ -60,7 +69,7 @@ public class LinkValiosoService implements CRUDOperation<LinkValiosoDTO> {
             linkValiosoRepository.delete(found.get());
             return 0;
         } else {
-            return 1; // no encontrado
+            return 1;
         }
     }
 
@@ -70,12 +79,22 @@ public class LinkValiosoService implements CRUDOperation<LinkValiosoDTO> {
             linkValiosoRepository.delete(found.get());
             return 0;
         } else {
-            return 1; // no encontrado
+            return 1; 
         }
     }
 
     @Override
     public int updateById(Long id, LinkValiosoDTO newData) {
+    	
+        ExceptionChecker.checkNotNullOrEmpty(newData.getNombre(), "Nombre del Link");
+        ExceptionChecker.checkStringLength(newData.getNombre(), 3, 150, "Nombre del Link");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getUrl(), "URL del Link");
+        ExceptionChecker.checkStringLength(newData.getUrl(), 3, 500, "URL del Link");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getTipo(), "Tipo link vacio");
+        ExceptionChecker.checkStringLength(newData.getTipo(), 3, 100, "Tipo link min 3 y max 100");
+        ExceptionChecker.checkOnlyLetters(newData.getTipo(), "Solo letras");
+      
+
         Optional<LinkValioso> found = linkValiosoRepository.findById(id);
         Optional<LinkValioso> newFound = linkValiosoRepository.findByNombre(newData.getNombre());
 
@@ -83,20 +102,19 @@ public class LinkValiosoService implements CRUDOperation<LinkValiosoDTO> {
             LinkValioso temp = found.get();
             temp.setImagen(newData.getImagen());
             temp.setTipo(newData.getTipo());
-            temp.setUrl(newData.getUrl()); // Ajusta según los atributos reales de tu entidad
+            temp.setUrl(newData.getUrl());
             linkValiosoRepository.save(temp);
             return 0;
         }
         if (found.isPresent() && newFound.isPresent()) {
-            return 1; // título ya existe
+            return 1; 
         }
         if (!found.isPresent()) {
-            return 2; // no encontrado
+            return 2; 
         } else {
-            return 3; // error genérico
+            return 3; 
         }
     }
-
     public LinkValiosoDTO getById(Long id) {
         Optional<LinkValioso> found = linkValiosoRepository.findById(id);
         if (found.isPresent()) {

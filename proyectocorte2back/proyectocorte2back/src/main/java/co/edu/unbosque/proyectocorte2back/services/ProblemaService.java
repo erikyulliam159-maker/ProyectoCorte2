@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.ProblemaDTO;
 import co.edu.unbosque.proyectocorte2back.entity.Problema;
 import co.edu.unbosque.proyectocorte2back.repository.ProblemaRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
 @Service
 public class ProblemaService implements CRUDOperation<ProblemaDTO> {
@@ -33,7 +34,21 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
 
     @Override
     public int create(ProblemaDTO data) {
+
+       
+        ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Título del Problema no puede estar vacio");
+        ExceptionChecker.checkStringLength(data.getTitulo(), 3, 150, "Título del Problema min 3 y max 100");
+        ExceptionChecker.checkOnlyLetters(data.getTitulo(),"Título del Problema solo letras");
+        ExceptionChecker.checkNotNullOrEmpty(data.getTema(), "Tema del Problema no puede estar vacio");
+        ExceptionChecker.checkOnlyLetters(data.getTema(), "Tema del Problema solo letras");
+        ExceptionChecker.checkStringLength(data.getTema(), 3, 100, "Tema del Problema min 3 y max 100");
+        ExceptionChecker.checkNotNullOrEmpty(data.getJuez(), "Juez del Problema no puede estar vacio");
+        ExceptionChecker.checkStringLength(data.getJuez(), 3, 100, "Juez del Problema min 3 y max 100");
+        ExceptionChecker.checkOnlyLetters(data.getJuez(),"Juez del Problema solo letras");
+        ExceptionChecker.checkNotNullOrEmpty(data.getUrl(), "URL del Problema no puede estar vacio");
+
         Problema entity = modelMapper.map(data, Problema.class);
+
         if (findTituloAlreadyTaken(entity)) {
             return 1;
         } else {
@@ -76,6 +91,19 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
 
     @Override
     public int updateById(Long id, ProblemaDTO newData) {
+
+
+    	 ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Título del Problema no puede estar vacio");
+         ExceptionChecker.checkStringLength(newData.getTitulo(), 3, 150, "Título del Problema min 3 y max 100");
+         ExceptionChecker.checkOnlyLetters(newData.getTitulo(),"Título del Problema solo letras");
+         ExceptionChecker.checkNotNullOrEmpty(newData.getTema(), "Tema del Problema no puede estar vacio");
+         ExceptionChecker.checkOnlyLetters(newData.getTema(), "Tema del Problema solo letras");
+         ExceptionChecker.checkStringLength(newData.getTema(), 3, 100, "Tema del Problema min 3 y max 100");
+         ExceptionChecker.checkNotNullOrEmpty(newData.getJuez(), "Juez del Problema no puede estar vacio");
+         ExceptionChecker.checkStringLength(newData.getJuez(), 3, 100, "Juez del Problema min 3 y max 100");
+         ExceptionChecker.checkOnlyLetters(newData.getJuez(),"Juez del Problema solo letras");
+         ExceptionChecker.checkNotNullOrEmpty(newData.getUrl(), "URL del Problema no puede estar vacio");
+
         Optional<Problema> found = problemaRepository.findById(id);
         Optional<Problema> newFound = problemaRepository.findByTitulo(newData.getTitulo());
 
@@ -85,6 +113,7 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
             temp.setJuez(newData.getJuez());
             temp.setTema(newData.getTema());
             temp.setUrl(newData.getUrl());
+            temp.setTitulo(newData.getTitulo());
             problemaRepository.save(temp);
             return 0;
         }
@@ -92,9 +121,9 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
             return 1; 
         }
         if (!found.isPresent()) {
-            return 2; // no encontrado
+            return 2; 
         } else {
-            return 3; // error genérico
+            return 3; 
         }
     }
 

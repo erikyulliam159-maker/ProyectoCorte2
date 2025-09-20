@@ -10,25 +10,28 @@ public class LibroDTO {
 	private int anio;
 	private String descripcion;
 	private String imagenPortada;
-	private String urlPdf;
-	
+	private String pdf;
+	private String urlpdf;
+
 	public LibroDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LibroDTO(String titulo, String autor, int anio, String descripcion, String imagenPortada, String urlPdf) {
+	public LibroDTO(String titulo, String autor, int anio, String descripcion, String imagenPortada, String pdf,
+			String urlpdf) {
 		super();
 		this.titulo = titulo;
 		this.autor = autor;
 		this.anio = anio;
 		this.descripcion = descripcion;
 		this.imagenPortada = imagenPortada;
-		this.urlPdf = urlPdf;
+		this.pdf = pdf;
+		this.urlpdf = urlpdf;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(anio, autor, descripcion, id, imagenPortada, titulo, urlPdf);
+		return Objects.hash(anio, autor, descripcion, id, imagenPortada, pdf, titulo, urlpdf);
 	}
 
 	@Override
@@ -42,8 +45,8 @@ public class LibroDTO {
 		LibroDTO other = (LibroDTO) obj;
 		return anio == other.anio && Objects.equals(autor, other.autor)
 				&& Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
-				&& Objects.equals(imagenPortada, other.imagenPortada) && Objects.equals(titulo, other.titulo)
-				&& Objects.equals(urlPdf, other.urlPdf);
+				&& Objects.equals(imagenPortada, other.imagenPortada) && Objects.equals(pdf, other.pdf)
+				&& Objects.equals(titulo, other.titulo) && Objects.equals(urlpdf, other.urlpdf);
 	}
 
 	public Long getId() {
@@ -94,13 +97,21 @@ public class LibroDTO {
 		this.imagenPortada = imagenPortada;
 	}
 
-	public String getUrlPdf() {
-		return urlPdf;
+	public String getPdf() {
+		return pdf;
 	}
 
-	public void setUrlPdf(String urlPdf) {
-		this.urlPdf = urlPdf;
+	public void setPdf(String pdf) {
+		this.pdf = pdf;
 	}
-	
-	
+
+	public String getUrlpdf() {
+		return urlpdf;
+	}
+
+	public void setUrlpdf(String urlpdf) {
+		this.urlpdf = urlpdf;
+	}
+
+
 }

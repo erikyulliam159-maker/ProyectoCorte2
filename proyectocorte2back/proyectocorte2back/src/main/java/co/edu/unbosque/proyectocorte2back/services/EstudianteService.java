@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.proyectocorte2back.dto.EstudianteDTO;
 import co.edu.unbosque.proyectocorte2back.entity.Estudiante;
 import co.edu.unbosque.proyectocorte2back.repository.EstudianteRepository;
+import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
+
 @Service
 public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 
@@ -32,6 +34,16 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 
 	@Override
 	public int create(EstudianteDTO data) {
+		ExceptionChecker.checkNotNullOrEmpty(data.getUsername(), "Username no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getUsername(), 3, 12, "Username min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(data.getPassword(), "Contraseña no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(data.getNombreCompleto(), "El nombre no puede estar en vacio");
+		ExceptionChecker.checkStringLength(data.getNombreCompleto(), 3, 50, "El nombre Min 3 letras max 50");
+		ExceptionChecker.checkOnlyLetters(data.getNombreCompleto(), "Solo letras en el nombre");
+		ExceptionChecker.checkNotNullOrEmpty(data.getEmail(), "Email no puede estar vacio");
+		ExceptionChecker.checkStringLength(data.getEmail(), 5, 100, "Email min 5 y max 100");
+
 		Estudiante entity = modelMapper.map(data, Estudiante.class);
 		if (findNombreAlreadyTaken(entity)) {
 			return 1;
@@ -76,12 +88,20 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 
 	@Override
 	public int updateById(Long id, EstudianteDTO newData) {
+
+		ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
+		ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+		ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
+		ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
+		ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
+
 		Optional<Estudiante> found = estudianteRepo.findById(id);
 		Optional<Estudiante> newFound = estudianteRepo.findByNombreCompleto(newData.getNombreCompleto());
 
 		if (found.isPresent() && !newFound.isPresent()) {
 			Estudiante temp = found.get();
-			temp.setNombreCompleto(newData.getNombreCompleto());
 			temp.setEmail(newData.getEmail());
 			temp.setFotoPerfil(newData.getFotoPerfil());
 			temp.setPassword(newData.getPassword());
@@ -114,12 +134,7 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 	}
 
 	public int validateCredentials(String username, String password) {
-		// encriptado del front
-		// username = AESUtil.decrypt("keyfrontfirstenc", "iviviviviviviviv", username);
-		// password = AESUtil.decrypt("keyfrontfirstenc", "iviviviviviviviv", password);
-		// a encriptrado del back
-		// username = AESUtil.encrypt(username);
-		// password = AESUtil.encrypt(password);
+
 		for (EstudianteDTO u : getAll()) {
 			if (u.getUsername().equals(username)) {
 				if (u.getPassword().equals(password)) {
