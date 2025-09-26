@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17584196841190" configfile="/proyectocorte2frontadulto/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" id="pf17586401435810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf17586401435811 pf17586401435812" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf17586401435813" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf17586401435811" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pantallaprincipal.xhtml" id="pf17586401435814" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf17586401435812" path="/pantallaprincipal.xhtml"/>
+  <links id="pf17586401435811" target="pf17586401435813" source="pf17586401435810" outcome="register"/>
+  <links id="pf17586401435812" target="pf17586401435814" source="pf17586401435810" outcome="pantallaprincipal.xhtml" redirect="true"/>
+</pageflow:Pageflow>

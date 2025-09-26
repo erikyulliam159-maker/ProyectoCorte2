@@ -1,3 +1,10 @@
+/**
+ * Clase EstudianteService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -13,25 +20,48 @@ import co.edu.unbosque.proyectocorte2back.entity.Estudiante;
 import co.edu.unbosque.proyectocorte2back.repository.EstudianteRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EstudianteService.
+ */
 @Service
 public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 
+	/** The estudiante repo. */
 	@Autowired
 	private EstudianteRepository estudianteRepo;
 
+	/** The model mapper. */
 	@Autowired
 	private ModelMapper modelMapper;
 
+	/**
+	 * Count.
+	 *
+	 * @return the long
+	 */
 	@Override
 	public long count() {
 		return estudianteRepo.count();
 	}
 
+	/**
+	 * Exist.
+	 *
+	 * @param id the id
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean exist(Long id) {
 		return estudianteRepo.existsById(id);
 	}
 
+	/**
+	 * Crea el.
+	 *
+	 * @param data the data
+	 * @return the int
+	 */
 	@Override
 	public int create(EstudianteDTO data) {
 		ExceptionChecker.checkNotNullOrEmpty(data.getUsername(), "Username no puede estar vacio");
@@ -53,6 +83,11 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		}
 	}
 
+	/**
+	 * Gets the all.
+	 *
+	 * @return the all
+	 */
 	@Override
 	public List<EstudianteDTO> getAll() {
 		List<Estudiante> entityList = estudianteRepo.findAll();
@@ -65,6 +100,12 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Delete by id.
+	 *
+	 * @param id the id
+	 * @return the int
+	 */
 	@Override
 	public int deleteById(Long id) {
 		Optional<Estudiante> found = estudianteRepo.findById(id);
@@ -76,6 +117,12 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		}
 	}
 
+	/**
+	 * Delete by nombre.
+	 *
+	 * @param nombreCompleto the nombre completo
+	 * @return the int
+	 */
 	public int deleteByNombre(String nombreCompleto) {
 		Optional<Estudiante> found = estudianteRepo.findByNombreCompleto(nombreCompleto);
 		if (found.isPresent()) {
@@ -86,39 +133,44 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		}
 	}
 
+	/**
+	 * Update by id.
+	 *
+	 * @param id the id
+	 * @param newData the new data
+	 * @return the int
+	 */
 	@Override
 	public int updateById(Long id, EstudianteDTO newData) {
+	    ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
+	    ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
+	    ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
+	    ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+	    ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
+	    ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
+	    ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
 
-		ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
-		ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
-		ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
-		ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
+	    Optional<Estudiante> found = estudianteRepo.findById(id);
 
-		Optional<Estudiante> found = estudianteRepo.findById(id);
-		Optional<Estudiante> newFound = estudianteRepo.findByNombreCompleto(newData.getNombreCompleto());
-
-		if (found.isPresent() && !newFound.isPresent()) {
-			Estudiante temp = found.get();
-			temp.setEmail(newData.getEmail());
-			temp.setFotoPerfil(newData.getFotoPerfil());
-			temp.setPassword(newData.getPassword());
-			temp.setUsername(newData.getUsername());
-			estudianteRepo.save(temp);
-			return 0;
-		}
-		if (found.isPresent() && newFound.isPresent()) {
-			return 1;
-		}
-		if (!found.isPresent()) {
-			return 2;
-		} else {
-			return 3;
-		}
+	    if (found.isPresent()) {
+	        Estudiante temp = found.get();
+	        // temp.setNombreCompleto(newData.getNombreCompleto()); // NO actualizar nombre
+	        temp.setEmail(newData.getEmail());
+	        temp.setFotoPerfil(newData.getFotoPerfil());
+	        temp.setPassword(newData.getPassword());
+	        temp.setUsername(newData.getUsername());
+	        estudianteRepo.save(temp);
+	        return 0;
+	    }
+	    return 2;
 	}
 
+	/**
+	 * Gets the by id.
+	 *
+	 * @param id the id
+	 * @return the by id
+	 */
 	public EstudianteDTO getById(Long id) {
 		Optional<Estudiante> found = estudianteRepo.findById(id);
 		if (found.isPresent()) {
@@ -128,11 +180,24 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		}
 	}
 
+	/**
+	 * Find nombre already taken.
+	 *
+	 * @param newEstudiante the new estudiante
+	 * @return true, if successful
+	 */
 	public boolean findNombreAlreadyTaken(Estudiante newEstudiante) {
 		Optional<Estudiante> found = estudianteRepo.findByNombreCompleto(newEstudiante.getNombreCompleto());
 		return found.isPresent();
 	}
 
+	/**
+	 * Validate credentials.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the int
+	 */
 	public int validateCredentials(String username, String password) {
 
 		for (EstudianteDTO u : getAll()) {

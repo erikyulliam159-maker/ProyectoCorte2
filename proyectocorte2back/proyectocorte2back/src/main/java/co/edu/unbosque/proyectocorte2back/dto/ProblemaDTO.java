@@ -1,21 +1,57 @@
+/**
+ * Clase ProblemaDTO
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.dto
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.dto;
 
 import java.util.Objects;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProblemaDTO.
+ */
 public class ProblemaDTO {
+	
+	/** The id. */
 	private Long id;
+	
+	/** The titulo. */
 	private String titulo;
+	
+	/** The dificultad. */
 	private int dificultad;
+	
+	/** The tema. */
 	private String tema; 
+	
+	/** The juez. */
 	private String juez;
+	
+	/** The url. */
 	private String url;
 	
 	
+	/**
+	 * Instantiates a new problema DTO.
+	 */
 	public ProblemaDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 
+	/**
+	 * Instantiates a new problema DTO.
+	 *
+	 * @param id the id
+	 * @param titulo the titulo
+	 * @param dificultad the dificultad
+	 * @param tema the tema
+	 * @param juez the juez
+	 * @param url the url
+	 */
 	public ProblemaDTO(Long id, String titulo, int dificultad, String tema, String juez, String url) {
 		super();
 		this.id = id;
@@ -27,12 +63,23 @@ public class ProblemaDTO {
 	}
 
 
+	/**
+	 * Hash code.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(dificultad, id, juez, tema, titulo, url);
 	}
 
 
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -48,61 +95,121 @@ public class ProblemaDTO {
 	}
 
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 
+	/**
+	 * Gets the titulo.
+	 *
+	 * @return the titulo
+	 */
 	public String getTitulo() {
 		return titulo;
 	}
 
 
+	/**
+	 * Sets the titulo.
+	 *
+	 * @param titulo the new titulo
+	 */
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
 
 
+	/**
+	 * Gets the dificultad.
+	 *
+	 * @return the dificultad
+	 */
 	public int getDificultad() {
 		return dificultad;
 	}
 
 
+	/**
+	 * Sets the dificultad.
+	 *
+	 * @param dificultad the new dificultad
+	 */
 	public void setDificultad(int dificultad) {
 		this.dificultad = dificultad;
 	}
 
 
+	/**
+	 * Gets the tema.
+	 *
+	 * @return the tema
+	 */
 	public String getTema() {
 		return tema;
 	}
 
 
+	/**
+	 * Sets the tema.
+	 *
+	 * @param tema the new tema
+	 */
 	public void setTema(String tema) {
 		this.tema = tema;
 	}
 
 
+	/**
+	 * Gets the juez.
+	 *
+	 * @return the juez
+	 */
 	public String getJuez() {
 		return juez;
 	}
 
 
+	/**
+	 * Sets the juez.
+	 *
+	 * @param juez the new juez
+	 */
 	public void setJuez(String juez) {
 		this.juez = juez;
 	}
 
 
+	/**
+	 * Gets the url.
+	 *
+	 * @return the url
+	 */
 	public String getUrl() {
 		return url;
 	}
 
 
+	/**
+	 * Sets the url.
+	 *
+	 * @param url the new url
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}

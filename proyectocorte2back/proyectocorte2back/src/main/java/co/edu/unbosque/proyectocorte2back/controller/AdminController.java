@@ -1,3 +1,10 @@
+/**
+ * Clase AdminController
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.controller
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.controller;
 
 import java.io.IOException;
@@ -23,6 +30,10 @@ import co.edu.unbosque.proyectocorte2back.services.EventoService;
 import co.edu.unbosque.proyectocorte2back.services.LinkValiosoService;
 import co.edu.unbosque.proyectocorte2back.util.ArchivoUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AdminController.
+ */
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(origins = "*")
@@ -30,30 +41,45 @@ import co.edu.unbosque.proyectocorte2back.util.ArchivoUtil;
 public class AdminController {
 
 
+	/** The evento service. */
 	@Autowired
 	private EventoService eventoService;
 
+	/** The link valioso service. */
 	@Autowired
 	private LinkValiosoService linkValiosoService;
 
+	/** The docente service. */
 	@Autowired
 	private DocenteService docenteService;
 
+	/** The estudiante service. */
 	@Autowired
 	private EstudianteService estudianteService;
+	
+	/** The archivo util. */
 	@Autowired
 	private ArchivoUtil archivoUtil;
 
+	/**
+	 * Instantiates a new admin controller.
+	 */
 	public AdminController() {
 	}
 
 
 //----------------------------------Evento----------------------------------------------------//
 
-	@PostMapping(path = "/evento/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	/**
+ * Crea el evento.
+ *
+ * @param eventoDTO the evento DTO
+ * @return the response entity
+ */
+@PostMapping(path = "/evento/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createEvento(@RequestBody EventoDTO eventoDTO) {
 	    try {
-	       
+	    	  System.out.println("DTO recibido: " + eventoDTO);
 	        if (eventoDTO.getTitulo() == null || eventoDTO.getTitulo().trim().isEmpty()) {
 	            return new ResponseEntity<>("El título del evento es obligatorio", HttpStatus.BAD_REQUEST);
 	        }else if (eventoDTO.getFecha() == null) {
@@ -76,16 +102,23 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Gets the all eventos.
+	 *
+	 * @return the all eventos
+	 */
 	@GetMapping("/evento/getall")
 	public ResponseEntity<List<EventoDTO>> getAllEventos() {
-		List<EventoDTO> eventos = eventoService.getAll();
-		if (eventos.isEmpty()) {
-			return new ResponseEntity<>(eventos, HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<>(eventos, HttpStatus.OK);
-		}
+	    List<EventoDTO> eventos = eventoService.getAll();
+	    return new ResponseEntity<>(eventos, HttpStatus.OK);
 	}
-
+	
+	/**
+	 * Gets the evento by id.
+	 *
+	 * @param id the id
+	 * @return the evento by id
+	 */
 	@GetMapping("/evento/getbyid/{id}")
 	public ResponseEntity<EventoDTO> getEventoById(@PathVariable Long id) {
 		EventoDTO evento = eventoService.getById(id);
@@ -96,6 +129,13 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Update evento.
+	 *
+	 * @param id the id
+	 * @param eventoDTO the evento DTO
+	 * @return the response entity
+	 */
 	@PutMapping(path = "/evento/update", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateEvento(@RequestParam Long id, @RequestBody EventoDTO eventoDTO) {
 		int status = eventoService.updateById(id, eventoDTO);
@@ -110,6 +150,12 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Delete evento by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@DeleteMapping("/evento/deletebyid/{id}")
 	public ResponseEntity<String> deleteEventoById(@PathVariable Long id) {
 		int status = eventoService.deleteById(id);
@@ -121,7 +167,13 @@ public class AdminController {
 	}
 //---------------------------------------------------------------LinkValioso-------------------------------------------------------------------//
 
-	@PostMapping(path = "/linkvalioso/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	/**
+ * Crea el link valioso.
+ *
+ * @param linkDTO the link DTO
+ * @return the response entity
+ */
+@PostMapping(path = "/linkvalioso/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createLinkValioso(@RequestBody LinkValiosoDTO linkDTO) {
 	    try {
 	       
@@ -148,6 +200,11 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Gets the all links valiosos.
+	 *
+	 * @return the all links valiosos
+	 */
 	@GetMapping("/linkvalioso/getall")
 	public ResponseEntity<List<LinkValiosoDTO>> getAllLinksValiosos() {
 	    try {
@@ -162,6 +219,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Gets the link valioso by id.
+	 *
+	 * @param id the id
+	 * @return the link valioso by id
+	 */
 	@GetMapping("/linkvalioso/getbyid/{id}")
 	public ResponseEntity<LinkValiosoDTO> getLinkValiosoById(@PathVariable Long id) {
 	    try {
@@ -179,6 +242,13 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Update link valioso.
+	 *
+	 * @param id the id
+	 * @param linkDTO the link DTO
+	 * @return the response entity
+	 */
 	@PutMapping(path = "/linkvalioso/update", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateLinkValioso(@RequestParam Long id, @RequestBody LinkValiosoDTO linkDTO) {
 	    try {
@@ -204,6 +274,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete link valioso by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@DeleteMapping("/linkvalioso/deletebyid/{id}")
 	public ResponseEntity<String> deleteLinkValiosoById(@PathVariable Long id) {
 	    try {
@@ -221,6 +297,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete link valioso by name.
+	 *
+	 * @param nombre the nombre
+	 * @return the response entity
+	 */
 	@DeleteMapping("/linkvalioso/deletebyname")
 	public ResponseEntity<String> deleteLinkValiosoByName(@RequestParam String nombre) {
 	    try {
@@ -240,6 +322,11 @@ public class AdminController {
 
 	// ----------------------------------Docente----------------------------------------------------//
 
+	/**
+	 * Gets the all docentes.
+	 *
+	 * @return the all docentes
+	 */
 	@GetMapping("/docente/getall")
 	public ResponseEntity<List<DocenteDTO>> getAllDocentes() {
 	    try {
@@ -254,6 +341,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Gets the docente by id.
+	 *
+	 * @param id the id
+	 * @return the docente by id
+	 */
 	@GetMapping("/docente/getbyid/{id}")
 	public ResponseEntity<DocenteDTO> getDocenteById(@PathVariable Long id) {
 	    try {
@@ -271,6 +364,17 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Update docente.
+	 *
+	 * @param id the id
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param file the file
+	 * @return the response entity
+	 */
 	@PutMapping(path = "/docente/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> updateDocente(
 	    @RequestParam("id") Long id,
@@ -329,6 +433,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete docente by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@DeleteMapping("/docente/deletebyid/{id}")
 	public ResponseEntity<String> deleteDocenteById(@PathVariable Long id) {
 	    try {
@@ -346,6 +456,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete docente by name.
+	 *
+	 * @param nombreCompleto the nombre completo
+	 * @return the response entity
+	 */
 	@DeleteMapping("/docente/deletebyname")
 	public ResponseEntity<String> deleteDocenteByName(@RequestParam String nombreCompleto) {
 	    try {
@@ -365,6 +481,11 @@ public class AdminController {
 
 	// ----------------------------------Estudiante----------------------------------------------------//
 
+	/**
+	 * Gets the all estudiantes.
+	 *
+	 * @return the all estudiantes
+	 */
 	@GetMapping("/estudiante/getall")
 	public ResponseEntity<List<EstudianteDTO>> getAllEstudiantes() {
 	    try {
@@ -379,6 +500,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Gets the estudiante by id.
+	 *
+	 * @param id the id
+	 * @return the estudiante by id
+	 */
 	@GetMapping("/estudiante/getbyid/{id}")
 	public ResponseEntity<EstudianteDTO> getEstudianteById(@PathVariable Long id) {
 	    try {
@@ -396,6 +523,17 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Update estudiante.
+	 *
+	 * @param id the id
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param file the file
+	 * @return the response entity
+	 */
 	@PutMapping(path = "/estudiante/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> updateEstudiante(
 	    @RequestParam("id") Long id,
@@ -454,6 +592,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete estudiante by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@DeleteMapping("/estudiante/deletebyid/{id}")
 	public ResponseEntity<String> deleteEstudianteById(@PathVariable Long id) {
 	    try {
@@ -471,6 +615,12 @@ public class AdminController {
 	    }
 	}
 
+	/**
+	 * Delete estudiante by name.
+	 *
+	 * @param nombreCompleto the nombre completo
+	 * @return the response entity
+	 */
 	@DeleteMapping("/estudiante/deletebyname")
 	public ResponseEntity<String> deleteEstudianteByName(@RequestParam String nombreCompleto) {
 	    try {

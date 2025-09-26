@@ -1,46 +1,38 @@
+/**
+ * Clase DocenteDTO
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.dto
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.dto;
 
-import java.util.Objects;
 
-public class DocenteDTO extends UsuarioDTO{
-	private Long id;
-	
-	 public DocenteDTO() {
-	        super();
-	    }
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DocenteDTO.
+ */
+public class DocenteDTO extends UsuarioDTO {
 
-	    public DocenteDTO(String username, String password, String nombreCompleto, String email, String fotoPerfil) {
-	        super(username, password, nombreCompleto, email, fotoPerfil);
-	   
-	    }
+	/**
+	 * Instantiates a new docente DTO.
+	 */
+	public DocenteDTO() {
+		super();
+	}
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = super.hashCode();
-			result = prime * result + Objects.hash(id);
-			return result;
-		}
+	/**
+	 * Instantiates a new docente DTO.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param fotoPerfil the foto perfil
+	 */
+	public DocenteDTO(String username, String password, String nombreCompleto, String email, String fotoPerfil) {
+		super(username, password, nombreCompleto, email, fotoPerfil);
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (!super.equals(obj))
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			DocenteDTO other = (DocenteDTO) obj;
-			return Objects.equals(id, other.id);
-		}
+	}
 
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-	    
 }

@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Problemas - Biblioteca Artemisa</title>
+	<link rel="stylesheet" type="text/css"
+		href="css/base1/pantallaprincipal.css?v=8" />
+	<link rel="icon" href="imagenes/iconpage.png" type="image/x-icon" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+<h:body>
+	<div class="layout-container">
+		<aside class="sidebar">
+		<div class="logo">
+			<a href="pantallaprincipal.xhtml"> <img
+				src="imagenes/logo-artemis.png" alt="Logo ARTEMIS" />
+			</a>
+		</div>
+
+		<nav>
+		<ul class="nav-menu">
+			<li><a href="pantallaprincipal.xhtml" class="nav-link"><i
+					class="fas fa-home"></i> Inicio</a></li>
+			<li><a href="Temario.xhtml" class="nav-link"><i
+					class="fas fa-paperclip"></i> Temario</a></li>
+			<li><a href="Problemas.xhtml" class="nav-link active"><i
+					class="fas fa-tasks"></i> Problemas</a></li>
+			<li><a href="Libros.xhtml" class="nav-link"><i
+					class="fas fa-book"></i> Libros</a></li>
+			<li><a href="Linkvaliosos.xhtml" class="nav-link"><i
+					class="fas fa-link"></i> Links Valiosos</a></li>
+			<li><a href="Eventos.xhtml" class="nav-link"><i
+					class="fas fa-calendar-alt"></i> Eventos</a></li>
+		</ul>
+		</nav>
+
+		<div class="sidebar-footer">
+
+			<p>Proyecto Artemisa 2025</p>
+		</div>
+		</aside>
+
+		<main class="main-content"> <header>
+		<div class="container">
+			<h1>Lista de Problemas</h1>
+			<p>64 problemas disponibles para practicar</p>
+		</div>
+		</header>
+
+		<div class="container">
+			<div class="problems-container">
+				<div class="problems-table">
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Título</th>
+								<th>Dificultad</th>
+								<th>Tema</th>
+								<th>Juez</th>
+								<th>Acción</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr>
+								<td>1</td>
+								<td>Hahsmat the Brave Warrior</td>
+								<td><span class="dificultad-0">Fácil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=996"
+									target="_blank"
+									class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+										Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>XOR</td>
+								<td><span class="dificultad-1">Media</span></td>
+								<td>Bitwise</td>
+								<td>Spoj</td>
+								<td><a href="https://www.spoj.com/problems/BSCXOR/en/"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Automate the Grades</td>
+								<td><span class="dificultad-1">Media</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2877">Ver
+										problema</a></td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Solve Me First</td>
+								<td><span class="dificultad-1">Media</span></td>
+								<td>Math</td>
+								<td>HackerRank</td>
+								<td><a
+									href="https://www.hackerrank.com/challenges/solve-me-first/problem"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Number Mirror</td>
+								<td><span class="dificultad-1">Media</span></td>
+								<td>Simulacion</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/START01"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>Xor Again</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>BitWise</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/XORAGN"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>Jumping Mario</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Data structures</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2864"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td>500!</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=564"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td>Above Average</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1311"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td>ATM</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/ATM"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>11</td>
+								<td>FizzBuzz</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Online JudgeLive</td>
+								<td><a
+									href="https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=6022"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td>Natural Factorial</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/FACT1K"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>13</td>
+								<td>Tarif Plan</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=3309"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>14</td>
+								<td>Tennis Championship</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=4957"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>15</td>
+								<td>Multiple of 17</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Simulation</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=3001"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>16</td>
+								<td>Searching for Nessy</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Simulation</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1985"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>17</td>
+								<td>Age Sort</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Sorting</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2457"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>18</td>
+								<td>Chef and Cards</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Sorting</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/CL16BD"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>19</td>
+								<td>Turbo Sort</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>Sorting</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/TSORT"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>20</td>
+								<td>Reverse The Number</td>
+								<td><span class="dificultad-2">Difícil</span></td>
+								<td>String</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/FLOW007"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>21</td>
+								<td>Divisors</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=230"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>22</td>
+								<td>Overflow</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=406"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>23</td>
+								<td>Prime Factors</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=524"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>24</td>
+								<td>Second Order Statistics</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Math</td>
+								<td>CodeForces</td>
+								<td><a
+									href="https://codeforces.com/problemset/problem/22/A"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>25</td>
+								<td>Small factorials</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Math</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/FCTRL2"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>26</td>
+								<td>Digit Counting</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Modular</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=3666"
+									target="_blank" class="btn-ver-problema"> Ver problema </a></td>
+							</tr>
+							<tr>
+								<td>27</td>
+								<td>Summing Digits</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Modular</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2307"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>28</td>
+								<td>A Balanced Contest</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Simulation</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/status/PERFCONT"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>29</td>
+								<td>Horror Dash</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Sorting</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2899"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>30</td>
+								<td>Quentin Taratino</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Sorting</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/KOL16J"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>31</td>
+								<td>Chef and Friends</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>String</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/FRK"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>32</td>
+								<td>Lucky Four</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>String</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/LUCKFOUR"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>33</td>
+								<td>Helping Machine</td>
+								<td><span class="dificultad-3">Muy Difícil</span></td>
+								<td>Strings</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/CMAN2"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>34</td>
+								<td>Pizza Cutting</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Geometry</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1020"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>35</td>
+								<td>Problem with a ridiculously long name but with a
+									ridiculously short description</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=5139"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>36</td>
+								<td>Sets Within Sets</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Math</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/CODE1602"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>37</td>
+								<td>Treasure Hunt</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Math</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/THC1"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>38</td>
+								<td>Testing Robot</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Simulación</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/TSTROBOT"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>39</td>
+								<td>Kindergarten Counting Game</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Simulation</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=435"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>40</td>
+								<td>Skew Binary</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Simulation</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=516"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>41</td>
+								<td>Train Swapping</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Sorting</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=235"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>42</td>
+								<td>The Decoder</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Strings</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=399"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>43</td>
+								<td>List of Conquests</td>
+								<td><span class="dificultad-4">Experto</span></td>
+								<td>Sets</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1361"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>44</td>
+								<td>Playing With Strings</td>
+								<td><span class="dificultad-5">Avanzado</span></td>
+								<td>Basic Maths</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/PLAYSTR"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>45</td>
+								<td>Stacking Cups</td>
+								<td><span class="dificultad-5">Avanzado</span></td>
+								<td>String</td>
+								<td>Online JudgeLive</td>
+								<td><a
+									href="https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=6047"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>46</td>
+								<td>Andy's First Dicctionary</td>
+								<td><span class="dificultad-5">Avanzado</span></td>
+								<td>Strings</td>
+								<td>Online Judge</td>
+								<td><a href="" target="_blank" class="btn-ver-problema">Ver
+										problema</a></td>
+							</tr>
+							<tr>
+								<td>47</td>
+								<td>Molar Mass</td>
+								<td><span class="dificultad-5">Avanzado</span></td>
+								<td>Strings</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=4461"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>48</td>
+								<td>Pole Position</td>
+								<td><span class="dificultad-6">Élite</span></td>
+								<td>Data structures</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=3302"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>49</td>
+								<td>Brick Wall Patterns</td>
+								<td><span class="dificultad-6">Élite</span></td>
+								<td>Math</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=841"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>50</td>
+								<td>Emoticon</td>
+								<td><span class="dificultad-6">Élite</span></td>
+								<td>String</td>
+								<td>SPOJ</td>
+								<td><a href="https://www.spoj.com/problems/BLKEK/en/"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>51</td>
+								<td>BALLSUM</td>
+								<td><span class="dificultad-7">Maestro</span></td>
+								<td>Math</td>
+								<td>SPOJ</td>
+								<td><a href="https://www.spoj.com/problems/BALLSUM/en/"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>52</td>
+								<td>Where is the Marble?</td>
+								<td><span class="dificultad-7">Maestro</span></td>
+								<td>Search</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=1415"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>53</td>
+								<td>Buying a New String</td>
+								<td><span class="dificultad-7">Maestro</span></td>
+								<td>String</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/TWOSTRS"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>54</td>
+								<td>Music &amp; Lyrics</td>
+								<td><span class="dificultad-8">Gran Maestro</span></td>
+								<td>String</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/LYRC"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>55</td>
+								<td>TEX Quotes</td>
+								<td><span class="dificultad-8">Gran Maestro</span></td>
+								<td>Strings</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;category=4&amp;amp;page=show_problem&amp;amp;problem=208"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>56</td>
+								<td>Aggressive cows</td>
+								<td><span class="dificultad-9">Leyenda</span></td>
+								<td>Binary_search</td>
+								<td>SPOJ</td>
+								<td><a href="https://www.spoj.com/problems/AGGRCOW/en/"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>57</td>
+								<td>The Settlers of Catan</td>
+								<td><span class="dificultad-10">Mítico</span></td>
+								<td>Grafo</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=480"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>58</td>
+								<td>Audiophobia</td>
+								<td><span class="dificultad-10">Mítico</span></td>
+								<td>Graph</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=989"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>59</td>
+								<td>Wormholes</td>
+								<td><span class="dificultad-10">Mítico</span></td>
+								<td>Graph</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=499"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>60</td>
+								<td>All-star Three-point Contest</td>
+								<td><span class="dificultad-10">Mítico</span></td>
+								<td>Strings</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=5217"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>61</td>
+								<td>Shortest Path</td>
+								<td><span class="dificultad-11">Divino</span></td>
+								<td>Grafo</td>
+								<td>Codechef</td>
+								<td><a href="https://www.codechef.com/problems/HW3G"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>62</td>
+								<td>Save Patient</td>
+								<td><span class="dificultad-11">Divino</span></td>
+								<td>Graph</td>
+								<td>CodeChef</td>
+								<td><a href="https://www.codechef.com/problems/PAC6"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>63</td>
+								<td>Travelling Salesman</td>
+								<td><span class="dificultad-12">Titán</span></td>
+								<td>Graph</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=1643"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+							<tr>
+								<td>64</td>
+								<td>Almost Shortest Path</td>
+								<td><span class="dificultad-15">Dios</span></td>
+								<td>Graph</td>
+								<td>Online Judge</td>
+								<td><a
+									href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;amp;Itemid=8&amp;amp;page=show_problem&amp;amp;problem=3296"
+									target="_blank" class="btn-ver-problema">Ver problema</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+		<div class="container">
+			<p>© 2025 BIBLIOTECA ARTEMISA - Todos los derechos reservados</p>
+
+		</div>
+		</footer> </main>
+	</div>
+</h:body>
+</html>

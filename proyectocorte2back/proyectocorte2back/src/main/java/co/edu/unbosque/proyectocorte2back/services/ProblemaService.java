@@ -1,3 +1,10 @@
+/**
+ * Clase ProblemaService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -13,25 +20,48 @@ import co.edu.unbosque.proyectocorte2back.entity.Problema;
 import co.edu.unbosque.proyectocorte2back.repository.ProblemaRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProblemaService.
+ */
 @Service
 public class ProblemaService implements CRUDOperation<ProblemaDTO> {
 
+    /** The problema repository. */
     @Autowired
     private ProblemaRepository problemaRepository;
 
+    /** The model mapper. */
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Count.
+     *
+     * @return the long
+     */
     @Override
     public long count() {
         return problemaRepository.count();
     }
 
+    /**
+     * Exist.
+     *
+     * @param id the id
+     * @return true, if successful
+     */
     @Override
     public boolean exist(Long id) {
         return problemaRepository.existsById(id);
     }
 
+    /**
+     * Crea el.
+     *
+     * @param data the data
+     * @return the int
+     */
     @Override
     public int create(ProblemaDTO data) {
 
@@ -57,6 +87,11 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         }
     }
 
+    /**
+     * Gets the all.
+     *
+     * @return the all
+     */
     @Override
     public List<ProblemaDTO> getAll() {
         List<Problema> entityList = problemaRepository.findAll();
@@ -68,6 +103,12 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         return dtoList;
     }
 
+    /**
+     * Delete by id.
+     *
+     * @param id the id
+     * @return the int
+     */
     @Override
     public int deleteById(Long id) {
         Optional<Problema> found = problemaRepository.findById(id);
@@ -79,6 +120,12 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         }
     }
 
+    /**
+     * Delete by titulo.
+     *
+     * @param titulo the titulo
+     * @return the int
+     */
     public int deleteByTitulo(String titulo) {
         Optional<Problema> found = problemaRepository.findByTitulo(titulo);
         if (found.isPresent()) {
@@ -89,6 +136,13 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         }
     }
 
+    /**
+     * Update by id.
+     *
+     * @param id the id
+     * @param newData the new data
+     * @return the int
+     */
     @Override
     public int updateById(Long id, ProblemaDTO newData) {
 
@@ -127,6 +181,12 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         }
     }
 
+    /**
+     * Gets the by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     public ProblemaDTO getById(Long id) {
         Optional<Problema> found = problemaRepository.findById(id);
         if (found.isPresent()) {
@@ -136,6 +196,12 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO> {
         }
     }
 
+    /**
+     * Find titulo already taken.
+     *
+     * @param newProblema the new problema
+     * @return true, if successful
+     */
     public boolean findTituloAlreadyTaken(Problema newProblema) {
         Optional<Problema> found = problemaRepository.findByTitulo(newProblema.getTitulo());
         return found.isPresent();

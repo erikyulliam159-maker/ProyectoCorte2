@@ -1,3 +1,10 @@
+/**
+ * Clase DetalleSubtemaService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -13,32 +20,53 @@ import co.edu.unbosque.proyectocorte2back.entity.DetalleSubtema;
 import co.edu.unbosque.proyectocorte2back.repository.DetalleSubtemaRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DetalleSubtemaService.
+ */
 @Service
 public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
 
+    /** The detalle subtema repository. */
     @Autowired
     private DetalleSubtemaRepository detalleSubtemaRepository;
 
+    /** The model mapper. */
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Count.
+     *
+     * @return the long
+     */
     @Override
     public long count() {
         return detalleSubtemaRepository.count();
     }
 
+    /**
+     * Exist.
+     *
+     * @param id the id
+     * @return true, if successful
+     */
     @Override
     public boolean exist(Long id) {
         return detalleSubtemaRepository.existsById(id);
     }
 
+    /**
+     * Crea el.
+     *
+     * @param data the data
+     * @return the int
+     */
     public int create(DetalleSubtemaDTO data) {
         ExceptionChecker.checkNotNullOrEmpty(data.getDescripcion(), "Descripción del Detalle no puede estar");
         ExceptionChecker.checkStringLength(data.getDescripcion(), 3, 1000, "Descripción del Detalle min 3 y 1000");
         ExceptionChecker.checkNotNullOrEmpty(data.getUrlImagen(), "Url Imagen no puede estar vacia");
-        ExceptionChecker.checkNotNullOrEmpty(data.getSubtemaNombre(), "Subtema no puede estar vacio");
-        ExceptionChecker.checkOnlyLetters(data.getSubtemaNombre(), "Solo letras en subtema");
-        ExceptionChecker.checkStringLength(data.getSubtemaNombre(), 3, 100, "Subtema min 3 y max 100");
+
         
         DetalleSubtema entity = modelMapper.map(data, DetalleSubtema.class);
         if (findIdAlreadyTaken(entity)) {
@@ -49,6 +77,11 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         }
     }
     
+    /**
+     * Gets the all.
+     *
+     * @return the all
+     */
     @Override
     public List<DetalleSubtemaDTO> getAll() {
         List<DetalleSubtema> entityList = detalleSubtemaRepository.findAll();
@@ -61,6 +94,12 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         return dtoList;
     }
 
+    /**
+     * Delete by id.
+     *
+     * @param id the id
+     * @return the int
+     */
     @Override
     public int deleteById(Long id) {
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(id);
@@ -72,6 +111,12 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         }
     }
 
+    /**
+     * Delete by nombre.
+     *
+     * @param id the id
+     * @return the int
+     */
     public int deleteByNombre(Long id) {
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(id);
         if (found.isPresent()) {
@@ -82,14 +127,19 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         }
     }
 
+    /**
+     * Update by id.
+     *
+     * @param id the id
+     * @param newData the new data
+     * @return the int
+     */
     @Override
     public int updateById(Long id, DetalleSubtemaDTO newData) {
         ExceptionChecker.checkNotNullOrEmpty(newData.getDescripcion(), "Descripción del Detalle no puede estar");
         ExceptionChecker.checkStringLength(newData.getDescripcion(), 3, 1000, "Descripción del Detalle min 3 y 1000");
         ExceptionChecker.checkNotNullOrEmpty(newData.getUrlImagen(), "Url Imagen no puede estar vacia");
-        ExceptionChecker.checkNotNullOrEmpty(newData.getSubtemaNombre(), "Subtema no puede estar vacio");
-        ExceptionChecker.checkOnlyLetters(newData.getSubtemaNombre(), "Solo letras en subtema");
-        ExceptionChecker.checkStringLength(newData.getSubtemaNombre(), 3, 100, "Subtema min 3 y max 100");
+
 
 
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(id);
@@ -112,6 +162,12 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         }
     }
 
+    /**
+     * Gets the by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     public DetalleSubtemaDTO getById(Long id) {
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(id);
         if (found.isPresent()) {
@@ -121,6 +177,12 @@ public class DetalleSubtemaService implements CRUDOperation<DetalleSubtemaDTO> {
         }
     }
 
+    /**
+     * Find id already taken.
+     *
+     * @param newDetalleSubtema the new detalle subtema
+     * @return true, if successful
+     */
     public boolean findIdAlreadyTaken(DetalleSubtema newDetalleSubtema) {
         Optional<DetalleSubtema> found = detalleSubtemaRepository.findById(newDetalleSubtema.getId());
         return found.isPresent();

@@ -1,3 +1,10 @@
+/**
+ * Clase TemarioService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -10,73 +17,88 @@ import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte2back.dto.SubtemaDTO;
 import co.edu.unbosque.proyectocorte2back.dto.TemarioDTO;
+import co.edu.unbosque.proyectocorte2back.entity.DetalleSubtema;
 import co.edu.unbosque.proyectocorte2back.entity.Subtema;
 import co.edu.unbosque.proyectocorte2back.entity.Temario;
 import co.edu.unbosque.proyectocorte2back.repository.TemarioRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TemarioService.
+ */
 @Service
 public class TemarioService implements CRUDOperation<TemarioDTO> {
 
+	/** The temario repository. */
 	@Autowired
 	private TemarioRepository temarioRepository;
 
+	/** The model mapper. */
 	@Autowired
 	private ModelMapper modelMapper;
 
+	/**
+	 * Count.
+	 *
+	 * @return the long
+	 */
 	@Override
 	public long count() {
 		return temarioRepository.count();
 	}
 
+	/**
+	 * Exist.
+	 *
+	 * @param id the id
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean exist(Long id) {
 		return temarioRepository.existsById(id);
 	}
 
 
-    @Override
-    public int create(TemarioDTO data) {
+	/**
+	 * Crea el.
+	 *
+	 * @param data the data
+	 * @return the int
+	 */
+	@Override
+	public int create(TemarioDTO data) {
+	    ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Título del Temario no puede estar vacio");
+	    ExceptionChecker.checkOnlyLetters(data.getTitulo(), "Título del Temario solo letras");
+	    ExceptionChecker.checkStringLength(data.getTitulo(), 3, 100, "Título del Temario min 3  y max 100");
 
-    
-        ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Título del Temario no puede estar vacio");
-        ExceptionChecker.checkOnlyLetters(data.getTitulo(), "Título del Temario solo letras");
-        ExceptionChecker.checkStringLength(data.getTitulo(), 3, 100, "Título del Temario min 3  y max 100");
+	    Temario entity = modelMapper.map(data, Temario.class);
 
 
-        if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
-            for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
-                ExceptionChecker.checkNotNullOrEmpty(subtemaDTO.getNombre(), "Nombre del Subtema");
-                ExceptionChecker.checkOnlyLetters(subtemaDTO.getNombre(), "Nombre del Subtema");
-                ExceptionChecker.checkStringLength(subtemaDTO.getNombre(), 3, 100, "Nombre del Subtema");
-            }
-        }
+	    List<Subtema> subtemasEntity = new ArrayList<>();
+	    if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
+	        for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
+	            Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
+	            subtema.setId(null); 
+	            subtema.setTemario(entity);
+	            if (subtema.getDetalle() != null) {
+	                subtema.getDetalle().setId(null);
+	                subtema.getDetalle().setSubtema(subtema);
+	            }
+	            subtemasEntity.add(subtema);
+	        }
+	    }
+	    entity.setSubtemas(subtemasEntity); 
 
-        Temario entity = modelMapper.map(data, Temario.class);
-
-        if (entity.getSubtemas() != null) {
-            entity.getSubtemas().forEach(s -> {
-                s.setTemario(entity);
-                if (s.getDetalle() != null) {
-                    s.getDetalle().setSubtema(s);
-                }
-            });
-        }
-
-        if (data.getSubtemas() != null && !data.getSubtemas().isEmpty()) {
-            List<Subtema> subtemasEntity = new ArrayList<>();
-            for (SubtemaDTO subtemaDTO : data.getSubtemas()) {
-                Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
-                subtema.setTemario(entity);
-                subtemasEntity.add(subtema);
-            }
-            entity.setSubtemas(subtemasEntity);
-        }
-
-        temarioRepository.save(entity);
-        return 0;
-    }
-
+	    temarioRepository.save(entity);
+	    return 0;
+	}
+	
+	/**
+	 * Gets the all.
+	 *
+	 * @return the all
+	 */
 	@Override
 	public List<TemarioDTO> getAll() {
 		List<Temario> entityList = temarioRepository.findAll();
@@ -88,6 +110,12 @@ public class TemarioService implements CRUDOperation<TemarioDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Delete by id.
+	 *
+	 * @param id the id
+	 * @return the int
+	 */
 	@Override
 	public int deleteById(Long id) {
 		Optional<Temario> found = temarioRepository.findById(id);
@@ -98,50 +126,117 @@ public class TemarioService implements CRUDOperation<TemarioDTO> {
 			return 1;
 		}
 	}
-
+	
+	/**
+	 * Update by id.
+	 *
+	 * @param id the id
+	 * @param newData the new data
+	 * @return the int
+	 */
 	@Override
-    public int updateById(Long id, TemarioDTO newData) {
+	public int updateById(Long id, TemarioDTO newData) {
+	    ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Título del Temario no puede estar vacio");
+	    ExceptionChecker.checkOnlyLetters(newData.getTitulo(), "Título del Temario solo letras");
+	    ExceptionChecker.checkStringLength(newData.getTitulo(), 3, 100, "Título del Temario min 3 y max 100");
 
-        
-        ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Título del Temario no puede estar vacio");
-        ExceptionChecker.checkOnlyLetters(newData.getTitulo(), "Título del Temario solo letras");
-        ExceptionChecker.checkStringLength(newData.getTitulo(), 3, 100, "Título del Temario min 3 y max 100");
+	    Optional<Temario> temarioConTitulo = temarioRepository.findByTitulo(newData.getTitulo());
+	    if (temarioConTitulo.isPresent() && !temarioConTitulo.get().getId().equals(id)) {
+	        return 1; // Título en uso
+	    }
 
-        if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
-            for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
-                ExceptionChecker.checkNotNullOrEmpty(subtemaDTO.getNombre(), "Nombre del Subtema");
-                ExceptionChecker.checkOnlyLetters(subtemaDTO.getNombre(), "Nombre del Subtema");
-                ExceptionChecker.checkStringLength(subtemaDTO.getNombre(), 3, 100, "Nombre del Subtema");
-            }
-        }
+	    Optional<Temario> found = temarioRepository.findById(id);
 
-        Optional<Temario> found = temarioRepository.findById(id);
+	    if (found.isPresent()) {
+	        Temario existing = found.get();
+	        existing.setTitulo(newData.getTitulo());
 
-        if (found.isPresent()) {
-            Temario existing = found.get();
+	        // GUARDA LOS SUBTEMAS EXISTENTES ANTES DE LIMPIAR
+	        List<Subtema> subtemasExistentes = new ArrayList<>(existing.getSubtemas());
+	        existing.getSubtemas().clear();
 
-            existing.setTitulo(newData.getTitulo());
+	        if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
+	            for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
+	                Subtema subtema;
+	                
+	                if (subtemaDTO.getId() != null) {
+	                    // Busca en los subtemas existentes ANTES de limpiar
+	                    Optional<Subtema> subtemaExistenteOpt = subtemasExistentes
+	                        .stream()
+	                        .filter(s -> s.getId().equals(subtemaDTO.getId()))
+	                        .findFirst();
+	                    
+	                    if (subtemaExistenteOpt.isPresent()) {
+	                        // REUTILIZA la instancia existente
+	                        subtema = subtemaExistenteOpt.get();
+	                        subtema.setNombre(subtemaDTO.getNombre());
+	                        subtema.setTipo(subtemaDTO.getTipo());
+	                        
+	                        // Actualiza el detalle
+	                        if (subtemaDTO.getDetalle() != null) {
+	                            if (subtema.getDetalle() != null) {
+	                                subtema.getDetalle().setDescripcion(subtemaDTO.getDetalle().getDescripcion());
+	                                subtema.getDetalle().setUrlImagen(subtemaDTO.getDetalle().getUrlImagen());
+	                            } else {
+	                                DetalleSubtema detalle = new DetalleSubtema();
+	                                detalle.setDescripcion(subtemaDTO.getDetalle().getDescripcion());
+	                                detalle.setUrlImagen(subtemaDTO.getDetalle().getUrlImagen());
+	                                detalle.setSubtema(subtema);
+	                                subtema.setDetalle(detalle);
+	                            }
+	                        } else {
+	                            subtema.setDetalle(null);
+	                        }
+	                    } else {
+	                        // Nuevo subtema con ID específico (caso raro)
+	                        subtema = new Subtema();
+	                        subtema.setId(subtemaDTO.getId());
+	                        subtema.setNombre(subtemaDTO.getNombre());
+	                        subtema.setTipo(subtemaDTO.getTipo());
+	                        subtema.setTemario(existing);
+	                        
+	                        if (subtemaDTO.getDetalle() != null) {
+	                            DetalleSubtema detalle = new DetalleSubtema();
+	                            detalle.setDescripcion(subtemaDTO.getDetalle().getDescripcion());
+	                            detalle.setUrlImagen(subtemaDTO.getDetalle().getUrlImagen());
+	                            detalle.setSubtema(subtema);
+	                            subtema.setDetalle(detalle);
+	                        }
+	                    }
+	                } else {
+	                    // Nuevo subtema sin ID
+	                    subtema = new Subtema();
+	                    subtema.setNombre(subtemaDTO.getNombre());
+	                    subtema.setTipo(subtemaDTO.getTipo());
+	                    subtema.setTemario(existing);
+	                    
+	                    if (subtemaDTO.getDetalle() != null) {
+	                        DetalleSubtema detalle = new DetalleSubtema();
+	                        detalle.setDescripcion(subtemaDTO.getDetalle().getDescripcion());
+	                        detalle.setUrlImagen(subtemaDTO.getDetalle().getUrlImagen());
+	                        detalle.setSubtema(subtema);
+	                        subtema.setDetalle(detalle);
+	                    }
+	                }
+	                
+	                existing.getSubtemas().add(subtema);
+	            }
+	        }
 
-            if (newData.getSubtemas() != null && !newData.getSubtemas().isEmpty()) {
-                List<Subtema> subtemasEntity = new ArrayList<>();
-                for (SubtemaDTO subtemaDTO : newData.getSubtemas()) {
-                    Subtema subtema = modelMapper.map(subtemaDTO, Subtema.class);
-                    subtema.setTemario(existing);
-                    subtemasEntity.add(subtema);
-                }
-                existing.setSubtemas(subtemasEntity);
-            } else {
-                existing.setSubtemas(null);
-            }
+	        temarioRepository.save(existing);
+	        return 0;
+	    } else {
+	        return 2; // Temario no encontrado
+	    }
+	}
+	
 
-            temarioRepository.save(existing);
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-
+	/**
+	 * Gets the by id.
+	 *
+	 * @param id the id
+	 * @return the by id
+	 */
 	public TemarioDTO getById(Long id) {
 		Optional<Temario> found = temarioRepository.findById(id);
 		if (found.isPresent()) {

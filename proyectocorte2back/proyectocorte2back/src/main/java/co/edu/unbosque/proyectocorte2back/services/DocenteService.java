@@ -1,3 +1,10 @@
+/**
+ * Clase DocenteService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -13,25 +20,48 @@ import co.edu.unbosque.proyectocorte2back.entity.Docente;
 import co.edu.unbosque.proyectocorte2back.repository.DocenteRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DocenteService.
+ */
 @Service
 public class DocenteService implements CRUDOperation<DocenteDTO> {
 
+    /** The docente repository. */
     @Autowired
     private DocenteRepository docenteRepository;
 
+    /** The model mapper. */
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Count.
+     *
+     * @return the long
+     */
     @Override
     public long count() {
         return docenteRepository.count();
     }
 
+    /**
+     * Exist.
+     *
+     * @param id the id
+     * @return true, if successful
+     */
     @Override
     public boolean exist(Long id) {
         return docenteRepository.existsById(id);
     }
 
+    /**
+     * Crea el.
+     *
+     * @param data the data
+     * @return the int
+     */
     @Override
     public int create(DocenteDTO data) {
 		ExceptionChecker.checkNotNullOrEmpty(data.getUsername(), "Username no puede estar vacio");
@@ -53,6 +83,11 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
         }
     }
 
+    /**
+     * Gets the all.
+     *
+     * @return the all
+     */
     @Override
     public List<DocenteDTO> getAll() {
         List<Docente> entityList = docenteRepository.findAll();
@@ -65,6 +100,12 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
         return dtoList;
     }
 
+    /**
+     * Delete by id.
+     *
+     * @param id the id
+     * @return the int
+     */
     @Override
     public int deleteById(Long id) {
         Optional<Docente> found = docenteRepository.findById(id);
@@ -76,6 +117,12 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
         }
     }
 
+    /**
+     * Delete by nombre.
+     *
+     * @param nombreCompleto the nombre completo
+     * @return the int
+     */
     public int deleteByNombre(String nombreCompleto) {
         Optional<Docente> found = docenteRepository.findByNombreCompleto(nombreCompleto);
         if (found.isPresent()) {
@@ -86,22 +133,28 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
         }
     }
 
+    /**
+     * Update by id.
+     *
+     * @param id the id
+     * @param newData the new data
+     * @return the int
+     */
     @Override
     public int updateById(Long id, DocenteDTO newData) {
-    	ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
-		ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
-		ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
-		ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
-		ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getUsername(), "Username no puede estar vacio");
+        ExceptionChecker.checkStringLength(newData.getUsername(), 3, 12, "Username min 3 y max 12");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getPassword(), "Contraseña no puede estar vacio");
+        ExceptionChecker.checkStringLength(newData.getPassword(), 3, 12, "Contraseña min 3 y max 12");
+        ExceptionChecker.checkOnlyLetters(newData.getNombreCompleto(), "Solo letras en el nombre");
+        ExceptionChecker.checkNotNullOrEmpty(newData.getEmail(), "Email no puede estar vacio");
+        ExceptionChecker.checkStringLength(newData.getEmail(), 5, 100, "Email min 5 y max 100");
 
         Optional<Docente> found = docenteRepository.findById(id);
-        Optional<Docente> newFound = docenteRepository.findByNombreCompleto(newData.getNombreCompleto());
 
-        if (found.isPresent() && !newFound.isPresent()) {
-            Docente temp = found.get();
-            temp.setNombreCompleto(newData.getNombreCompleto());
+        if (found.isPresent()) {
+        	Docente temp = found.get();
+            // temp.setNombreCompleto(newData.getNombreCompleto()); // NO actualizar nombre
             temp.setEmail(newData.getEmail());
             temp.setFotoPerfil(newData.getFotoPerfil());
             temp.setPassword(newData.getPassword());
@@ -109,16 +162,15 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
             docenteRepository.save(temp);
             return 0;
         }
-        if (found.isPresent() && newFound.isPresent()) {
-            return 1;
-        }
-        if (!found.isPresent()) {
-            return 2;
-        } else {
-            return 3;
-        }
+        return 2;
     }
 
+    /**
+     * Gets the by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     public DocenteDTO getById(Long id) {
         Optional<Docente> found = docenteRepository.findById(id);
         if (found.isPresent()) {
@@ -128,11 +180,24 @@ public class DocenteService implements CRUDOperation<DocenteDTO> {
         }
     }
 
+    /**
+     * Find nombre already taken.
+     *
+     * @param newDocente the new docente
+     * @return true, if successful
+     */
     public boolean findNombreAlreadyTaken(Docente newDocente) {
         Optional<Docente> found = docenteRepository.findByNombreCompleto(newDocente.getNombreCompleto());
         return found.isPresent();
     }
     
+    /**
+     * Validate credentials.
+     *
+     * @param username the username
+     * @param password the password
+     * @return the int
+     */
     public int validateCredentials(String username, String password) {
 		// encriptado del front
 		// username = AESUtil.decrypt("keyfrontfirstenc", "iviviviviviviviv", username);

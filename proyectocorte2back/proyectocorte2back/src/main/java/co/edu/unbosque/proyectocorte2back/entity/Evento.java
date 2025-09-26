@@ -1,3 +1,10 @@
+/**
+ * Clase Evento
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.entity
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.entity;
 
 import jakarta.persistence.*;
@@ -6,26 +13,47 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Evento.
+ */
 @Entity
 @Table(name = "evento")
 public class Evento {
 
+	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/** The titulo. */
 	private String titulo;
 
+	/** The descripcion. */
 	@Column(length = 1000)
 	private String descripcion;
 
+	/** The fecha. */
 	private LocalDate fecha;
 
+	/** The url. */
 	private String url;
 
+	/**
+	 * Instantiates a new evento.
+	 */
 	public Evento() {
 	}
 
+	/**
+	 * Instantiates a new evento.
+	 *
+	 * @param id the id
+	 * @param titulo the titulo
+	 * @param descripcion the descripcion
+	 * @param fecha the fecha
+	 * @param url the url
+	 */
 	public Evento(Long id, String titulo, String descripcion, LocalDate fecha, String url) {
 		super();
 		this.id = id;
@@ -35,11 +63,22 @@ public class Evento {
 		this.url = url;
 	}
 
+	/**
+	 * Hash code.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(descripcion, fecha, id, titulo, url);
 	}
 
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -54,42 +93,92 @@ public class Evento {
 				&& Objects.equals(url, other.url);
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the titulo.
+	 *
+	 * @return the titulo
+	 */
 	public String getTitulo() {
 		return titulo;
 	}
 
+	/**
+	 * Sets the titulo.
+	 *
+	 * @param titulo the new titulo
+	 */
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
 
+	/**
+	 * Gets the descripcion.
+	 *
+	 * @return the descripcion
+	 */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
+	/**
+	 * Sets the descripcion.
+	 *
+	 * @param descripcion the new descripcion
+	 */
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
+	/**
+	 * Gets the fecha.
+	 *
+	 * @return the fecha
+	 */
 	public LocalDate getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * Sets the fecha.
+	 *
+	 * @param fecha the new fecha
+	 */
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
+	/**
+	 * Gets the url.
+	 *
+	 * @return the url
+	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * Sets the url.
+	 *
+	 * @param url the new url
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}

@@ -1,0 +1,606 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libros - Biblioteca Artemisa</title>
+    <link rel="stylesheet" type="text/css"
+        href="css/base1/pantallaprincipal.css?v=8" />
+    <link rel="stylesheet" type="text/css"
+        href="css/base2/Libros.css?v=8" />
+    <link rel="icon" href="imagenes/iconpage.png" type="image/x-icon" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+<h:body>
+    <div class="layout-container">
+        <!-- Panel lateral -->
+        <aside class="sidebar">
+       <div class="logo">
+			<a href="pantallaprincipal.xhtml"> <img
+				src="imagenes/logo-artemis.png" alt="Logo ARTEMIS" />
+			</a>
+		</div>
+
+        <nav>
+        <ul class="nav-menu">
+            <li><a href="pantallaprincipal.xhtml" class="nav-link"><i
+                    class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="Temario.xhtml" class="nav-link"><i
+                    class="fas fa-paperclip"></i> Temario</a></li>
+            <li><a href="Problemas.xhtml" class="nav-link"><i
+                    class="fas fa-tasks"></i> Problemas</a></li>
+            <li><a href="Libros.xhtml" class="nav-link active"><i
+                    class="fas fa-book"></i> Libros</a></li>
+            <li><a href="Linkvaliosos.xhtml" class="nav-link"><i
+                    class="fas fa-link"></i> Links Valiosos</a></li>
+            <li><a href="Eventos.xhtml" class="nav-link"><i
+                    class="fas fa-calendar-alt"></i> Eventos</a></li>
+        </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Proyecto Artemisa 2025</p>
+        </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content"> 
+        <header>
+        <div class="container">
+            <h1>Libros de Programación</h1>
+            <p>Recursos bibliográficos para aprender programación competitiva</p>
+        </div>
+        </header>
+
+        <div class="container">
+            <div class="books-section">
+                <div class="books-header">
+                    <h2>Biblioteca de Libros</h2>
+                    <button class="download-all-btn" id="downloadAllBtn">
+                        <i class="fas fa-download"></i> Descargar Todos los Libros
+                    </button>
+                </div>
+                <p>Aquí encontrarás una colección de libros recomendados para programación competitiva.</p>
+                
+                <div class="books-grid" id="booksGrid">
+                    <!-- Los libros se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <footer>
+        <div class="container">
+            <p>&#169; 2025 BIBLIOTECA ARTEMISA - Todos los derechos reservados</p>
+        </div>
+        </footer> 
+        </main>
+    </div>
+    
+    <script type="text/javascript">
+//<![CDATA[
+        const booksData = [
+            {
+                id: 1,
+                title: "Algorithms (Inglés)",
+                subtitle: "Notes For Professionals - 2022",
+                description: "Libro introductorio (nivel básico) de algoritmia para iniciados. 200+ páginas de contenido profesional para programadores.",
+                pages: "200+ páginas",
+                level: "Básico",
+                source: "Free Programming Books",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/9.jpg"
+            },
+            {
+                id: 2,
+                title: "Algoritmos Voraces",
+                subtitle: "Aprende Olimpíadas Informáticas - 2022",
+                description: "Pequeño libro teórico acerca de las ideas base de los algoritmos voraces (Básico).",
+                pages: "50 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíadas Informáticas",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/10.jpg"
+            },
+            {
+                id: 3,
+                title: "Backtracking (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en Backtracking y programación dinámica (Básico a experto).",
+                pages: "80 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/12.jpg"
+            },
+            {
+                id: 4,
+                title: "Bit Magic (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en magia binaria BitWise (Básico a experto).",
+                pages: "70 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/14.jpg"
+            },
+            {
+                id: 5,
+                title: "Advanced Data Structure (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos para estructuras de datos avanzadas o especializadas.",
+                pages: "85 páginas",
+                level: "Avanzado",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/8.jpg"
+            },
+            {
+                id: 6,
+                title: "Arrays (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en Arrays (Básico a experto).",
+                pages: "75 páginas",
+                level: "Básico",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/11.jpg"
+            },
+            {
+                id: 7,
+                title: "Binary Search Tree (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en arboles de busqueda binaria (Básico a experto).",
+                pages: "80 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/13.jpg"
+            },
+            {
+                id: 8,
+                title: "Pilas, Colas, Listas, Árboles y Grafos",
+                subtitle: "Universidad Autónoma del Estado de México - 2019",
+                description: "Este libro tiene por objetivo que el programador identifique las herramientas teóricas fundamentales para la representación y manipulación de información en la computadora, haciendo énfasis en el tipo de datos dinámicos con base en éste. (Básico)",
+                pages: "120 páginas",
+                level: "Básico",
+                source: "Universidad Autónoma del Estado de México",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/19.jpg"
+            },
+            {
+                id: 9,
+                title: "Linked List (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en listas enlazadas y listas doblemente enlazadas (Básico a experto).",
+                pages: "65 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/31.jpg"
+            },
+            {
+                id: 10,
+                title: "Divide And Conquer (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en la metodología de resolución de problemas, divide y conquista (Básico a experto).",
+                pages: "75 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/17.jpg"
+            },
+            {
+                id: 11,
+                title: "Dynamic Programming (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en la metodología de resolución de problemas con programación dinámica y los algoritmos basados en DP (Básico a experto).",
+                pages: "120 páginas",
+                level: "Avanzado",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/18.jpg"
+            },
+            {
+                id: 12,
+                title: "Game Theory (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en teorías de juegos (Básico a experto).",
+                pages: "90 páginas",
+                level: "Avanzado",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/20.jpg"
+            },
+            {
+                id: 13,
+                title: "Greedy (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos voraces (Básico a experto).",
+                pages: "70 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/23.jpg"
+            },
+            {
+                id: 14,
+                title: "Hashing (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en hasheos (Básico a experto).",
+                pages: "65 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/24.jpg"
+            },
+            {
+                id: 15,
+                title: "Heaps (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en heaps (Básico a experto).",
+                pages: "60 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/25.jpg"
+            },
+            {
+                id: 16,
+                title: "Introducción a la Algoritmia I - Eficiencia",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Explica aquellas propiedades de los algoritmos que están relacionadas con la cantidad de recursos utilizados por el algoritmo.",
+                pages: "45 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/26.jpg"
+            },
+            {
+                id: 17,
+                title: "Introducción a la Algoritmia II - Costes",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Demuestra ejemplos de costes al momento de ejecutar algoritmos.",
+                pages: "48 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/27.jpg"
+            },
+            {
+                id: 18,
+                title: "Introducción a la Algoritmia III - Ejemplos de análisis de costes",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Demuestra ejemplos de costes al momento de ejecutar algoritmos.",
+                pages: "52 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/28.jpg"
+            },
+            {
+                id: 19,
+                title: "Introducción a la Algoritmia IV - Coste de ordenar",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Demuestra ejemplos de costes al momento de ejecutar algoritmos.",
+                pages: "55 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/29.jpg"
+            },
+            {
+                id: 20,
+                title: "Principles of Algorithmic Problem Solving (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en matrices de diferentes dimensiones (Básico a experto).",
+                pages: "95 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/34.jpg"
+            },
+            {
+                id: 21,
+                title: "Competitive programming handbook",
+                subtitle: "Antti Laaksonen - 2020",
+                description: "El propósito de este libro es darte una introducción completa a la programación competitiva. Se asume que ya dominas lo básico de programación, pero no es necesario que poseas conocimientos previos de programación competitiva.",
+                pages: "300+ páginas",
+                level: "Intermedio",
+                source: "Antti Laaksonen",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/1.jpg"
+            },
+            {
+                id: 22,
+                title: "Geometric Algorithms (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos de geometría computacional (Básico a experto).",
+                pages: "85 páginas",
+                level: "Avanzado",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/21.jpg"
+            },
+            {
+                id: 23,
+                title: "Graphs (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos de teoría de grafos, arboles, flujos y redes (Básico a experto).",
+                pages: "100 páginas",
+                level: "Avanzado",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/22.jpg"
+            },
+            {
+                id: 24,
+                title: "Guía de programación en Java",
+                subtitle: "Julian Stiven Muñetones - 2021",
+                description: "Guía de nivel básico para el aprendizaje de la sintaxis básica de java, con toques de enfoque en programación competitiva",
+                pages: "80 páginas",
+                level: "Básico",
+                source: "Julian Stiven Muñetones",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/2.jpg"
+            },
+            {
+                id: 25,
+                title: "Guía de programación en C++",
+                subtitle: "Edwin Villarraga - 2021",
+                description: "Guía de nivel básico para el aprendizaje de la sintaxis básica de C++, con toques de enfoque en programación competitiva",
+                pages: "85 páginas",
+                level: "Básico",
+                source: "Edwin Villarraga",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/3.jpg"
+            },
+            {
+                id: 26,
+                title: "Guía de programación en Python",
+                subtitle: "Daniel Alayon - 2021",
+                description: "Guía de nivel básico para el aprendizaje de la sintaxis básica de Python, con toques de enfoque en programación competitiva",
+                pages: "75 páginas",
+                level: "Básico",
+                source: "Daniel Alayon",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/4.jpg"
+            },
+            {
+                id: 27,
+                title: "C++ (Inglés)",
+                subtitle: "Notes For Professionals - 2022",
+                description: "Libro teórico del lenguaje C++ desde nivel básico hasta avanzado.",
+                pages: "250+ páginas",
+                level: "Intermedio",
+                source: "Free Programming Books",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/16.jpg"
+            },
+            {
+                id: 28,
+                title: "Java (Inglés)",
+                subtitle: "Notes For Professionals - 2022",
+                description: "Libro teórico del lenguaje Java desde nivel básico hasta avanzado.",
+                pages: "240+ páginas",
+                level: "Intermedio",
+                source: "Free Programming Books",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/30.jpg"
+            },
+            {
+                id: 29,
+                title: "Python (Inglés)",
+                subtitle: "Notes For Professionals - 2022",
+                description: "Libro teórico del lenguaje Python desde nivel básico hasta avanzado.",
+                pages: "230+ páginas",
+                level: "Intermedio",
+                source: "Free Programming Books",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/37.jpg"
+            },
+            {
+                id: 30,
+                title: "Ruby (Inglés)",
+                subtitle: "Notes For Professionals - 2022",
+                description: "Libro teórico del lenguaje Ruby desde nivel básico hasta avanzado.",
+                pages: "220+ páginas",
+                level: "Intermedio",
+                source: "Free Programming Books",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/40.jpg"
+            },
+            {
+                id: 31,
+                title: "Discrete Structures (Inglés)",
+                subtitle: "Rob Hoogerwoord & Hans Zantema - 2016",
+                description: "Documento explicativo en inglés sobre las distintas operaciones matemáticas pertenecientes a la matemática discreta, nivel intermedio - avanzado",
+                pages: "180 páginas",
+                level: "Intermedio",
+                source: "Rob Hoogerwoord & Hans Zantema",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/5.jpg"
+            },
+            {
+                id: 32,
+                title: "Matemática discreta",
+                subtitle: "Francesc Comellas - Josep Fàbrega - Anna Sànchez - Oriol Serra - 2001",
+                description: "Documento explicativo sobre las distintas operaciones matemáticas pertenecientes a la matemática discreta, nivel intermedio - avanzado",
+                pages: "200 páginas",
+                level: "Intermedio",
+                source: "Francesc Comellas et al.",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/6.jpg"
+            },
+            {
+                id: 33,
+                title: "Principles of Algorithmic Problem Solving (Inglés)",
+                subtitle: "Johan Sannemo - 2018",
+                description: "La resolución algorítmica de problemas es el arte de formular métodos eficientes que resolver problemas de carácter matemático.",
+                pages: "150 páginas",
+                level: "Intermedio",
+                source: "Johan Sannemo",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/7.jpg"
+            },
+            {
+                id: 34,
+                title: "Combinatorial (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en combinatorias y estadística (Básico a experto).",
+                pages: "75 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/15.jpg"
+            },
+            {
+                id: 35,
+                title: "Programación Dinámica I - Fundamentos",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Pequeño libro introductorio a la programación dinámica, adecuado para principiantes.",
+                pages: "60 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/35.jpg"
+            },
+            {
+                id: 36,
+                title: "Programación Dinámica II - Ejemplos más avanzados",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Pequeño libro introductorio a la programación dinámica, adecuado para principiantes.",
+                pages: "65 páginas",
+                level: "Intermedio",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/36.jpg"
+            },
+            {
+                id: 37,
+                title: "Recursion (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos basados en el método de resolución de problemas, recursividad (Básico a experto).",
+                pages: "70 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/38.jpg"
+            },
+            {
+                id: 38,
+                title: "Recursividad",
+                subtitle: "Aprende Olimpíada Informática - 2022",
+                description: "Pequeño libro introductorio a los algoritmos recursivos, adecuado para principiantes.",
+                pages: "45 páginas",
+                level: "Básico",
+                source: "Aprende Olimpíada Informática",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/39.jpg"
+            },
+            {
+                id: 39,
+                title: "Searching (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos de búsquedas de todo tipo (Básico a experto).",
+                pages: "85 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/41.jpg"
+            },
+            {
+                id: 40,
+                title: "Sorting (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos de ordenamiento de todo tipo de datos (Básico a experto).",
+                pages: "90 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/42.jpg"
+            },
+            {
+                id: 41,
+                title: "Strings (Inglés)",
+                subtitle: "Geeks4Geeks - 2022",
+                description: "Documento recopilatorio de algoritmos de matching y manipulación de Strings (Básico a experto).",
+                pages: "75 páginas",
+                level: "Intermedio",
+                source: "Geeks4Geeks",
+                image: "https://biblioteca-artemisa.netlify.app/assets/images/libros/descargables/43.jpg"
+            }
+           
+        ];
+
+        // Generar los libros
+        function generateBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            
+            booksData.forEach(function(bookData) {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                
+                // Determinar clase CSS para el nivel de dificultad
+                let levelClass = '';
+                if (bookData.level === 'Básico') {
+                    levelClass = 'level-basic-bg';
+                } else if (bookData.level === 'Intermedio') {
+                    levelClass = 'level-intermediate-bg';
+                } else {
+                    levelClass = 'level-advanced-bg';
+                }
+                
+                // Crear el contenido HTML
+                bookCard.innerHTML = 
+                    '<div class="level-indicator ' + levelClass + '">' + bookData.level + '</div>' +
+                    '<img src="' + bookData.image + '" alt="' + bookData.title + '" class="book-image" onerror="this.src=\'https://via.placeholder.com/300x180/4a6491/ffffff?text=' + encodeURIComponent(bookData.title.substring(0, 20)) + '\'">' +
+                    '<div class="book-content">' +
+                    '<h3 class="book-title">' + bookData.title + '</h3>' +
+                    '<p class="book-subtitle">' + bookData.subtitle + '</p>' +
+                    '<p class="book-source">' + bookData.source + '</p>' +
+                    '<p class="book-description">' + bookData.description + '</p>' +
+                    '<div class="book-meta">' +
+                    '<span>' + bookData.pages + '</span>' +
+                    '</div>' +
+                    '<div class="book-actions">' +
+                    '<button class="view-btn" data-book-id="' + bookData.id + '">' +
+                    '<i class="fas fa-eye"></i> Ver Online' +
+                    '</button>' +
+                    '<button class="download-btn" data-book-id="' + bookData.id + '">' +
+                    '<i class="fas fa-download"></i> Descargar' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>';
+                
+                booksGrid.appendChild(bookCard);
+            });
+            
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.download-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-book-id');
+                    downloadBook(bookId);
+                });
+            });
+            
+            document.querySelectorAll('.view-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const bookId = this.getAttribute('data-book-id');
+                    viewBook(bookId);
+                });
+            });
+        }
+
+        // Función para descargar un libro individual
+        function downloadBook(bookId) {
+            // En una implementación real, aquí iría la lógica para descargar el libro
+            alert("Descargando libro con ID: " + bookId);
+            console.log("Iniciando descarga del libro " + bookId);
+        }
+
+        // Función para ver un libro online
+        function viewBook(bookId) {
+            // En una implementación real, aquí iría la lógica para ver el libro online
+            alert("Viendo libro con ID: " + bookId + " online");
+            console.log("Abriendo vista online del libro " + bookId);
+        }
+
+        // Función para descargar todos los libros
+        function setupDownloadAll() {
+            document.getElementById('downloadAllBtn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres descargar todos los libros? Esto puede tomar varios minutos.')) {
+                    // En una implementación real, aquí iría la lógica para descargar todos los libros
+                    alert('Iniciando descarga de todos los libros...');
+                    console.log('Descargando todos los libros');
+                    
+                    // Mostrar progreso (simulado)
+                    let progress = 0;
+                    const interval = setInterval(function() {
+                        progress += 2;
+                        console.log("Progreso de descarga: " + progress + "%");
+                        
+                        if (progress >= 100) {
+                            clearInterval(interval);
+                            alert("¡Todos los libros han sido descargados!");
+                        }
+                    }, 100);
+                }
+            });
+        }
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            generateBooks();
+            setupDownloadAll();
+        });
+//]]>
+    </script>
+</h:body>
+</html>

@@ -1,3 +1,10 @@
+/**
+ * Clase LoginController
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.controller
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,10 @@ import co.edu.unbosque.proyectocorte2back.services.AdministradorService;
 import co.edu.unbosque.proyectocorte2back.services.DocenteService;
 import co.edu.unbosque.proyectocorte2back.services.EstudianteService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginController.
+ */
 @RestController
 @RequestMapping("/login")
 @CrossOrigin(origins = {"*"})
@@ -21,15 +32,25 @@ import co.edu.unbosque.proyectocorte2back.services.EstudianteService;
 public class LoginController {
 	
 	
+	/** The estudiante service. */
 	@Autowired
 	private EstudianteService estudianteService;
 	
+	/** The administrador service. */
 	@Autowired
 	private AdministradorService administradorService;
 	
+	/** The docente service. */
 	@Autowired
 	private DocenteService docenteService;
 	
+	/**
+	 * Check log estudiante.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the response entity
+	 */
 	@PostMapping(path = "/checkloginEstudiante")
 	public ResponseEntity<String> checkLogEstudiante(@RequestParam String username, @RequestParam String password) {
 
@@ -53,6 +74,13 @@ public class LoginController {
 	    }
 	}
 
+	/**
+	 * Check log docente.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the response entity
+	 */
 	@PostMapping(path = "/checkloginDocente")
 	public ResponseEntity<String> checkLogDocente(@RequestParam String username, @RequestParam String password) {
 
@@ -76,6 +104,13 @@ public class LoginController {
 	    }
 	}
 
+	/**
+	 * Check log administrador.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the response entity
+	 */
 	@PostMapping(path = "/checkloginAdministrador")
 	public ResponseEntity<String> checkLogAdministrador(@RequestParam String username, @RequestParam String password) {
 

@@ -1,3 +1,10 @@
+/**
+ * Clase RegistroController
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.controller
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.controller;
 
 import java.io.IOException;
@@ -19,25 +26,43 @@ import co.edu.unbosque.proyectocorte2back.util.ArchivoUtil;
 import co.edu.unbosque.proyectocorte2back.dto.DocenteDTO;
 import co.edu.unbosque.proyectocorte2back.dto.EstudianteDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RegistroController.
+ */
 @RestController
 @CrossOrigin(origins = { "*" })
 @RequestMapping(path = { "/registro" })
 public class RegistroController {
 
+	/** The estudiante service. */
 	@Autowired
 	private EstudianteService estudianteService;
+	
+	/** The docente service. */
 	@Autowired
 	private DocenteService docenteService;
 
+	/** The archivo util. */
 	@Autowired
 	private ArchivoUtil archivoUtil;
 
+	/**
+	 * Crea el estudiante.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param file the file
+	 * @return the response entity
+	 */
 	@PostMapping(path = "/estudiante/crear")
 	public ResponseEntity<String> createEstudiante(@RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("nombreCompleto") String nombreCompleto,
 			@RequestParam("email") String email, @RequestParam(value = "file", required = false) MultipartFile file) {
 		try {
-			// Validaciones simples antes de crear
+
 			if (username == null || username.trim().isEmpty()) {
 				return new ResponseEntity<>("El username no puede estar vacío", HttpStatus.BAD_REQUEST);
 			}
@@ -77,6 +102,16 @@ public class RegistroController {
 		}
 	}
 
+	/**
+	 * Crea el docente.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param file the file
+	 * @return the response entity
+	 */
 	@PostMapping(path = "/docente/crear")
 	public ResponseEntity<String> createDocente(@RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("nombreCompleto") String nombreCompleto,

@@ -1,3 +1,10 @@
+/**
+ * Clase ArchivoUtil
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.util
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.util;
 
 import org.springframework.stereotype.Service;
@@ -23,11 +30,23 @@ import java.io.ByteArrayOutputStream;
 
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ArchivoUtil.
+ */
 @Service
 public class ArchivoUtil {
 
+    /** The upload dir. */
     private final String uploadDir = "archivos/pdf/";
 
+    /**
+     * Guardar archivo.
+     *
+     * @param archivo the archivo
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public String guardarArchivo(MultipartFile archivo) throws IOException {
         File dir = new File(uploadDir);
         if (!dir.exists()) {
@@ -39,10 +58,23 @@ public class ArchivoUtil {
         return nombreArchivo;
     }
 
+    /**
+     * Obtener archivo.
+     *
+     * @param nombreArchivo the nombre archivo
+     * @return the file
+     */
     public File obtenerArchivo(String nombreArchivo) {
         return new File(uploadDir + nombreArchivo);
     }
     
+    /**
+     * Generar pdf temario.
+     *
+     * @param temarios the temarios
+     * @return the byte[]
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public byte[] generarPdfTemario(List<TemarioDTO> temarios) throws IOException {
         try (PDDocument document = new PDDocument(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             PDPage page = new PDPage();
@@ -80,6 +112,13 @@ public class ArchivoUtil {
         }
     }
 
+    /**
+     * Generar pdf problemas.
+     *
+     * @param problemas the problemas
+     * @return the byte[]
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public byte[] generarPdfProblemas(List<ProblemaDTO> problemas) throws IOException {
         try (PDDocument document = new PDDocument(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             PDPage page = new PDPage();
@@ -114,6 +153,13 @@ public class ArchivoUtil {
         }
     }
 
+    /**
+     * Generar pdf libros.
+     *
+     * @param libros the libros
+     * @return the byte[]
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public byte[] generarPdfLibros(List<LibroDTO> libros) throws IOException {
         try (PDDocument document = new PDDocument(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             PDPage page = new PDPage();
@@ -148,15 +194,33 @@ public class ArchivoUtil {
         }
     }
 
+    /**
+     * Guardar archivo imagen.
+     *
+     * @param archivo the archivo
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public String guardarArchivoImagen(MultipartFile archivo) throws IOException {
+     
+        String contentType = archivo.getContentType();
+        if (contentType == null || 
+           !(contentType.equalsIgnoreCase("image/jpeg") || 
+             contentType.equalsIgnoreCase("image/jpg") || 
+             contentType.equalsIgnoreCase("image/png"))) {
+            throw new IOException("Solo se permiten imágenes JPG, JPEG o PNG");
+        }
+
         String uploadDir = "archivos/fotoperfil/";
         File dir = new File(uploadDir);
         if (!dir.exists()) {
             dir.mkdirs();
         }
+
         String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
         Path ruta = Paths.get(uploadDir + nombreArchivo);
         Files.write(ruta, archivo.getBytes());
         return nombreArchivo;
     }
+
 }

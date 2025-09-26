@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Panel de Administración</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="css/users/admin.css?v=2" />
+	<link rel="icon" href="imagenes/iconpage.png" type="image/x-icon" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+<h:body>
+	<div class="layout-container">
+		<!-- Panel lateral -->
+		<aside class="sidebar">
+		<div class="logo">
+			<img src="imagenes/logo-artemis.png" alt="Logo ARTEMIS" />
+		</div>
+
+		<nav>
+		<ul class="nav-menu">
+			<li><a href="pantallaprincipal.xhtml" class="nav-link"><i
+					class="fas fa-home"></i> Inicio</a></li>
+			<li><a href="Admin.xhtml" class="nav-link active"><i
+					class="fas fa-cog"></i> Administración</a></li>
+			<li><a href="Temario.xhtml" class="nav-link"><i
+					class="fas fa-paperclip"></i> Temario</a></li>
+			<li><a href="Problemas.xhtml" class="nav-link"><i
+					class="fas fa-tasks"></i> Problemas</a></li>
+			<li><a href="Libros.xhtml" class="nav-link"><i
+					class="fas fa-book"></i> Libros</a></li>
+			<li><a href="Linkvaliosos.xhtml" class="nav-link"><i
+					class="fas fa-link"></i> Links Valiosos</a></li>
+			<li><a href="Eventos.xhtml" class="nav-link"><i
+					class="fas fa-calendar-alt"></i> Eventos</a></li>
+		</ul>
+		</nav>
+
+		<div class="sidebar-footer">
+			<p>Proyecto Artemisa 2025</p>
+		</div>
+		</aside>
+
+		<!-- Contenido principal -->
+		<main class="main-content"> <header>
+		<div class="container">
+			<img src="imagenes/logop.png" alt="Logo ARTEMIS" />
+			<p>Panel de Administración</p>
+		</div>
+		</header>
+
+		<div class="container">
+			<div class="admin-sections-container">
+				<!-- Tabla de Usuarios -->
+				<section class="admin-section">
+				<h2>
+					<i class="fas fa-users"></i> Gestión de Usuarios
+				</h2>
+				<h:form id="usuariosForm" styleClass="admin-form"
+					enctype="multipart/form-data">
+					<h:outputLabel for="filtroRol" value="Mostrar: " />
+					<h:selectOneMenu id="filtroRol" value="#{adminBean.filtroRol}">
+						<f:selectItem itemValue="Estudiante" itemLabel="Estudiantes" />
+						<f:selectItem itemValue="Docente" itemLabel="Docentes" />
+						<f:ajax listener="#{adminBean.cargarUsuariosPorRol}"
+							render="tablaUsuarios" />
+					</h:selectOneMenu>
+
+					<h:dataTable id="tablaUsuarios" value="#{adminBean.usuarios}"
+						var="usuario" styleClass="admin-table">
+						<h:column>
+							<f:facet name="header">Nombre Completo</f:facet>
+							<h:inputText value="#{usuario.nombreCompleto}"
+								styleClass="admin-input" readonly="true" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+							<h:inputText value="#{usuario.email}" styleClass="admin-input" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Username</f:facet>
+							<h:inputText value="#{usuario.username}" styleClass="admin-input" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Password</f:facet>
+							<h:inputText value="#{usuario.password}" styleClass="admin-input" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Foto de Perfil</f:facet>
+							<h:inputFile value="#{adminBean.fotoPerfilPart}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Rol</f:facet>
+							<h:outputText value="#{adminBean.filtroRol}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Acciones</f:facet>
+							<div class="admin-actions">
+								<h:commandButton value="Actualizar"
+									action="#{adminBean.actualizarUsuario(usuario)}"
+									styleClass="admin-btn update-btn" />
+								<h:commandButton value="Eliminar"
+									action="#{adminBean.eliminarUsuario(usuario)}"
+									onclick="return confirm('¿Seguro que desea eliminar este usuario?');"
+									styleClass="admin-btn delete-btn" />
+							</div>
+						</h:column>
+					</h:dataTable>
+				</h:form></section>
+
+
+			</div>
+		</div>
+		<!-- CRUD Link Valioso --> <section class="admin-section">
+		<h2>
+			<i class="fas fa-link"></i> Gestión de Links Valiosos
+		</h2>
+		<h:form id="linkForm" styleClass="admin-form">
+			<h:dataTable value="#{linkValiosoBean.links}" var="link"
+				styleClass="admin-table">
+				<h:column>
+					<f:facet name="header">Nombre</f:facet>
+					<h:inputText value="#{link.nombre}" styleClass="admin-input"
+						readonly="true" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Tipo</f:facet>
+					<h:inputText value="#{link.tipo}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">URL</f:facet>
+					<h:inputText value="#{link.url}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Imagen (URL)</f:facet>
+					<h:inputText value="#{link.imagen}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Acciones</f:facet>
+					<div class="admin-actions">
+						<h:commandButton value="Actualizar"
+							action="#{linkValiosoBean.actualizarLink(link)}"
+							styleClass="admin-btn update-btn" />
+						<h:commandButton value="Eliminar"
+							action="#{linkValiosoBean.eliminarLink(link)}"
+							onclick="return confirm('¿Seguro que desea eliminar este link?');"
+							styleClass="admin-btn delete-btn" />
+					</div>
+				</h:column>
+			</h:dataTable>
+			<h3>Agregar Nuevo Link</h3>
+			<h:panelGrid columns="2" styleClass="admin-panel-grid">
+				<h:outputLabel value="Nombre:" styleClass="admin-label" />
+				<h:inputText value="#{linkValiosoBean.nuevoLink.nombre}"
+					styleClass="admin-input" />
+				<h:outputLabel value="Tipo:" styleClass="admin-label" />
+				<h:inputText value="#{linkValiosoBean.nuevoLink.tipo}"
+					styleClass="admin-input" />
+				<h:outputLabel value="URL:" styleClass="admin-label" />
+				<h:inputText value="#{linkValiosoBean.nuevoLink.url}"
+					styleClass="admin-input" />
+				<h:outputLabel value="Imagen (URL):" styleClass="admin-label" />
+				<h:inputText value="#{linkValiosoBean.nuevoLink.imagen}"
+					styleClass="admin-input" />
+				<h:commandButton value="Agregar"
+					action="#{linkValiosoBean.agregarLink}"
+					styleClass="admin-btn add-btn" />
+			</h:panelGrid>
+		</h:form> </section> <!-- CRUD Evento --> <section class="admin-section">
+		<h2>
+			<i class="fas fa-calendar-alt"></i> Gestión de Eventos
+		</h2>
+		<h:form id="eventoForm" styleClass="admin-form">
+			<h:messages globalOnly="true" style="color:red;" />
+			<h:dataTable value="#{eventoBean.eventos}" var="evento"
+				styleClass="admin-table">
+				<h:column>
+					<f:facet name="header">Título</f:facet>
+					<h:inputText value="#{evento.titulo}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Fecha</f:facet>
+					<p:datePicker value="#{evento.fecha}" pattern="yyyy-MM-dd"
+						showIcon="true" />
+
+				</h:column>
+				<h:column>
+					<f:facet name="header">Descripción</f:facet>
+					<h:inputText value="#{evento.descripcion}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">URL</f:facet>
+					<h:inputText value="#{evento.url}" styleClass="admin-input" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Acciones</f:facet>
+					<div class="admin-actions">
+						<h:commandButton value="Actualizar"
+							action="#{eventoBean.actualizarEvento(evento)}"
+							styleClass="admin-btn update-btn" />
+						<h:commandButton value="Eliminar"
+							action="#{eventoBean.eliminarEvento(evento)}"
+							onclick="return confirm('¿Seguro que desea eliminar este evento?');"
+							styleClass="admin-btn delete-btn" />
+					</div>
+				</h:column>
+			</h:dataTable>
+			<h3>Agregar Nuevo Evento</h3>
+			<h:panelGrid columns="2" styleClass="admin-panel-grid">
+				<h:outputLabel value="Título:" styleClass="admin-label" />
+				<h:inputText value="#{eventoBean.nuevoEvento.titulo}"
+					styleClass="admin-input" />
+				<h:outputLabel value="Fecha:" styleClass="admin-label" />
+				<p:datePicker value="#{eventoBean.nuevoEvento.fecha}"
+					pattern="yyyy-MM-dd" showIcon="true" />
+				<h:outputLabel value="Descripción:" styleClass="admin-label" />
+				<h:inputText value="#{eventoBean.nuevoEvento.descripcion}"
+					styleClass="admin-input" />
+				<h:outputLabel value="URL:" styleClass="admin-label" />
+				<h:inputText value="#{eventoBean.nuevoEvento.url}"
+					styleClass="admin-input" />
+				<p:commandButton value="Agregar"
+					action="#{eventoBean.agregarEvento}" update="eventoForm"
+					styleClass="admin-btn add-btn" />
+			</h:panelGrid>
+		</h:form> </section> <footer>
+		<div class="container">
+			<p>© 2025 BIBLIOTEC ARTEMIS - Panel de Administración</p>
+		</div>
+		</footer> </main>
+	</div>
+</h:body>
+</html>

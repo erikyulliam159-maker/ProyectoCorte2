@@ -1,3 +1,10 @@
+/**
+ * Clase EstudianteController
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.controller
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.controller;
 
 import java.util.List;
@@ -28,42 +35,54 @@ import org.springframework.http.MediaType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EstudianteController.
+ */
 @RestController
 @RequestMapping("/estudiante")
 @CrossOrigin(origins = { "*" })
 public class EstudianteController {
 
+    /** The temario service. */
     @Autowired
     private TemarioService temarioService;
 
+    /** The subtema service. */
     @Autowired
     private SubtemaService subtemaService;
 
+    /** The detalle subtema service. */
     @Autowired
     private DetalleSubtemaService detalleSubtemaService;
 
+    /** The problema service. */
     @Autowired
     private ProblemaService problemaService;
 
+    /** The libro service. */
     @Autowired
     private LibroService libroService;
 
+    /** The evento service. */
     @Autowired
     private EventoService eventoService;
 
+    /** The link valioso service. */
     @Autowired
     private LinkValiosoService linkValiosoService;
     
+    /** The archivo util. */
     @Autowired
     private ArchivoUtil archivoUtil;
 
   
+    /**
+     * Gets the all temarios.
+     *
+     * @return the all temarios
+     */
     @GetMapping("/temario/getall")
     public ResponseEntity<List<TemarioDTO>> getAllTemarios() {
         List<TemarioDTO> temarios = temarioService.getAll();
@@ -74,6 +93,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the temario by id.
+     *
+     * @param id the id
+     * @return the temario by id
+     */
     @GetMapping("/temario/getbyid/{id}")
     public ResponseEntity<TemarioDTO> getTemarioById(@PathVariable Long id) {
         TemarioDTO temario = temarioService.getById(id);
@@ -84,6 +109,11 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the all subtemas.
+     *
+     * @return the all subtemas
+     */
     // Ver subtemas
     @GetMapping("/subtema/getall")
     public ResponseEntity<List<SubtemaDTO>> getAllSubtemas() {
@@ -95,6 +125,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the subtema by id.
+     *
+     * @param id the id
+     * @return the subtema by id
+     */
     @GetMapping("/subtema/getbyid/{id}")
     public ResponseEntity<SubtemaDTO> getSubtemaById(@PathVariable Long id) {
         SubtemaDTO subtema = subtemaService.getById(id);
@@ -105,6 +141,11 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the all detalles subtema.
+     *
+     * @return the all detalles subtema
+     */
     // Ver detalle subtema
     @GetMapping("/detallesubtema/getall")
     public ResponseEntity<List<DetalleSubtemaDTO>> getAllDetallesSubtema() {
@@ -116,6 +157,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the detalle subtema by id.
+     *
+     * @param id the id
+     * @return the detalle subtema by id
+     */
     @GetMapping("/detallesubtema/getbyid/{id}")
     public ResponseEntity<DetalleSubtemaDTO> getDetalleSubtemaById(@PathVariable Long id) {
         DetalleSubtemaDTO detalle = detalleSubtemaService.getById(id);
@@ -127,6 +174,11 @@ public class EstudianteController {
     }
 
 
+    /**
+     * Gets the all problemas.
+     *
+     * @return the all problemas
+     */
     @GetMapping("/problema/getall")
     public ResponseEntity<List<ProblemaDTO>> getAllProblemas() {
         List<ProblemaDTO> problemas = problemaService.getAll();
@@ -137,6 +189,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the problema by id.
+     *
+     * @param id the id
+     * @return the problema by id
+     */
     @GetMapping("/problema/getbyid/{id}")
     public ResponseEntity<ProblemaDTO> getProblemaById(@PathVariable Long id) {
         ProblemaDTO problema = problemaService.getById(id);
@@ -147,7 +205,12 @@ public class EstudianteController {
         }
     }
 
-    // Ver libros
+
+    /**
+     * Gets the all libros.
+     *
+     * @return the all libros
+     */
     @GetMapping("/libro/getall")
     public ResponseEntity<List<LibroDTO>> getAllLibros() {
         List<LibroDTO> libros = libroService.getAll();
@@ -158,6 +221,13 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Download pdf.
+     *
+     * @param id the id
+     * @return the response entity
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @GetMapping("/libro/downloadpdf/{id}")
     public ResponseEntity<InputStreamResource> downloadPdf(@PathVariable Long id) throws IOException {
         LibroDTO libro = libroService.getById(id);
@@ -178,7 +248,12 @@ public class EstudianteController {
 
     
     
-    // Ver eventos
+
+    /**
+     * Gets the all eventos.
+     *
+     * @return the all eventos
+     */
     @GetMapping("/evento/getall")
     public ResponseEntity<List<EventoDTO>> getAllEventos() {
         List<EventoDTO> eventos = eventoService.getAll();
@@ -189,6 +264,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the evento by id.
+     *
+     * @param id the id
+     * @return the evento by id
+     */
     @GetMapping("/evento/getbyid/{id}")
     public ResponseEntity<EventoDTO> getEventoById(@PathVariable Long id) {
         EventoDTO evento = eventoService.getById(id);
@@ -199,7 +280,12 @@ public class EstudianteController {
         }
     }
 
-    // Ver links valiosos
+
+    /**
+     * Gets the all links valiosos.
+     *
+     * @return the all links valiosos
+     */
     @GetMapping("/linkvalioso/getall")
     public ResponseEntity<List<LinkValiosoDTO>> getAllLinksValiosos() {
         List<LinkValiosoDTO> links = linkValiosoService.getAll();
@@ -210,6 +296,12 @@ public class EstudianteController {
         }
     }
 
+    /**
+     * Gets the link valioso by id.
+     *
+     * @param id the id
+     * @return the link valioso by id
+     */
     @GetMapping("/linkvalioso/getbyid/{id}")
     public ResponseEntity<LinkValiosoDTO> getLinkValiosoById(@PathVariable Long id) {
         LinkValiosoDTO link = linkValiosoService.getById(id);
@@ -220,6 +312,12 @@ public class EstudianteController {
         }
     }
     
+    /**
+     * Download temario pdf.
+     *
+     * @return the response entity
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @GetMapping("/temario/downloadpdf")
     public ResponseEntity<byte[]> downloadTemarioPdf() throws IOException {
         List<TemarioDTO> temarios = temarioService.getAll();
@@ -230,6 +328,12 @@ public class EstudianteController {
                 .body(pdfBytes);
     }
 
+    /**
+     * Download problemas pdf.
+     *
+     * @return the response entity
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @GetMapping("/problema/downloadpdf")
     public ResponseEntity<byte[]> downloadProblemasPdf() throws IOException {
         List<ProblemaDTO> problemas = problemaService.getAll();
@@ -240,6 +344,12 @@ public class EstudianteController {
                 .body(pdfBytes);
     }
 
+    /**
+     * Download libros pdf.
+     *
+     * @return the response entity
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @GetMapping("/libro/downloadpdf")
     public ResponseEntity<byte[]> downloadLibrosPdf() throws IOException {
         List<LibroDTO> libros = libroService.getAll();

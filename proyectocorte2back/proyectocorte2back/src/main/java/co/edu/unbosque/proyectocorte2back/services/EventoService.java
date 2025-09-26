@@ -1,3 +1,10 @@
+/**
+ * Clase EventoService
+ * Proyecto: proyectocorte2back
+ * Paquete: co.edu.unbosque.proyectocorte2back.services
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.proyectocorte2back.services;
 
 import java.util.ArrayList;
@@ -13,25 +20,48 @@ import co.edu.unbosque.proyectocorte2back.entity.Evento;
 import co.edu.unbosque.proyectocorte2back.repository.EventoRepository;
 import co.edu.unbosque.proyectocorte2back.util.ExceptionChecker;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EventoService.
+ */
 @Service
 public class EventoService implements CRUDOperation<EventoDTO> {
     
+    /** The evento repository. */
     @Autowired
     private EventoRepository eventoRepository;
 
+    /** The model mapper. */
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Count.
+     *
+     * @return the long
+     */
     @Override
     public long count() {
         return eventoRepository.count();
     }
 
+    /**
+     * Exist.
+     *
+     * @param id the id
+     * @return true, if successful
+     */
     @Override
     public boolean exist(Long id) {
         return eventoRepository.existsById(id);
     }
 
+    /**
+     * Crea el.
+     *
+     * @param data the data
+     * @return the int
+     */
     @Override
     public int create(EventoDTO data) {
     	ExceptionChecker.checkNotNullOrEmpty(data.getTitulo(), "Titulo del Evento no puede estar vacia ");
@@ -41,8 +71,9 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         ExceptionChecker.checkNotNullOrEmpty(data.getUrl(), "URL del Evento no puede estar vacia");
         ExceptionChecker.checkNotNullDate(data.getFecha(), "Fecha del Evento no puede estar vacio");
         ExceptionChecker.checkNotPastDate(data.getFecha(), "No se pueden poner fechas en meses anteriores");
-
+        System.out.println("Creando evento: " + data);
         Evento entity = modelMapper.map(data, Evento.class);
+        System.out.println("Entidad a guardar: " + entity);
         if (findNombreAlreadyTaken(entity)){
             return 1;
         } else {
@@ -50,6 +81,12 @@ public class EventoService implements CRUDOperation<EventoDTO> {
             return 0;
         }
     }
+    
+    /**
+     * Gets the all.
+     *
+     * @return the all
+     */
     @Override
     public List<EventoDTO> getAll() {
         List<Evento> entityList = eventoRepository.findAll();
@@ -62,6 +99,12 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         return dtoList;
     }
 
+    /**
+     * Delete by id.
+     *
+     * @param id the id
+     * @return the int
+     */
     @Override
     public int deleteById(Long id) {
         Optional<Evento> found = eventoRepository.findById(id);
@@ -73,6 +116,12 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         }
     }
 
+    /**
+     * Delete by nombre.
+     *
+     * @param id the id
+     * @return the int
+     */
     public int deleteByNombre(Long id) {
         Optional<Evento> found = eventoRepository.findById(id);
         if (found.isPresent()) {
@@ -83,6 +132,13 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         }
     }
 
+    /**
+     * Update by id.
+     *
+     * @param id the id
+     * @param newData the new data
+     * @return the int
+     */
     @Override
     public int updateById(Long id, EventoDTO newData) {
      	ExceptionChecker.checkNotNullOrEmpty(newData.getTitulo(), "Titulo del Evento no puede estar vacia ");
@@ -114,6 +170,12 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         }
     }
 
+    /**
+     * Gets the by id.
+     *
+     * @param id the id
+     * @return the by id
+     */
     public EventoDTO getById(Long id) {
         Optional<Evento> found = eventoRepository.findById(id);
         if (found.isPresent()) {
@@ -123,8 +185,14 @@ public class EventoService implements CRUDOperation<EventoDTO> {
         }
     }
 
+    /**
+     * Find nombre already taken.
+     *
+     * @param newEvento the new evento
+     * @return true, if successful
+     */
     public boolean findNombreAlreadyTaken(Evento newEvento) {
-        Optional<Evento> found = eventoRepository.findById(newEvento.getId());
+        Optional<Evento> found = eventoRepository.findByTitulo(newEvento.getTitulo());
         return found.isPresent();
     }
 }

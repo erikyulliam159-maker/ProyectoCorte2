@@ -1,0 +1,329 @@
+@charset "UTF-8";
+/* Eventos.css - Estilos específicos para la página de eventos */
+
+/* ===== ESTILOS PARA LA PÁGINA DE EVENTOS ===== */
+
+.calendar-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    background-color: var(--table-header);
+    border-radius: 4px;
+}
+
+.calendar-day {
+    height: 100px;
+    border: 1px solid var(--table-border);
+    border-radius: 4px;
+    padding: 5px;
+    overflow-y: auto;
+    background-color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.calendar-day.other-month {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.calendar-day.current-day {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-color: var(--accent-color);
+    transform: scale(1.02);
+}
+
+.calendar-day.has-events {
+    border-color: var(--accent-color);
+}
+
+.day-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.event-item {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    background-color: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+}
+
+.event-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.event-item.contest {
+    background-color: var(--success-color);
+}
+
+.event-item.important {
+    background-color: #e74c3c;
+}
+
+.event-item.general {
+    background-color: #f39c12;
+}
+
+.events-sidebar {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.event-detail {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-color);
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.event-detail:hover {
+    transform: translateX(5px);
+    background-color: #e9ecef;
+}
+
+.event-detail.contest {
+    border-left-color: var(--success-color);
+}
+
+.event-detail.important {
+    border-left-color: #e74c3c;
+}
+
+.event-detail.general {
+    border-left-color: #f39c12;
+}
+
+.event-time {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.event-title {
+    font-weight: 500;
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.event-description {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-month {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-month:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.current-month {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    min-width: 200px;
+    text-align: center;
+}
+
+.event-form {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.event-form h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.event-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.event-actions {
+    grid-column: 1/-1;
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--table-border);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.empty-calendar {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+}
+
+.empty-calendar i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #dee2e6;
+}
+
+/* Responsive para eventos */
+@media (max-width: 768px) {
+    .calendar-day {
+        height: 80px;
+        font-size: 0.8rem;
+    }
+    
+    .event-item {
+        font-size: 0.65rem;
+        padding: 2px 4px;
+    }
+    
+    .calendar-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .month-navigation {
+        justify-content: center;
+    }
+    
+    .current-month {
+        font-size: 1.2rem;
+        min-width: 150px;
+    }
+    
+    .event-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-day {
+        height: 70px;
+        padding: 2px;
+    }
+    
+    .event-item {
+        display: block;
+        font-size: 0.6rem;
+        padding: 1px 3px;
+    }
+    
+    .day-number {
+        font-size: 0.8rem;
+    }
+    
+    .calendar-grid {
+        gap: 2px;
+    }
+}
+
+/* Ajustes para Bootstrap */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
