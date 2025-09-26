@@ -1,3 +1,10 @@
+/**
+ * Clase DocenteService
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.service
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.service;
 
 import java.io.IOException;
@@ -21,15 +28,30 @@ import java.nio.file.Path;
 
 import java.util.UUID;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DocenteService.
+ */
 public class DocenteService {
 
+	/** The Constant httpClient. */
 	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
 			.connectTimeout(Duration.ofSeconds(5)).build();
 
+	/** The Constant BASE_URL. */
 	private static final String BASE_URL = "http://localhost:8080/proyectocorte2back/docente";
+	
+	/** The Constant gson. */
 	private static final Gson gson = new Gson();
 
 
+	/**
+	 * Do post.
+	 *
+	 * @param url the url
+	 * @param json the json
+	 * @return the string
+	 */
 	public static String doPost(String url, String json) {
 		HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.ofString(json))
 				.uri(URI.create(url)).setHeader("User-Agent", "Java 11 HttpClient Bot")
@@ -45,6 +67,16 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Do post multipart.
+	 *
+	 * @param url the url
+	 * @param dto the dto
+	 * @param imagenPath the imagen path
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException the interrupted exception
+	 */
 	public static String doPostMultipart(String url, DocenteDTO dto, Path imagenPath) throws IOException, InterruptedException {
 	    String boundary = "----WebKitFormBoundary" + UUID.randomUUID().toString().replace("-", "");
 
@@ -103,6 +135,13 @@ public class DocenteService {
 	    return response.body();
 	}
 
+	/**
+	 * Do put.
+	 *
+	 * @param url the url
+	 * @param json the json
+	 * @return the string
+	 */
 	public static String doPut(String url, String json) {
 		HttpRequest request = HttpRequest.newBuilder().PUT(HttpRequest.BodyPublishers.ofString(json))
 				.uri(URI.create(url)).setHeader("User-Agent", "Java 11 HttpClient Bot")
@@ -118,6 +157,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Do delete.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doDelete(String url) {
 		HttpRequest request = HttpRequest.newBuilder().DELETE().uri(URI.create(url))
 				.setHeader("User-Agent", "Java 11 HttpClient Bot").header("Content-Type", "application/json").build();
@@ -132,6 +177,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Do get all.
+	 *
+	 * @param url the url
+	 * @return the array list
+	 */
 	public static ArrayList<DocenteDTO> doGetAll(String url) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 				.setHeader("User-Agent", "Java 11 HttpClient Bot").header("Content-Type", "application/json").build();
@@ -149,6 +200,11 @@ public class DocenteService {
 	}
 
 
+	/**
+	 * Obtener todos temarios.
+	 *
+	 * @return the array list
+	 */
 	public ArrayList<TemarioDTO> obtenerTodosTemarios() {
 		try {
 			String url = BASE_URL + "/temario/getall";
@@ -166,6 +222,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Crear temario.
+	 *
+	 * @param temario the temario
+	 * @return true, if successful
+	 */
 	public boolean crearTemario(TemarioDTO temario) {
 		try {
 			String url = BASE_URL + "/temario/createjson";
@@ -178,6 +240,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Eliminar temario.
+	 *
+	 * @param id the id
+	 * @return true, if successful
+	 */
 	public boolean eliminarTemario(Long id) {
 		try {
 			String url = BASE_URL + "/temario/deletebyid/" + id;
@@ -190,6 +258,11 @@ public class DocenteService {
 	}
 
 
+	/**
+	 * Obtener todos problemas.
+	 *
+	 * @return the array list
+	 */
 	public ArrayList<ProblemaDTO> obtenerTodosProblemas() {
 		try {
 			String url = BASE_URL + "/problema/getall";
@@ -207,6 +280,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Crear problema.
+	 *
+	 * @param problema the problema
+	 * @return true, if successful
+	 */
 	public boolean crearProblema(ProblemaDTO problema) {
 		try {
 			String url = BASE_URL + "/problema/createjson";
@@ -219,6 +298,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Eliminar problema.
+	 *
+	 * @param id the id
+	 * @return true, if successful
+	 */
 	public boolean eliminarProblema(Long id) {
 		try {
 			String url = BASE_URL + "/problema/deletebyid/" + id;
@@ -230,6 +315,11 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Obtener todos libros.
+	 *
+	 * @return the array list
+	 */
 	// Métodos específicos para Libros
 	public ArrayList<LibroDTO> obtenerTodosLibros() {
 		try {
@@ -248,6 +338,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Crear libro.
+	 *
+	 * @param libro the libro
+	 * @return true, if successful
+	 */
 	public boolean crearLibro(LibroDTO libro) {
 		try {
 			String url = BASE_URL + "/libro/createjson";
@@ -260,6 +356,12 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Eliminar libro.
+	 *
+	 * @param id the id
+	 * @return true, if successful
+	 */
 	public boolean eliminarLibro(Long id) {
 		try {
 			String url = BASE_URL + "/libro/deletebyid/" + id;
@@ -271,6 +373,14 @@ public class DocenteService {
 		}
 	}
 
+	/**
+	 * Do get all.
+	 *
+	 * @param <T> the generic type
+	 * @param url the url
+	 * @param clazz the clazz
+	 * @return the array list
+	 */
 	// Métodos genéricos para diferentes tipos de DTO
 	public static <T> ArrayList<T> doGetAll(String url, Class<T[]> clazz) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))

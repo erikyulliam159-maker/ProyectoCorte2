@@ -1,3 +1,10 @@
+/**
+ * Clase RegisterBean
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.beans
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.beans;
 
 import jakarta.inject.Named;
@@ -14,23 +21,46 @@ import co.edu.unbosque.service.DocenteService;
 import co.edu.unbosque.service.EstudianteService;
 import com.google.gson.Gson;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RegisterBean.
+ */
 @Named
 @ViewScoped
 public class RegisterBean implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The estudiante. */
 	private EstudianteDTO estudiante;
+	
+	/** The docente. */
 	private DocenteDTO docente;
+	
+	/** The tipo usuario. */
 	private String tipoUsuario = "estudiante";
+	
+	/** The message. */
 	private String message;
+	
+	/** The message type. */
 	private String messageType;
+	
+	/** The foto perfil file. */
 	private UploadedFile fotoPerfilFile;
 
+	/**
+	 * Instantiates a new register bean.
+	 */
 	public RegisterBean() {
 		estudiante = new EstudianteDTO();
 		docente = new DocenteDTO();
 	}
 
+	/**
+	 * Register.
+	 */
 	public void register() {
 	    try {
 	        Path tempFile = null;
@@ -76,55 +106,120 @@ public class RegisterBean implements Serializable {
 	    }
 	}
 
-
+	
+	/**
+	 * Gets the foto perfil file.
+	 *
+	 * @return the foto perfil file
+	 */
 	public UploadedFile getFotoPerfilFile() {
 		return fotoPerfilFile;
 	}
 
+	/**
+	 * Sets the foto perfil file.
+	 *
+	 * @param fotoPerfilFile the new foto perfil file
+	 */
 	public void setFotoPerfilFile(UploadedFile fotoPerfilFile) {
 		this.fotoPerfilFile = fotoPerfilFile;
 	}
 
+	/**
+	 * Gets the estudiante.
+	 *
+	 * @return the estudiante
+	 */
 	public EstudianteDTO getEstudiante() {
 		return estudiante;
 	}
 
+	/**
+	 * Sets the estudiante.
+	 *
+	 * @param estudiante the new estudiante
+	 */
 	public void setEstudiante(EstudianteDTO estudiante) {
 		this.estudiante = estudiante;
 	}
 
+	/**
+	 * Gets the docente.
+	 *
+	 * @return the docente
+	 */
 	public DocenteDTO getDocente() {
 		return docente;
 	}
 
+	/**
+	 * Sets the docente.
+	 *
+	 * @param docente the new docente
+	 */
 	public void setDocente(DocenteDTO docente) {
 		this.docente = docente;
 	}
 
+	/**
+	 * Gets the tipo usuario.
+	 *
+	 * @return the tipo usuario
+	 */
 	public String getTipoUsuario() {
 		return tipoUsuario;
 	}
 
+	/**
+	 * Sets the tipo usuario.
+	 *
+	 * @param tipoUsuario the new tipo usuario
+	 */
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 
+	/**
+	 * Gets the message.
+	 *
+	 * @return the message
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Sets the message.
+	 *
+	 * @param message the new message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
+	/**
+	 * Gets the message type.
+	 *
+	 * @return the message type
+	 */
 	public String getMessageType() {
 		return messageType;
 	}
 
+	/**
+	 * Sets the message type.
+	 *
+	 * @param messageType the new message type
+	 */
 	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
 
+	/**
+	 * Gets the serialversionuid.
+	 *
+	 * @return the serialversionuid
+	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

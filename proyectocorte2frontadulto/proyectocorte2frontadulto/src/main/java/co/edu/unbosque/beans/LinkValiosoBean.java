@@ -1,3 +1,10 @@
+/**
+ * Clase LinkValiosoBean
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.beans
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.beans;
 
 import jakarta.inject.Named;
@@ -13,18 +20,32 @@ import com.google.gson.Gson;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LinkValiosoBean.
+ */
 @Named("linkValiosoBean")
 @ViewScoped
 public class LinkValiosoBean implements Serializable {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The links. */
     private List<LinkValiosoDTO> links;
+    
+    /** The nuevo link. */
     private LinkValiosoDTO nuevoLink;
+    
+    /** The link seleccionado. */
     private LinkValiosoDTO linkSeleccionado;
 
+    /** The base url. */
     private final String BASE_URL = "http://localhost:8081/admin/linkvalioso";
 
+    /**
+     * Inicializa el.
+     */
     @PostConstruct
     public void init() {
         links = new ArrayList<>();
@@ -33,6 +54,9 @@ public class LinkValiosoBean implements Serializable {
         cargarLinks();
     }
 
+    /**
+     * Cargar links.
+     */
     public void cargarLinks() {
         try {
             links = LinkValiosoService.doGetAll(BASE_URL + "/getall");
@@ -46,6 +70,9 @@ public class LinkValiosoBean implements Serializable {
         }
     }
 
+    /**
+     * Agregar link.
+     */
     public void agregarLink() {
         try {
             Gson g = new Gson();
@@ -66,6 +93,11 @@ public class LinkValiosoBean implements Serializable {
         }
     }
 
+    /**
+     * Actualizar link.
+     *
+     * @param link the link
+     */
     public void actualizarLink(LinkValiosoDTO link) {
         try {
             Gson g = new Gson();
@@ -85,6 +117,11 @@ public class LinkValiosoBean implements Serializable {
         }
     }
 
+    /**
+     * Eliminar link.
+     *
+     * @param link the link
+     */
     public void eliminarLink(LinkValiosoDTO link) {
         try {
             String respuesta = LinkValiosoService.doDelete(BASE_URL + "/deletebyid/" + link.getId());
@@ -102,27 +139,57 @@ public class LinkValiosoBean implements Serializable {
         }
     }
 
+    /**
+     * Gets the links.
+     *
+     * @return the links
+     */
     // Getters y setters
     public List<LinkValiosoDTO> getLinks() {
         return links;
     }
 
+    /**
+     * Sets the links.
+     *
+     * @param links the new links
+     */
     public void setLinks(List<LinkValiosoDTO> links) {
         this.links = links;
     }
 
+    /**
+     * Gets the nuevo link.
+     *
+     * @return the nuevo link
+     */
     public LinkValiosoDTO getNuevoLink() {
         return nuevoLink;
     }
 
+    /**
+     * Sets the nuevo link.
+     *
+     * @param nuevoLink the new nuevo link
+     */
     public void setNuevoLink(LinkValiosoDTO nuevoLink) {
         this.nuevoLink = nuevoLink;
     }
 
+    /**
+     * Gets the link seleccionado.
+     *
+     * @return the link seleccionado
+     */
     public LinkValiosoDTO getLinkSeleccionado() {
         return linkSeleccionado;
     }
 
+    /**
+     * Sets the link seleccionado.
+     *
+     * @param linkSeleccionado the new link seleccionado
+     */
     public void setLinkSeleccionado(LinkValiosoDTO linkSeleccionado) {
         this.linkSeleccionado = linkSeleccionado;
     }

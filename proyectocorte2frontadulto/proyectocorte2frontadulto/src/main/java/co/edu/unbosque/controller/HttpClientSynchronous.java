@@ -1,3 +1,10 @@
+/**
+ * Clase HttpClientSynchronous
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.controller
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.controller;
 
 import java.io.IOException;
@@ -12,11 +19,23 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HttpClientSynchronous.
+ */
 public class HttpClientSynchronous {
 
+	/** The Constant httpClient. */
 	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
 			.connectTimeout(Duration.ofSeconds(10)).build();
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException the interrupted exception
+	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println("//// GET ////");
 		String geolocation="https://ipgeolocation.abstractapi.com/v1/?";
@@ -35,6 +54,12 @@ public class HttpClientSynchronous {
 		//System.out.println(doDelete("https://httpbin.org/delete"));
 	}
 	
+	/**
+	 * Do get and parse.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doGetAndParse(String url) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 				.setHeader("User-Agent", "Java 11 HttpClient Bot").build();
@@ -54,6 +79,12 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(uglyJson);
 	}
 	
+	/**
+	 * Do get with headers.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doGetWithHeaders(String url) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 				.setHeader("X-Apikey", "b022b08d83bbbfd856d2f1e6080a08cc93a24c38db6537639d2c0b5bd84c0701")
@@ -75,6 +106,12 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(uglyJson);
 	}
 	
+	/**
+	 * Do get.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doGet(String url) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 				.setHeader("User-Agent", "Java 11 HttpClient Bot").build();
@@ -94,6 +131,13 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(uglyJson);
 	}
 
+	/**
+	 * Do post.
+	 *
+	 * @param url the url
+	 * @param json the json
+	 * @return the string
+	 */
 	public static String doPost(String url, String json) {
 
 		// add json header
@@ -114,6 +158,13 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(response.body());
 	}
 
+	/**
+	 * Do put.
+	 *
+	 * @param url the url
+	 * @param json the json
+	 * @return the string
+	 */
 	public static String doPut(String url, String json) {
 
 		// add json header
@@ -134,6 +185,12 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(response.body());
 	}
 
+	/**
+	 * Do delete.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doDelete(String url) {
 
 		// add json header
@@ -154,6 +211,12 @@ public class HttpClientSynchronous {
 		return prettyPrintUsingGson(response.body());
 	}
 
+	/**
+	 * Pretty print using gson.
+	 *
+	 * @param uglyJson the ugly json
+	 * @return the string
+	 */
 	@SuppressWarnings("deprecation")
 	public static String prettyPrintUsingGson(String uglyJson) {
 	Gson gson = new GsonBuilder().setLenient().setPrettyPrinting().create();

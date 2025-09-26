@@ -1,3 +1,10 @@
+/**
+ * Clase LoginBean
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.beans
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.beans;
 
 import java.io.Serializable;
@@ -15,22 +22,45 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.application.FacesMessage;
 import jakarta.inject.Named;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginBean.
+ */
 @Named
 @SessionScoped
 public class LoginBean implements Serializable {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The username. */
     private String username;
+    
+    /** The password. */
     private String password;
+    
+    /** The message. */
     private String message;
+    
+    /** The message type. */
     private String messageType;
+    
+    /** The usuario logueado. */
     private UsuarioDTO usuarioLogueado;
+    
+    /** The tipo usuario. */
     private String tipoUsuario = "estudiante";
+    
+    /** The api url. */
     private final String API_URL = "http://localhost:8081/login";
 
+    /**
+     * Login.
+     *
+     * @return the string
+     */
     public String login() {
         try {
-            // Validaciones básicas
             if (username == null || username.trim().isEmpty()) {
                 addErrorMessage("El nombre de usuario es obligatorio");
                 return null;
@@ -41,7 +71,6 @@ public class LoginBean implements Serializable {
                 return null;
             }
 
-            // Determinar el endpoint según el tipo de usuario
             String endpoint = getEndpointByUserType();
             
             HttpClient client = HttpClient.newBuilder()
@@ -69,6 +98,11 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Gets the endpoint by user type.
+     *
+     * @return the endpoint by user type
+     */
     private String getEndpointByUserType() {
         switch (tipoUsuario) {
             case "docente":
@@ -81,6 +115,12 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Handle login response.
+     *
+     * @param response the response
+     * @return the string
+     */
     private String handleLoginResponse(HttpResponse<String> response) {
         int statusCode = response.statusCode();
         
@@ -99,6 +139,11 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Handle successful login.
+     *
+     * @return the string
+     */
     private String handleSuccessfulLogin() {
         addSuccessMessage("Inicio de sesión exitoso");
         
@@ -109,10 +154,9 @@ public class LoginBean implements Serializable {
         context.getExternalContext().getSessionMap().put("usuarioLogueado", usuarioLogueado);
         context.getExternalContext().getSessionMap().put("tipoUsuario", tipoUsuario);
         
-        // CAMBIADO: Redirigir a Docente.xhtml para usuarios docentes
         switch (tipoUsuario) {
             case "docente":
-                return "Docente.xhtml?faces-redirect=true"; // CAMBIADO
+                return "Docente.xhtml?faces-redirect=true"; 
             case "administrador":
                 return "Admin.xhtml?faces-redirect=true";
             case "estudiante":
@@ -121,6 +165,11 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Agrega el error message.
+     *
+     * @param errorMessage the error message
+     */
     private void addErrorMessage(String errorMessage) {
         this.message = errorMessage;
         this.messageType = "error";
@@ -128,6 +177,11 @@ public class LoginBean implements Serializable {
             new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", errorMessage));
     }
 
+    /**
+     * Agrega el success message.
+     *
+     * @param successMessage the success message
+     */
     private void addSuccessMessage(String successMessage) {
         this.message = successMessage;
         this.messageType = "success";
@@ -135,6 +189,11 @@ public class LoginBean implements Serializable {
             new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", successMessage));
     }
 
+    /**
+     * Logout.
+     *
+     * @return the string
+     */
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         usuarioLogueado = null;
@@ -144,55 +203,120 @@ public class LoginBean implements Serializable {
         return "/index.xhtml?faces-redirect=true";
     }
 
+    /**
+     * Checks if is logged in.
+     *
+     * @return true, if is logged in
+     */
     public boolean isLoggedIn() {
         return usuarioLogueado != null;
     }
 
+    /**
+     * Gets the username.
+     *
+     * @return the username
+     */
     // Getters y Setters
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets the username.
+     *
+     * @param username the new username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Gets the password.
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the password.
+     *
+     * @param password the new password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Gets the message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Sets the message.
+     *
+     * @param message the new message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Gets the message type.
+     *
+     * @return the message type
+     */
     public String getMessageType() {
         return messageType;
     }
 
+    /**
+     * Sets the message type.
+     *
+     * @param messageType the new message type
+     */
     public void setMessageType(String messageType) {
         this.messageType = messageType;
     }
 
+    /**
+     * Gets the usuario logueado.
+     *
+     * @return the usuario logueado
+     */
     public UsuarioDTO getUsuarioLogueado() {
         return usuarioLogueado;
     }
 
+    /**
+     * Sets the usuario logueado.
+     *
+     * @param usuarioLogueado the new usuario logueado
+     */
     public void setUsuarioLogueado(UsuarioDTO usuarioLogueado) {
         this.usuarioLogueado = usuarioLogueado;
     }
 
+    /**
+     * Gets the tipo usuario.
+     *
+     * @return the tipo usuario
+     */
     public String getTipoUsuario() {
         return tipoUsuario;
     }
 
+    /**
+     * Sets the tipo usuario.
+     *
+     * @param tipoUsuario the new tipo usuario
+     */
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }

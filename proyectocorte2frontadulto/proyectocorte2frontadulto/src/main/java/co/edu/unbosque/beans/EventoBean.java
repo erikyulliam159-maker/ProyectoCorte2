@@ -1,3 +1,10 @@
+/**
+ * Clase EventoBean
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.beans
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.beans;
 
 import jakarta.inject.Named;
@@ -17,19 +24,35 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import java.time.LocalDate;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EventoBean.
+ */
 @Named("eventoBean")
 @ViewScoped
 public class EventoBean implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The eventos. */
 	private List<EventoDTO> eventos;
+	
+	/** The nuevo evento. */
 	private EventoDTO nuevoEvento;
+	
+	/** The evento seleccionado. */
 	private EventoDTO eventoSeleccionado;
 
+	/** The base url. */
 	private final String BASE_URL = "http://localhost:8081/admin/evento";
+	
+	/** The gson. */
 	private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
+	/**
+	 * Inicializa el.
+	 */
 	@PostConstruct
 	public void init() {
 		
@@ -39,6 +62,9 @@ public class EventoBean implements Serializable {
 		cargarEventos();
 	}
 
+	/**
+	 * Cargar eventos.
+	 */
 	public void cargarEventos() {
 		try {
 			eventos = EventoService.doGetAll(BASE_URL + "/getall");
@@ -53,6 +79,9 @@ public class EventoBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Agregar evento.
+	 */
 	public void agregarEvento() {
 		System.out.println("Agregar evento invocado");
 		try {
@@ -76,6 +105,11 @@ public class EventoBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Actualizar evento.
+	 *
+	 * @param evento the evento
+	 */
 	public void actualizarEvento(EventoDTO evento) {
 		try {
 			String json = gson.toJson(evento);
@@ -94,6 +128,11 @@ public class EventoBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Eliminar evento.
+	 *
+	 * @param evento the evento
+	 */
 	public void eliminarEvento(EventoDTO evento) {
 		try {
 			String respuesta = EventoService.doDelete(BASE_URL + "/deletebyid/" + evento.getId());
@@ -111,27 +150,57 @@ public class EventoBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Gets the eventos.
+	 *
+	 * @return the eventos
+	 */
 	// Getters y setters
 	public List<EventoDTO> getEventos() {
 		return eventos;
 	}
 
+	/**
+	 * Sets the eventos.
+	 *
+	 * @param eventos the new eventos
+	 */
 	public void setEventos(List<EventoDTO> eventos) {
 		this.eventos = eventos;
 	}
 
+	/**
+	 * Gets the nuevo evento.
+	 *
+	 * @return the nuevo evento
+	 */
 	public EventoDTO getNuevoEvento() {
 		return nuevoEvento;
 	}
 
+	/**
+	 * Sets the nuevo evento.
+	 *
+	 * @param nuevoEvento the new nuevo evento
+	 */
 	public void setNuevoEvento(EventoDTO nuevoEvento) {
 		this.nuevoEvento = nuevoEvento;
 	}
 
+	/**
+	 * Gets the evento seleccionado.
+	 *
+	 * @return the evento seleccionado
+	 */
 	public EventoDTO getEventoSeleccionado() {
 		return eventoSeleccionado;
 	}
 
+	/**
+	 * Sets the evento seleccionado.
+	 *
+	 * @param eventoSeleccionado the new evento seleccionado
+	 */
 	public void setEventoSeleccionado(EventoDTO eventoSeleccionado) {
 		this.eventoSeleccionado = eventoSeleccionado;
 	}

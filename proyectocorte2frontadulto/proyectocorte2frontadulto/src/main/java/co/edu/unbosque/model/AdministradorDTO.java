@@ -1,19 +1,49 @@
+/**
+ * Clase AdministradorDTO
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.model
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.model;
 
 import java.util.Objects;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AdministradorDTO.
+ */
 public class AdministradorDTO extends UsuarioDTO {
+	
+	/** The id. */
 	private Long id;
 	
+	/**
+	 * Instantiates a new administrador DTO.
+	 */
 	public AdministradorDTO() {
 		super();
 	}
 
+	/**
+	 * Instantiates a new administrador DTO.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param nombreCompleto the nombre completo
+	 * @param email the email
+	 * @param fotoPerfil the foto perfil
+	 */
 	public AdministradorDTO(String username, String password, String nombreCompleto, String email, String fotoPerfil) {
 		super(username, password, nombreCompleto, email, fotoPerfil);
 
 	}
 
+	/**
+	 * Hash code.
+	 *
+	 * @return the int
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -22,6 +52,12 @@ public class AdministradorDTO extends UsuarioDTO {
 		return result;
 	}
 
+	/**
+	 * Equals.
+	 *
+	 * @param obj the obj
+	 * @return true, if successful
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -34,10 +70,20 @@ public class AdministradorDTO extends UsuarioDTO {
 		return Objects.equals(id, other.id);
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}

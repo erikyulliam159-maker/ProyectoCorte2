@@ -1,3 +1,10 @@
+/**
+ * Clase ProblemaService
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.service
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.service;
 
 import java.io.IOException;
@@ -13,17 +20,28 @@ import com.google.gson.Gson;
 import co.edu.unbosque.model.ProblemaDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProblemaService.
+ */
 @ApplicationScoped
 public class ProblemaService {
 
+    /** The Constant httpClient. */
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
             .connectTimeout(Duration.ofSeconds(5))
             .build();
 
+    /** The Constant BASE. */
     private static final String BASE = "http://localhost:8081/docente/problema";
 
-    // Obtener todos los problemas
+   
+    /**
+     * Do get all.
+     *
+     * @return the array list
+     */
     public ArrayList<ProblemaDTO> doGetAll() {
         String url = BASE + "/getall";
         HttpRequest request = HttpRequest.newBuilder()
@@ -53,6 +71,12 @@ public class ProblemaService {
         }
     }
 
+    /**
+     * Do get by id.
+     *
+     * @param id the id
+     * @return the problema DTO
+     */
     // Obtener un problema por ID
     public ProblemaDTO doGetById(Long id) {
         String url = BASE + "/getbyid/" + id;
@@ -82,6 +106,12 @@ public class ProblemaService {
         }
     }
 
+    /**
+     * Do post.
+     *
+     * @param problema the problema
+     * @return the string
+     */
     // Crear un nuevo problema
     public String doPost(ProblemaDTO problema) {
         Gson g = new Gson();
@@ -107,6 +137,13 @@ public class ProblemaService {
         return response.statusCode() + "|" + response.body();
     }
 
+    /**
+     * Do put.
+     *
+     * @param id the id
+     * @param problema the problema
+     * @return the string
+     */
     // Actualizar un problema existente
     public String doPut(Long id, ProblemaDTO problema) {
         Gson g = new Gson();
@@ -132,6 +169,12 @@ public class ProblemaService {
         return response.statusCode() + "|" + response.body();
     }
 
+    /**
+     * Do delete.
+     *
+     * @param id the id
+     * @return the string
+     */
     // Eliminar un problema
     public String doDelete(Long id) {
         String url = BASE + "/deletebyid/" + id;
@@ -155,7 +198,13 @@ public class ProblemaService {
         return response.statusCode() + "|" + response.body();
     }
 
-    // Buscar problemas por término (opcional, si tienes endpoint de búsqueda)
+  
+    /**
+     * Do search.
+     *
+     * @param termino the termino
+     * @return the array list
+     */
     public ArrayList<ProblemaDTO> doSearch(String termino) {
         String url = BASE + "/buscar?q=" + termino;
 

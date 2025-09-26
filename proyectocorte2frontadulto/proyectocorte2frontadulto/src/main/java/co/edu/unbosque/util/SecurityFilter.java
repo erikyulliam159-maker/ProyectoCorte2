@@ -1,3 +1,10 @@
+/**
+ * Clase SecurityFilter
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.util
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.util;
 
 import java.io.IOException;
@@ -13,37 +20,58 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SecurityFilter.
+ */
 @WebFilter("/Admin.xhtml")
 public class SecurityFilter implements Filter {
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // Inicialización del filtro
-    }
+	/**
+	 * Inicializa el.
+	 *
+	 * @param filterConfig the filter config
+	 * @throws ServletException the servlet exception
+	 */
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpSession session = httpRequest.getSession(false);
-        
-        // Verificar si el usuario está logueado y es administrador
-        boolean loggedIn = (session != null && session.getAttribute("usuarioLogueado") != null);
-        boolean isAdmin = (session != null && "administrador".equals(session.getAttribute("tipoUsuario")));
-        
-        if (loggedIn && isAdmin) {
-            // Usuario autenticado y es administrador, permitir acceso
-            chain.doFilter(request, response);
-        } else {
-            // Redirigir al login si no está autenticado o no es administrador
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.xhtml");
-        }
-    }
+	}
 
-    @Override
-    public void destroy() {
-        // Cleanup code
-    }
+	/**
+	 * Do filter.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param chain the chain
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ServletException the servlet exception
+	 */
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		HttpSession session = httpRequest.getSession(false);
+
+		boolean loggedIn = (session != null && session.getAttribute("usuarioLogueado") != null);
+		boolean isAdmin = (session != null && "administrador".equals(session.getAttribute("tipoUsuario")));
+
+		if (loggedIn && isAdmin) {
+
+			chain.doFilter(request, response);
+		} else {
+
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.xhtml");
+		}
+	}
+
+	/**
+	 * Destroy.
+	 */
+	@Override
+	public void destroy() {
+
+	}
 }

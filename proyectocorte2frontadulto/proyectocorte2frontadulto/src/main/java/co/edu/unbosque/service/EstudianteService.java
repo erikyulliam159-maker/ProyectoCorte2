@@ -1,3 +1,10 @@
+/**
+ * Clase EstudianteService
+ * Proyecto: proyectocorte2frontadulto
+ * Paquete: co.edu.unbosque.service
+ *
+ * Descripción: Documentación pendiente.
+ */
 package co.edu.unbosque.service;
 
 import java.io.IOException;
@@ -16,11 +23,26 @@ import java.util.UUID;
 import com.google.gson.Gson;
 import co.edu.unbosque.model.EstudianteDTO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EstudianteService.
+ */
 public class EstudianteService {
 
+	/** The Constant httpClient. */
 	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
 			.connectTimeout(Duration.ofSeconds(5)).build();
 
+	/**
+	 * Do post multipart.
+	 *
+	 * @param url the url
+	 * @param dto the dto
+	 * @param imagenPath the imagen path
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException the interrupted exception
+	 */
 	public static String doPostMultipart(String url, EstudianteDTO dto, Path imagenPath) throws IOException, InterruptedException {
 	    String boundary = "----WebKitFormBoundary" + UUID.randomUUID().toString().replace("-", "");
 
@@ -79,6 +101,12 @@ public class EstudianteService {
 	    return response.body();
 	}
 	
+	/**
+	 * Do get all.
+	 *
+	 * @param url the url
+	 * @return the array list
+	 */
 	public static ArrayList<EstudianteDTO> doGetAll(String url) {
 		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 				.setHeader("User-Agent", "Java 11 HttpClient Bot").header("Content-Type", "application/json").build();
@@ -96,6 +124,12 @@ public class EstudianteService {
 		return new ArrayList<>(Arrays.asList(temps));
 	}
 
+	/**
+	 * Do get.
+	 *
+	 * @param url the url
+	 * @return the string
+	 */
 	public static String doGet(String url) {
 		 HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url))
 		            .setHeader("User-Agent", "Java 11 HttpClient Bot")
