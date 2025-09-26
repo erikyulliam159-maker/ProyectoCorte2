@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Registro - CodeAcademy</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/css/base1/index.css?v=3" />
+		<link rel="stylesheet" type="text/css" href="css/child_theme.css" />
+	<link
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		rel="stylesheet" />
+	<link rel="icon"
+		href="#{facesContext.externalContext.requestContextPath}/imagenes/iconpage.png"
+		type="image/x-icon" />
+</h:head>
+<body class="child-theme">
+
+	<div class="background-animation">
+		<div class="code-bubble"></div>
+		<div class="code-bubble"></div>
+		<div class="code-bubble"></div>
+		<div class="code-bubble"></div>
+		<div class="code-bubble"></div>
+	</div>
+
+	<div class="container">
+		<div class="register-card">
+			<div class="card-header">
+				<div class="logo">
+					<i class="fas fa-code"></i> <span>CodeAcademy</span>
+				</div>
+				<h2>
+					<i class="fas fa-user-plus"></i> Crear Cuenta
+				</h2>
+				<p>Únete a nuestra comunidad de programadores</p>
+			</div>
+
+			<h:form id="registerForm" enctype="multipart/form-data">
+				<h:panelGroup rendered="#{not empty registerBean.message}">
+					<div class="message #{registerBean.messageType}">
+						<i
+							class="fas #{registerBean.messageType eq 'success' ? 'fa-check-circle' : 
+                                      registerBean.messageType eq 'error' ? 'fa-exclamation-circle' : 
+                                      'fa-exclamation-triangle'}"></i>
+						#{registerBean.message}
+					</div>
+				</h:panelGroup>
+
+				<p:messages id="messages" showDetail="true" autoUpdate="true"
+					closable="true" skipDetailIfEqualsSummary="true" />
+
+				<div class="form-group">
+					<label for="tipoUsuario"><i class="fas fa-user-tag"></i>
+						Tipo de Usuario</label>
+					<h:selectOneMenu id="tipoUsuario"
+						value="#{registerBean.tipoUsuario}" styleClass="form-control">
+						<f:selectItem itemValue="estudiante" itemLabel="Estudiante" />
+						<f:selectItem itemValue="docente" itemLabel="Docente" />
+					</h:selectOneMenu>
+				</div>
+
+				<h:panelGroup rendered="#{registerBean.tipoUsuario eq 'estudiante'}">
+					<div class="form-group">
+						<label for="usernameEst"><i class="fas fa-user"></i>
+							Nombre de Usuario</label>
+						<h:inputText id="usernameEst"
+							value="#{registerBean.estudiante.username}"
+							styleClass="form-control" required="true"
+							requiredMessage="El nombre de usuario es obligatorio">
+							<f:validateLength minimum="3" maximum="50" />
+						</h:inputText>
+						<h:message for="usernameEst" styleClass="error-message" />
+						<small>Ej: java_coder22</small>
+					</div>
+
+					<div class="form-group">
+						<label for="passwordEst"><i class="fas fa-lock"></i>
+							Contraseña</label>
+						<h:inputSecret id="passwordEst"
+							value="#{registerBean.estudiante.password}"
+							styleClass="form-control" required="true"
+							requiredMessage="La contraseña es obligatoria">
+							<f:validateLength minimum="4" maximum="100" />
+						</h:inputSecret>
+						<h:message for="passwordEst" styleClass="error-message" />
+						<small>Mínimo 8 caracteres</small>
+					</div>
+
+					<div class="form-group">
+						<label for="nombreCompletoEst"><i class="fas fa-id-card"></i>
+							Nombre Completo</label>
+						<h:inputText id="nombreCompletoEst"
+							value="#{registerBean.estudiante.nombreCompleto}"
+							styleClass="form-control" required="true"
+							requiredMessage="El nombre completo es obligatorio">
+							<f:validateLength minimum="5" maximum="100" />
+						</h:inputText>
+						<h:message for="nombreCompletoEst" styleClass="error-message" />
+					</div>
+
+					<div class="form-group">
+						<label for="emailEst"><i class="fas fa-envelope"></i>
+							Correo Electrónico</label>
+						<h:inputText id="emailEst"
+							value="#{registerBean.estudiante.email}"
+							styleClass="form-control" required="true"
+							requiredMessage="El email es obligatorio">
+							<f:validateRegex
+								pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+						</h:inputText>
+						<h:message for="emailEst" styleClass="error-message" />
+						<small>Ej: tu.email@universidad.edu</small>
+					</div>
+
+					<div class="form-group">
+						<label for="fotoPerfilEst"><i class="fas fa-camera"></i>
+							Foto de Perfil</label>
+						<div class="custom-file-upload">
+							<p:fileUpload id="fotoPerfilEst"
+								value="#{registerBean.fotoPerfilFile}" mode="simple"
+								allowTypes="/(\.|\/)(jpe?g|png)$/" fileLimit="1"
+								sizeLimit="1000000" />
+							<i class="fas fa-upload"></i>
+						</div>
+						<small>Formatos: JPG, PNG (Máx. 1MB)</small>
+					</div>
+				</h:panelGroup>
+
+				
+				<h:panelGroup rendered="#{registerBean.tipoUsuario eq 'docente'}">
+					<div class="form-group">
+						<label for="usernameDoc"><i class="fas fa-user"></i>
+							Nombre de Usuario</label>
+						<h:inputText id="usernameDoc"
+							value="#{registerBean.docente.username}"
+							styleClass="form-control" required="true"
+							requiredMessage="El nombre de usuario es obligatorio">
+							<f:validateLength minimum="3" maximum="50" />
+						</h:inputText>
+						<h:message for="usernameDoc" styleClass="error-message" />
+					</div>
+
+					<div class="form-group">
+						<label for="passwordDoc"><i class="fas fa-lock"></i>
+							Contraseña</label>
+						<h:inputSecret id="passwordDoc"
+							value="#{registerBean.docente.password}"
+							styleClass="form-control" required="true"
+							requiredMessage="La contraseña es obligatoria">
+							<f:validateLength minimum="4" maximum="100" />
+						</h:inputSecret>
+						<h:message for="passwordDoc" styleClass="error-message" />
+					</div>
+
+					<div class="form-group">
+						<label for="nombreCompletoDoc"><i class="fas fa-id-card"></i>
+							Nombre Completo</label>
+						<h:inputText id="nombreCompletoDoc"
+							value="#{registerBean.docente.nombreCompleto}"
+							styleClass="form-control" required="true"
+							requiredMessage="El nombre completo es obligatorio">
+							<f:validateLength minimum="5" maximum="100" />
+						</h:inputText>
+						<h:message for="nombreCompletoDoc" styleClass="error-message" />
+					</div>
+
+					<div class="form-group">
+						<label for="emailDoc"><i class="fas fa-envelope"></i>
+							Correo Electrónico</label>
+						<h:inputText id="emailDoc" value="#{registerBean.docente.email}"
+							styleClass="form-control" required="true"
+							requiredMessage="El email es obligatorio">
+							<f:validateRegex
+								pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+						</h:inputText>
+						<h:message for="emailDoc" styleClass="error-message" />
+					</div>
+
+					<div class="form-group">
+						<label for="fotoPerfilDoc"><i class="fas fa-camera"></i>
+							Foto de Perfil</label>
+						<div class="custom-file-upload">
+							<p:fileUpload id="fotoPerfilDoc"
+								value="#{registerBean.fotoPerfilFile}" mode="simple"
+								allowTypes="/(\.|\/)(jpe?g|png)$/" fileLimit="1"
+								sizeLimit="1000000" />
+							<i class="fas fa-upload"></i>
+						</div>
+						<small>Formatos: JPG, PNG (Máx. 1MB)</small>
+					</div>
+				</h:panelGroup>
+
+				<div class="form-actions">
+					<h:commandButton value="Registrarse"
+						action="#{registerBean.register}" styleClass="btn-register"
+						update="messages registerForm" />
+					<p class="login-link">
+						¿Ya tienes cuenta?
+						<h:link outcome="login" value="Inicia sesión" />
+					</p>
+				</div>
+			</h:form>
+
+			<div class="features">
+				<div class="feature">
+					<i class="fas fa-laptop-code"></i> <span>Aprende
+						programación</span>
+				</div>
+				<div class="feature">
+					<i class="fas fa-users"></i> <span>Comunidad activa</span>
+				</div>
+				<div class="feature">
+					<i class="fas fa-graduation-cap"></i> <span>Proyectos
+						prácticos</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

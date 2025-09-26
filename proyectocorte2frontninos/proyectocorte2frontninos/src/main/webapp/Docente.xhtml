@@ -1,0 +1,453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Panel del Docente</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="css/users/docente.css?v=3" />
+	<link rel="stylesheet" type="text/css" href="css/child_theme.css" />
+	<link rel="icon" href="imagenes/iconpage.png" type="image/x-icon" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+
+<h:body class="child-theme">
+	<div class="layout-container">
+		<aside class="sidebar">
+		<div class="logo">
+			<a href="pantallaprincipal.xhtml"> <img
+				src="imagenes/logo-artemis.png" alt="Logo ARTEMIS" />
+			</a>
+		</div>
+
+		<nav>
+		<ul class="nav-menu">
+			<li><a href="pantallaprincipal.xhtml" class="nav-link"><i
+					class="fas fa-home"></i> Inicio</a></li>
+			<li><a href="Docente.xhtml" class="nav-link active"><i
+					class="fas fa-chalkboard-teacher"></i> Panel Docente</a></li>
+			<li><a href="Temario.xhtml" class="nav-link"><i
+					class="fas fa-paperclip"></i> Temario</a></li>
+			<li><a href="Problemas.xhtml" class="nav-link"><i
+					class="fas fa-tasks"></i> Problemas</a></li>
+			<li><a href="Libros.xhtml" class="nav-link"><i
+					class="fas fa-book"></i> Libros</a></li>
+			<li><a href="Linkvaliosos.xhtml" class="nav-link"><i
+					class="fas fa-link"></i> Links Valiosos</a></li>
+			<li><a href="Eventos.xhtml" class="nav-link"><i
+					class="fas fa-calendar-alt"></i> Eventos</a></li>
+		</ul>
+		</nav>
+
+		<div class="sidebar-footer">
+			<p>Proyecto Artemisa 2025</p>
+		</div>
+		</aside>
+
+	
+		<main class="main-content"> 
+		<div class="page-header">
+			<div class="container">
+				<div class="header-content">
+					<h1 class="page-title">Panel del Docente</h1>
+					<p class="page-subtitle">Gestión completa de recursos
+						educativos</p>
+				</div>
+				<div class="header-logo">
+					<img src="imagenes/logop.png" alt="Logo ARTEMIS" />
+				</div>
+			</div>
+		</div>
+
+		
+		<header>
+		<div class="container">
+			<div class="header-info">
+				<p>Bienvenido, Docente</p>
+			</div>
+		</div>
+		</header>
+
+		<div class="container">
+			<div class="docente-sections-container">
+
+			
+				<section class="docente-section">
+				<h2>
+					<i class="fas fa-book"></i> Gestión de Libros
+				</h2>
+				<div class="docente-form">
+
+				
+					<div class="form-section">
+						<h3>Agregar/Editar Libro</h3>
+						<h:form id="formLibro" enctype="multipart/form-data">
+							<div class="form-row">
+								<div class="form-group">
+									<label for="titulo">Título:</label>
+									<h:inputText id="titulo"
+										value="#{libroBean.libroSeleccionado.titulo}"
+										styleClass="docente-input" required="true" />
+								</div>
+								<div class="form-group">
+									<label for="autor">Autor:</label>
+									<h:inputText id="autor"
+										value="#{libroBean.libroSeleccionado.autor}"
+										styleClass="docente-input" required="true" />
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group">
+									<label for="anio">Año de Publicación:</label>
+									<h:inputText id="anio"
+										value="#{libroBean.libroSeleccionado.anio}"
+										styleClass="docente-input" />
+								</div>
+								<div class="form-group">
+									<label for="imagenPortada">URL Imagen Portada:</label>
+									<h:inputText id="imagenPortada"
+										value="#{libroBean.libroSeleccionado.imagenPortada}"
+										styleClass="docente-input" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="descripcion">Descripción:</label>
+								<h:inputTextarea id="descripcion"
+									value="#{libroBean.libroSeleccionado.descripcion}"
+									styleClass="docente-input" rows="3" />
+							</div>
+
+							<div class="form-row">
+								<div class="form-group">
+									<label for="filePdf">Archivo PDF:</label>
+									<h:inputFile id="filePdf" value="#{libroBean.archivoPdf}"
+										styleClass="docente-input" />
+								</div>
+								<div class="form-group">
+									<label for="urlpdf">URL PDF:</label>
+									<h:inputText id="urlpdf"
+										value="#{libroBean.libroSeleccionado.urlpdf}"
+										styleClass="docente-input" />
+								</div>
+							</div>
+
+							<div class="form-buttons">
+
+								<h:commandButton value="Guardar"
+									action="#{libroBean.crearLibro}"
+									styleClass="docente-btn add-btn" />
+								<h:commandButton value="Cancelar"
+									action="#{libroBean.cancelarEdicion()}"
+									styleClass="docente-btn cancel-btn" immediate="true" />
+
+								<h:commandButton value="Guardar Edición"
+									action="#{libroBean.guardarEdicion}"
+									styleClass="docente-btn add-btn" />
+							</div>
+						</h:form>
+					</div>
+
+				
+					<h3>Lista de Libros</h3>
+					<h:form id="tablaLibrosForm">
+						<h:dataTable value="#{libroBean.libros}" var="libro"
+							styleClass="docente-table">
+							<h:column>
+								<f:facet name="header">ID</f:facet>
+                                        #{libro.id}
+                                    </h:column>
+							<h:column>
+								<f:facet name="header">Título</f:facet>
+                                        #{libro.titulo}
+                                    </h:column>
+							<h:column>
+								<f:facet name="header">Autor</f:facet>
+                                        #{libro.autor}
+                                    </h:column>
+							<h:column>
+								<f:facet name="header">Año</f:facet>
+                                        #{libro.anio}
+                                    </h:column>
+							<h:column>
+								<f:facet name="header">Acciones</f:facet>
+								<div class="docente-actions">
+									<h:commandButton value="Editar"
+										action="#{libroBean.editarLibro(libro)}"
+										styleClass="docente-btn update-btn" />
+
+									<h:commandButton value="Eliminar"
+										action="#{libroBean.eliminarLibro(libro)}"
+										styleClass="docente-btn delete-btn"
+										onclick="return confirm('¿Está seguro de eliminar este libro?')" />
+								</div>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+				</section>
+
+		
+				<section class="docente-section">
+				<h2>
+					<i class="fas fa-tasks"></i> Gestión de Problemas
+				</h2>
+				<div class="docente-form">
+
+			
+					<div class="form-section">
+						<h3>Agregar/Editar Problema</h3>
+						<h:form id="formProblema">
+							<div class="form-row">
+								<div class="form-group">
+									<label for="tituloProblema">Título:</label>
+									<h:inputText id="tituloProblema"
+										value="#{problemaBean.problemaSeleccionado.titulo}"
+										styleClass="docente-input" required="true" />
+								</div>
+								<div class="form-group">
+									<label for="dificultad">Dificultad:</label>
+									<h:selectOneMenu id="dificultad"
+										value="#{problemaBean.problemaSeleccionado.dificultad}"
+										styleClass="docente-input">
+										<f:selectItem itemValue="0" itemLabel="Fácil" />
+										<f:selectItem itemValue="1" itemLabel="Media" />
+										<f:selectItem itemValue="2" itemLabel="Difícil" />
+										<f:selectItem itemValue="3" itemLabel="Muy Difícil" />
+										<f:selectItem itemValue="4" itemLabel="Experto" />
+										<f:selectItem itemValue="5" itemLabel="Avanzado" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group">
+									<label for="tema">Tema:</label>
+									<h:inputText id="tema"
+										value="#{problemaBean.problemaSeleccionado.tema}"
+										styleClass="docente-input" required="true" />
+								</div>
+								<div class="form-group">
+									<label for="juez">Juez:</label>
+									<h:inputText id="juez"
+										value="#{problemaBean.problemaSeleccionado.juez}"
+										styleClass="docente-input" required="true" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="urlProblema">URL del Problema:</label>
+								<h:inputText id="urlProblema"
+									value="#{problemaBean.problemaSeleccionado.url}"
+									styleClass="docente-input" required="true" />
+							</div>
+							<div class="form-buttons">
+								<h:commandButton value="Guardar"
+									action="#{problemaBean.guardarProblema}"
+									styleClass="docente-btn add-btn"
+									rendered="#{problemaBean.problemaSeleccionado.id == null}" />
+								<h:commandButton value="Guardar Cambios"
+									action="#{problemaBean.guardarEdicion}"
+									styleClass="docente-btn update-btn"
+									rendered="#{problemaBean.problemaSeleccionado.id != null}" />
+								<h:commandButton value="Cancelar"
+									action="#{problemaBean.cancelarEdicion}"
+									styleClass="docente-btn cancel-btn" immediate="true" />
+							</div>
+						</h:form>
+					</div>
+
+				
+					<h3>Lista de Problemas</h3>
+					<h:form id="tablaProblemasForm">
+						<h:dataTable value="#{problemaBean.problemas}" var="problema"
+							styleClass="docente-table">
+							<h:column>
+								<f:facet name="header">ID</f:facet>
+                    #{problema.id}
+                </h:column>
+							<h:column>
+								<f:facet name="header">Título</f:facet>
+                    #{problema.titulo}
+                </h:column>
+							<h:column>
+								<f:facet name="header">Dificultad</f:facet>
+								<span class="dificultad dificultad-#{problema.dificultad}">
+									#{problema.dificultad == 0 ? 'Fácil' : problema.dificultad == 1
+									? 'Media' : problema.dificultad == 2 ? 'Difícil' :
+									problema.dificultad == 3 ? 'Muy Difícil' : problema.dificultad
+									== 4 ? 'Experto' : 'Avanzado'} </span>
+							</h:column>
+							<h:column>
+								<f:facet name="header">Tema</f:facet>
+                    #{problema.tema}
+                </h:column>
+							<h:column>
+								<f:facet name="header">Juez</f:facet>
+                    #{problema.juez}
+                </h:column>
+							<h:column>
+								<f:facet name="header">URL</f:facet>
+								<h:outputLink value="#{problema.url}" target="_blank">
+                        Ver Problema
+                    </h:outputLink>
+							</h:column>
+							<h:column>
+								<f:facet name="header">Acciones</f:facet>
+								<div class="docente-actions">
+									<h:commandButton value="Editar"
+										action="#{problemaBean.editarProblema(problema)}"
+										styleClass="docente-btn update-btn" />
+									<h:commandButton value="Eliminar"
+										action="#{problemaBean.eliminarProblema(problema)}"
+										styleClass="docente-btn delete-btn"
+										onclick="return confirm('¿Está seguro de eliminar este problema?')" />
+								</div>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+				</section>
+
+				
+				<section class="docente-section">
+				<h2>
+					<i class="fas fa-paperclip"></i> Gestión de Temarios
+				</h2>
+				<div class="docente-form">
+					<div class="form-section">
+						<h3>Agregar/Editar Temario</h3>
+						<h:form id="temarioForm">
+							<div class="form-row">
+								<div class="form-group">
+									<label for="tituloTemario">Título del Temario:</label>
+									<h:inputText id="tituloTemario"
+										value="#{temarioBean.nuevoTemario.titulo}"
+										styleClass="docente-input" required="true" />
+								</div>
+							</div>
+							<h4>Agregar Subtema</h4>
+							<div class="form-row">
+								<div class="form-group">
+									<label for="nombreSubtema">Nombre del Subtema:</label>
+									<h:inputText id="nombreSubtema"
+										value="#{temarioBean.nuevoSubtema.nombre}"
+										styleClass="docente-input" />
+								</div>
+								<div class="form-group">
+									<label for="tipoSubtema">Tipo:</label>
+									<h:inputText id="tipoSubtema"
+										value="#{temarioBean.nuevoSubtema.tipo}"
+										styleClass="docente-input" />
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group">
+									<label for="descripcionDetalle">Descripción Detalle:</label>
+									<h:inputText id="descripcionDetalle"
+										value="#{temarioBean.nuevoSubtema.detalle.descripcion}"
+										styleClass="docente-input" />
+								</div>
+								<div class="form-group">
+									<label for="urlImagenDetalle">URL Imagen Detalle:</label>
+									<h:inputText id="urlImagenDetalle"
+										value="#{temarioBean.nuevoSubtema.detalle.urlImagen}"
+										styleClass="docente-input" />
+								</div>
+							</div>
+							<div class="form-buttons">
+								<p:commandButton value="Agregar Subtema"
+									action="#{temarioBean.agregarSubtema}" process="@form"
+									update="subtemasTable @form" styleClass="docente-btn add-btn" />
+
+								<p:commandButton value="Crear Temario"
+									action="#{temarioBean.crearTemario}" process="@form"
+									update="@form subtemasTable" styleClass="docente-btn add-btn" />
+
+								<p:commandButton value="Guardar Edición"
+									action="#{temarioBean.guardarActualizacion}"
+									update="temarioForm tablaTemariosForm"
+									styleClass="docente-btn update-btn" />
+
+							</div>
+
+
+							<h3>Subtemas agregados</h3>
+							<h:dataTable id="subtemasTable"
+								value="#{temarioBean.nuevoTemario.subtemas}" var="subtema"
+								varStatus="status" styleClass="docente-table">
+								<h:column>
+									<f:facet name="header">Nombre</f:facet>
+        #{subtema.nombre}
+    </h:column>
+								<h:column>
+									<f:facet name="header">Tipo</f:facet>
+								        #{subtema.tipo}
+								</h:column>
+								<h:column>
+									<f:facet name="header">Descripción</f:facet>
+							        #{subtema.detalle.descripcion}
+							    </h:column>
+								<h:column>
+									<f:facet name="header">Imagen</f:facet>
+									<a href="#{subtema.detalle.urlImagen}" target="_blank">Ver
+										Imagen</a>
+								</h:column>
+								<h:column>
+									<f:facet name="header">Acciones</f:facet>
+									<p:commandButton value="Eliminar"
+										action="#{temarioBean.eliminarSubtema(status.index)}"
+										update="temarioForm" styleClass="docente-btn delete-btn" />
+								</h:column>
+							</h:dataTable>
+
+						</h:form>
+						<h:form id="tablaTemariosForm">
+							<h3>Lista de Temarios</h3>
+							<h:dataTable id="tablaTemarios" value="#{temarioBean.temarios}"
+								var="temario" styleClass="docente-table">
+								<h:column>
+									<f:facet name="header">ID</f:facet>
+            #{temario.id}
+        </h:column>
+								<h:column>
+									<f:facet name="header">Título</f:facet>
+            #{temario.titulo}
+        </h:column>
+								<h:column>
+									<f:facet name="header"># Subtemas</f:facet>
+            #{temario.subtemas != null ? temario.subtemas.size() : 0}
+        </h:column>
+								<h:column>
+									<f:facet name="header">Acciones</f:facet>
+									<p:commandButton value="Actualizar"
+										action="#{temarioBean.actualizarTemario(temario)}"
+										update="temarioForm tablaTemarios"
+										styleClass="docente-btn update-btn" />
+									<p:commandButton value="Eliminar"
+										action="#{temarioBean.eliminarTemario(temario.id)}"
+										update="tablaTemariosForm" styleClass="docente-btn delete-btn"
+										onclick="return confirm('¿Está seguro de eliminar este temario?')" />
+								</h:column>
+							</h:dataTable>
+						</h:form>
+					</div>
+				</div>
+				</section>
+			</div>
+		</div>
+
+		<footer>
+		<div class="container">
+			<p>© 2025 BIBLIOTECA ARTEMIS - Panel del Docente</p>
+		</div>
+		</footer> </main>
+	</div>
+</h:body>
+</html>

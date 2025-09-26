@@ -1,0 +1,226 @@
+
+/* Estilo moderno y atractivo para frontend infantil inspirado en Cocomelon */
+
+body.child-theme {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #fceabb, #f8b500);
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+.child-theme .container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff9e6;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(255, 197, 0, 0.3);
+}
+
+.child-theme h1, .child-theme h2, .child-theme h3 {
+    color: #ea4c89;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.child-theme a, .child-theme a:visited {
+    color: #22a7f0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.child-theme a:hover {
+    color: #ef476f;
+    text-decoration: underline;
+}
+
+.child-theme button, .child-theme .btn {
+    cursor: pointer;
+    background-color: #ef476f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.child-theme button:hover, .child-theme .btn:hover {
+    background-color: #ff6f91;
+}
+
+.child-theme .nav-menu li a {
+    font-size: 1.3rem;
+    padding: 10px;
+}
+
+.child-theme .sidebar {
+    background: #fdeff9;
+    border-radius: 20px 0 0 20px;
+    box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+}
+
+.child-theme .sidebar .logo img {
+    border-radius: 50%;
+    padding: 8px;
+    background: #ffdce0;
+    max-width: 100px;
+    display: block;
+    margin: 10px auto;
+}
+
+.child-theme .main-content {
+    background: #ffdeeb;
+    border-radius: 0 20px 20px 0;
+    padding: 20px;
+    min-height: 75vh;
+}
+
+.child-theme .form-group label {
+    font-weight: bold;
+    color: #ff4267;
+    font-size: 1.1rem;
+}
+
+.child-theme input, .child-theme select, .child-theme textarea {
+    border-radius: 20px;
+    border: 2px solid #ff85a2;
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.child-theme input:focus, .child-theme select:focus, .child-theme textarea:focus {
+    border-color: #ff4267;
+    outline: none;
+}
+
+.child-theme .book-card {
+    background: #fff0f6;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(239, 71, 111, 0.2);
+    overflow: hidden;
+    margin-bottom: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.child-theme .book-title {
+    font-size: 1.3rem;
+    color: #ff0066;
+}
+
+.child-theme .book-image {
+    width: 100%;
+    border-bottom: 3px solid #ff85a2;
+}
+
+.child-theme .level-indicator {
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.child-theme .level-basic-bg {
+    background-color: #ffd1dc;
+    color: #a83257;
+}
+.child-theme .level-intermediate-bg {
+    background-color: #ffa3af;
+    color: #5a214a;
+}
+.child-theme .level-advanced-bg {
+    background-color: #ef476f;
+    color: #fff;
+}
+
+.child-theme nav .nav-menu li a {
+    font-weight: bold;
+    color: #ff4267;
+    transition: color 0.3s ease;
+}
+
+.child-theme nav .nav-menu li a:hover {
+    color: #ff85a2;
+}
+
+.child-theme .message {
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+
+.child-theme .message.success {
+    background-color: #d4edda;
+    color: #218838;
+}
+
+.child-theme .message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.child-theme .message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.child-theme .sidebar-footer p {
+    color: #a83257;
+    font-weight: bold;
+}
+
+/* Animaciones para burbujas en login y registro */
+.child-theme .background-animation {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    background: linear-gradient(135deg, #fceabb, #f8b500);
+    z-index: -1;
+}
+
+.child-theme .code-bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    animation: bubble-move 7s infinite;
+}
+
+.child-theme .code-bubble:nth-child(1) {
+    width: 40px; height: 40px;
+    top: 10%; left: 20%;
+    animation-delay: 0s;
+}
+.child-theme .code-bubble:nth-child(2) {
+    width: 30px; height: 30px;
+    top: 30%; left: 40%;
+    animation-delay: 2s;
+}
+.child-theme .code-bubble:nth-child(3) {
+    width: 50px; height: 50px;
+    top: 50%; left: 60%;
+    animation-delay: 4s;
+}
+.child-theme .code-bubble:nth-child(4) {
+    width: 35px; height: 35px;
+    top: 70%; left: 80%;
+    animation-delay: 6s;
+}
+.child-theme .code-bubble:nth-child(5) {
+    width: 45px; height: 45px;
+    top: 90%; left: 10%;
+    animation-delay: 8s;
+}
+
+@keyframes bubble-move {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+    50% { transform: translateY(-50px) translateX(20px); opacity: 0.4; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.7; }
+}
+
